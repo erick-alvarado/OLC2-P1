@@ -1,0 +1,12 @@
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\[OLC2] Proyecto 1.exe.config
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\[OLC2] Proyecto 1.exe
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\[OLC2] Proyecto 1.pdb
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\Irony.dll
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.csprojAssemblyReference.cache
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\_OLC2__Proyecto_1.Form1.resources
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\_OLC2__Proyecto_1.Properties.Resources.resources
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.csproj.GenerateResource.cache
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.csproj.CoreCompileInputs.cache
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.csproj.CopyComplete
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.exe
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.pdb
