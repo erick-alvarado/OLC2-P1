@@ -259,12 +259,10 @@ namespace _OLC2__Proyecto_1.Gramm
                 | repeatUntilST
                 | RBREAK 
                 | RCONTINUE
-                | functionST
                 | callFuncST
-                | procedureST
-                //| RGRAFICARTS + LEFTPAR + RIGHTPAR + SEMICOLON COLOCAR graficarTS dentro de callFunc
-
                 | statements 
+                | RBREAK + SEMICOLON
+                | RCONTINUE + SEMICOLON
                 | Empty
                 ;
 
@@ -327,6 +325,7 @@ namespace _OLC2__Proyecto_1.Gramm
             procedureST.Rule = RPROCEDURE + ID + LEFTPAR + argumentList + RIGHTPAR +  SEMICOLON + declarationList + RBEGIN + instructionList + REND + SEMICOLON
                 ;
             callFuncST.Rule = ID + LEFTPAR + parameterList + RIGHTPAR + SEMICOLON
+                | RGRAFICARTS + LEFTPAR + RIGHTPAR + SEMICOLON;
                 ;
 
             parameterList.Rule = parameterList + COMMA + expression
@@ -350,10 +349,10 @@ namespace _OLC2__Proyecto_1.Gramm
                 ;
             repeatUntilST.Rule = RREPEAT + statements + RUNTIL + expression + SEMICOLON
                 ;
-            printST.Rule = RWRITE + LEFTPAR + expression + RIGHTPAR + SEMICOLON
-                | RWRITELN + LEFTPAR + expression + RIGHTPAR + SEMICOLON
-                | RWRITE + LEFTPAR + expression + RIGHTPAR
-                | RWRITELN + LEFTPAR + expression + RIGHTPAR
+            printST.Rule = RWRITE + LEFTPAR + expressionList + RIGHTPAR + SEMICOLON
+                | RWRITELN + LEFTPAR + expressionList + RIGHTPAR + SEMICOLON
+                | RWRITE + LEFTPAR + expressionList + RIGHTPAR
+                | RWRITELN + LEFTPAR + expressionList + RIGHTPAR
                 ;
 
             //ErrorRule
