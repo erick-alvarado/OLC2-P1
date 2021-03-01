@@ -9,7 +9,7 @@ namespace _OLC2__Proyecto_1.Gramm
 {
     class Gramm: Grammar
     {
-        public Gramm(): base(caseSensitive: false)
+        public Gramm() : base(caseSensitive: false)
         {
             #region RE
             StringLiteral STR = new StringLiteral("STR", "'");
@@ -105,7 +105,7 @@ namespace _OLC2__Proyecto_1.Gramm
             RegisterOperators(4, Associativity.Left, EQUAL, DISTINCT, LESS_EQ, GREAT_EQ, LESS, GREAT);
             RegisterOperators(5, Associativity.Left, PLUS, MINUS);
             RegisterOperators(6, Associativity.Left, TIMES, DIVISION, MODULE);
-            
+
             NonGrammarTerminals.Add(lineComment);
             NonGrammarTerminals.Add(keyComment);
             NonGrammarTerminals.Add(parComment);
@@ -134,11 +134,13 @@ namespace _OLC2__Proyecto_1.Gramm
 
             // DECLARATION
             NonTerminal declara = new NonTerminal("declara");
+            NonTerminal declaration = new NonTerminal("declaration");
+
             NonTerminal declarationVar = new NonTerminal("declarationVar");
             NonTerminal declarationType = new NonTerminal("declarationType");
-            NonTerminal declarationObj = new NonTerminal("declarationObj");
 
             NonTerminal declarationList = new NonTerminal("declarationList");
+            NonTerminal declarationObj = new NonTerminal("declarationObj");
 
             NonTerminal declarationListVar = new NonTerminal("declarationListVar");
             NonTerminal declarationListType = new NonTerminal("declarationListType");
@@ -157,6 +159,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
             // CASE
             NonTerminal caseST = new NonTerminal("caseST");
+            NonTerminal caseList = new NonTerminal("caseList");
 
             /* LOOPS */
             // WHILE - DO
@@ -170,6 +173,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
             /* EXPRESION */
             NonTerminal expression = new NonTerminal("expression");
+            NonTerminal expressionList = new NonTerminal("expressionList");
             NonTerminal finalExp = new NonTerminal("finalExp");
 
             /* GENERAL */
@@ -183,18 +187,20 @@ namespace _OLC2__Proyecto_1.Gramm
             start.Rule = RPROGRAM + ID + SEMICOLON + globalVariables /*+ functionList */+ main
                 ;
 
-            globalVariables.Rule = Empty
-                | declarationList 
+            globalVariables.Rule = declarationList
                 ;
 
+            //DECLARATION
             declarationList.Rule = declarationList + declara
                 | declara;
 
-            declara.Rule = RTYPE + ID + EQUAL + ROBJECT + RVAR + declarationObj + REND
-                | RTYPE + declarationListType
+            declara.Rule = RTYPE + declarationListType
                 | RVAR + declarationListVar
+                | RCONST + declaration
+                | Empty
+            ;
+            declaration.Rule = ID + EQUAL + expression + SEMICOLON
                 ;
-
             declarationListVar.Rule = declarationListVar + declarationVar
                 | declarationVar
                 ;
@@ -202,23 +208,80 @@ namespace _OLC2__Proyecto_1.Gramm
                 | declarationType
                 ;
 
-            declarationVar.Rule = argument + SEMICOLON
-                | argument + EQUAL + expression + SEMICOLON
+
+            declarationVar.Rule = idList+ POINTS+ type + EQUAL + expression + SEMICOLON //TODO validar en semantico que idList solo tenga 1 ID
+                |  idList + POINTS + type + SEMICOLON
                 | idList + POINTS + ID + SEMICOLON
                 ;
+            
 
             declarationType.Rule = idList + EQUAL + type + SEMICOLON
+                | ID + EQUAL + ROBJECT + RVAR + declarationObj +declarationList + REND + SEMICOLON
+                | ID + EQUAL + RARRAY + LEFTCOR + type  + RIGHTCOR + ROF +type+SEMICOLON;
                 ;
 
             declarationObj.Rule = declarationObj + argument + SEMICOLON
                 | argument + SEMICOLON
+                | Empty
                 ;
-            argument.Rule = idList + POINTS + type
-                ;
-            idList.Rule = idList +COMMA + ID
+            idList.Rule = idList + COMMA + ID
                 | ID
                 ;
-            type.Rule = RINTEGER | RSTRING | RREAL | RBOOLEAN | RVOID;
+
+
+
+            //MAIN
+            main.Rule = RBEGIN + instructionList + REND + POINT
+                ;
+
+
+            instructionList.Rule = instructionList + instruction 
+                | instruction 
+                ;
+
+            instruction.Rule = assignmentST
+                | ifST
+                | caseST
+                //| printST
+                //| functionST
+
+
+                //| whileST
+                //| repeatUntilST
+                //| forDoST
+                //| callFuncST
+                //| RGRAFICARTS + LEFTPAR + RIGHTPAR + SEMICOLON COLOCAR graficarTS dentro de callFunc
+                //| RBREAK 
+                //| RCONTINUE
+                | statements 
+                | Empty
+                ;
+
+            ifST.Rule = RIF + expression + RTHEN + statements 
+                | RIF + expression + RTHEN + statements + RELSE + statements 
+                | RIF + expression + RTHEN + statements + RELSE + ifST
+                ;
+
+            caseST.Rule = RCASE + RIGHTPAR + expression + LEFTPAR + ROF + caseList + RELSE + statements 
+                | RCASE + RIGHTPAR + expression + LEFTPAR + ROF + caseList
+                ;
+
+            caseList.Rule = caseList + expressionList + POINTS + statements
+                | expressionList + POINTS + statements
+                ;
+
+            expressionList.Rule= expressionList + COMMA + expression  
+                | expression
+                ;
+
+            statements.Rule = RBEGIN + instructionList + REND + SEMICOLON
+                | instructionList 
+                ;
+
+            argument.Rule = idList + POINTS + type
+                ;
+            
+            
 
             expression.Rule = MINUS + expression
                 | NOT + expression
@@ -247,7 +310,9 @@ namespace _OLC2__Proyecto_1.Gramm
                 | FALSE
                 | NULL
                 ;
-
+            type.Rule = RINTEGER | RSTRING | RREAL | RBOOLEAN | RVOID
+                | expression + POINT + POINT + expression
+                ;
             access.Rule = ID
                 ;
 
@@ -255,28 +320,9 @@ namespace _OLC2__Proyecto_1.Gramm
             //    ;
             //functionList.Rule = Empty /*| */
             //    ;
-            main.Rule = RBEGIN + instructionList + REND + POINT
-                ;
-            main.ErrorRule = SyntaxError + REND + POINT;
-
-            instructionList.Rule = instructionList + instruction
-                | instruction
                 ;
 
-            instruction.Rule = assignmentST
-                //| printST
-                //| functionST
-                //| ifST
-                //| caseST
-                //| whileST
-                //| repeatUntilST
-                //| forDoST
-                //| callFuncST
-                //| RGRAFICARTS + LEFTPAR + RIGHTPAR + SEMICOLON COLOCAR graficarTS dentro de callFunc
-                //| RBREAK + SEMICOLON
-                //| RCONTINUE + SEMICOLON
-                | statements + SEMICOLON
-                ;
+            
             instruction.ErrorRule = SyntaxError + SEMICOLON
                 | SyntaxError + REND
                 ;
@@ -287,13 +333,9 @@ namespace _OLC2__Proyecto_1.Gramm
             assignmentST.Rule = ID + P_EQUAL + expression + SEMICOLON
                 ;
 
-            statements.Rule = RBEGIN + instructionList + REND
-                ;
+            
 
-            ifST.Rule = RIF + expression + RTHEN + statements + SEMICOLON
-                | RIF + expression + RTHEN + statements + RELSE + statements + SEMICOLON
-                | RIF + expression + RTHEN + statements + RELSE + ifST
-                ;
+            
 
             whileST.Rule = RWHILE + expression + RDO + statements + SEMICOLON
                 ;
@@ -303,7 +345,8 @@ namespace _OLC2__Proyecto_1.Gramm
                 ;
 
             
-                ;
+            main.ErrorRule = SyntaxError + REND + POINT;
+
             #endregion
 
             #region Preferences

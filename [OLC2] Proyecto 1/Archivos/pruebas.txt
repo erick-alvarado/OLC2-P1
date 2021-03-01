@@ -1,0 +1,9 @@
+﻿program Hello;
+type
+	Rectangle = object
+	var 
+		l : integer;
+end;
+begin
+
+end.

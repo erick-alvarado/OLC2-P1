@@ -30,7 +30,7 @@ namespace _OLC2__Proyecto_1.Gramm
             ErrorHandler errorHandler = new ErrorHandler(tree, root);
             if (!errorHandler.hasErrors())
             {
-                LinkedList<Instruction> AST = start(root);
+                /*LinkedList<Instruction> AST = start(root);
                 Environment_ environment = new Environment_();
                 foreach (Instruction ins in AST)
                 {
@@ -46,7 +46,7 @@ namespace _OLC2__Proyecto_1.Gramm
                     {
                         throw e;
                     }
-                }
+                }*/
             }
             else
             {

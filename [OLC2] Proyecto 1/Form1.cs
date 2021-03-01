@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _OLC2__Proyecto_1.Gramm;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -71,6 +72,14 @@ namespace _OLC2__Proyecto_1
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+            Analyzer n = new Analyzer();
+          
+            textBox2.Text= n.analyze(textBox1.Text);
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }

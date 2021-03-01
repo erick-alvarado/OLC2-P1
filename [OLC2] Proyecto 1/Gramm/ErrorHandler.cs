@@ -10,12 +10,13 @@ namespace _OLC2__Proyecto_1.Gramm
     {
         private ParseTree tree;
         private ParseTreeNode root;
-        public List<Error> errors;
+        public List<Error> errors = new List<Error>();
 
         public ErrorHandler(ParseTree tree, ParseTreeNode root)
         {
             this.tree = tree;
             this.root = root;
+            ;
         }
 
         public bool hasErrors()
@@ -25,7 +26,17 @@ namespace _OLC2__Proyecto_1.Gramm
                 foreach(var error in tree.ParserMessages)
                 {
                     Analyzer.output +="Error en fila " + error.Location.Line + ", columna " + error.Location.Column + ". " + error.Message + "\n";
-                    errors.Add(new Error(error.Location.Line, error.Location.Column, "", "Se esperaba: " + error.ParserState.ExpectedTerminals, ""));
+                    String type = error.Message[0]=='I' ? "Lex":"Syntax";
+                    String expected="";
+                    if (error.ParserState.ReportedExpectedSet != null)
+                    {
+                        foreach (String i in error.ParserState.ReportedExpectedSet)
+                        {
+                            expected += i + " | ";
+                        }
+                    }
+                    
+                    errors.Add(new Error(error.Location.Line, error.Location.Column,type, error.Message, ""));
                 }
                 return true;
             }
@@ -34,3 +45,4 @@ namespace _OLC2__Proyecto_1.Gramm
 
     }
 }
+
