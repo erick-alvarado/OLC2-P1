@@ -122,6 +122,7 @@ namespace _OLC2__Proyecto_1.Gramm
             NonTerminal statements = new NonTerminal("statements");
             NonTerminal argument = new NonTerminal("argument");
             NonTerminal argumentList = new NonTerminal("argumentList");
+            NonTerminal parameterList = new NonTerminal("parameterList");
 
 
 
@@ -131,6 +132,10 @@ namespace _OLC2__Proyecto_1.Gramm
             // FUNCTIONS
             NonTerminal functionST = new NonTerminal("functionST");
             NonTerminal callFuncST = new NonTerminal("callFunST");
+
+            //Procedures
+            NonTerminal procedureST = new NonTerminal("procedureST");
+
 
             // DECLARATION
             NonTerminal declara = new NonTerminal("declara");
@@ -197,21 +202,23 @@ namespace _OLC2__Proyecto_1.Gramm
             declara.Rule = RTYPE + declarationListType
                 | RVAR + declarationListVar
                 | RCONST + declaration
+                | functionST
+                | procedureST
                 | Empty
             ;
             declaration.Rule = ID + EQUAL + expression + SEMICOLON
                 ;
-            declarationListVar.Rule = declarationListVar + declarationVar
-                | declarationVar
+            declarationListVar.Rule = declarationListVar + declarationVar + SEMICOLON
+                | declarationVar + SEMICOLON
                 ;
-            declarationListType.Rule = declarationListType + declarationType
-                | declarationType
+            declarationListType.Rule = declarationListType + declarationType 
+                | declarationType 
                 ;
 
 
-            declarationVar.Rule = idList+ POINTS+ type + EQUAL + expression + SEMICOLON //TODO validar en semantico que idList solo tenga 1 ID
-                |  idList + POINTS + type + SEMICOLON
-                | idList + POINTS + ID + SEMICOLON
+            declarationVar.Rule = idList+ POINTS+ type + EQUAL + expression  //TODO validar en semantico que idList solo tenga 1 ID
+                |  idList + POINTS + type 
+                | idList + POINTS + ID 
                 ;
             
 
@@ -227,8 +234,11 @@ namespace _OLC2__Proyecto_1.Gramm
             idList.Rule = idList + COMMA + ID
                 | ID
                 ;
-
-
+            assignmentST.Rule = ID + P_EQUAL + expression 
+                ;
+            statements.Rule = RBEGIN + instructionList + REND + SEMICOLON
+                | instructionList
+                ;
 
             //MAIN
             main.Rule = RBEGIN + instructionList + REND + POINT
@@ -242,46 +252,41 @@ namespace _OLC2__Proyecto_1.Gramm
             instruction.Rule = assignmentST
                 | ifST
                 | caseST
-                //| printST
-                //| functionST
-
-
-                //| whileST
-                //| repeatUntilST
-                //| forDoST
-                //| callFuncST
+                | printST
+                | assignmentST + SEMICOLON
+                | whileST
+                | forDoST
+                | repeatUntilST
+                | RBREAK 
+                | RCONTINUE
+                | functionST
+                | callFuncST
+                | procedureST
                 //| RGRAFICARTS + LEFTPAR + RIGHTPAR + SEMICOLON COLOCAR graficarTS dentro de callFunc
-                //| RBREAK 
-                //| RCONTINUE
+
                 | statements 
                 | Empty
                 ;
 
+            //CONDITIONS
             ifST.Rule = RIF + expression + RTHEN + statements 
                 | RIF + expression + RTHEN + statements + RELSE + statements 
                 | RIF + expression + RTHEN + statements + RELSE + ifST
                 ;
 
-            caseST.Rule = RCASE + RIGHTPAR + expression + LEFTPAR + ROF + caseList + RELSE + statements 
-                | RCASE + RIGHTPAR + expression + LEFTPAR + ROF + caseList
+            caseST.Rule = RCASE + expression + ROF + caseList + RELSE + statements + REND + SEMICOLON
+                | RCASE +expression+ ROF + caseList + REND + SEMICOLON
                 ;
 
             caseList.Rule = caseList + expressionList + POINTS + statements
                 | expressionList + POINTS + statements
                 ;
 
+
+            //EXPRESSIONS
             expressionList.Rule= expressionList + COMMA + expression  
                 | expression
                 ;
-
-            statements.Rule = RBEGIN + instructionList + REND + SEMICOLON
-                | instructionList 
-                ;
-
-            argument.Rule = idList + POINTS + type
-                ;
-            
-            
 
             expression.Rule = MINUS + expression
                 | NOT + expression
@@ -302,6 +307,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 ;
 
             finalExp.Rule = LEFTPAR + expression + RIGHTPAR
+                | callFuncST
                 | access
                 | INTEGER
                 | REAL
@@ -315,38 +321,46 @@ namespace _OLC2__Proyecto_1.Gramm
                 ;
             access.Rule = ID
                 ;
-
-
-            //    ;
-            //functionList.Rule = Empty /*| */
-            //    ;
+            // Functions
+            functionST.Rule = RFUNCTION + ID + LEFTPAR + argumentList + RIGHTPAR+ POINTS + type + SEMICOLON+ declarationList + RBEGIN + instructionList + REND + SEMICOLON
+                ;
+            procedureST.Rule = RPROCEDURE + ID + LEFTPAR + argumentList + RIGHTPAR +  SEMICOLON + declarationList + RBEGIN + instructionList + REND + SEMICOLON
+                ;
+            callFuncST.Rule = ID + LEFTPAR + parameterList + RIGHTPAR + SEMICOLON
                 ;
 
-            
+            parameterList.Rule = parameterList + COMMA + expression
+                | expression
+                | Empty
+                ;
+            argumentList.Rule = argumentList + SEMICOLON + argument
+               | argumentList + SEMICOLON + declarationVar
+               | argument
+               | RVAR+ declarationVar
+               | Empty
+               ;
+            argument.Rule = idList + POINTS + type
+                ;
+           
+            //LOOPS
+
+            whileST.Rule = RWHILE + expression + RDO + statements 
+                ;
+            forDoST.Rule = RFOR + assignmentST + RTO + expression + RDO +statements
+                ;
+            repeatUntilST.Rule = RREPEAT + statements + RUNTIL + expression + SEMICOLON
+                ;
+            printST.Rule = RWRITE + LEFTPAR + expression + RIGHTPAR + SEMICOLON
+                | RWRITELN + LEFTPAR + expression + RIGHTPAR + SEMICOLON
+                | RWRITE + LEFTPAR + expression + RIGHTPAR
+                | RWRITELN + LEFTPAR + expression + RIGHTPAR
+                ;
+
+            //ErrorRule
+            main.ErrorRule = SyntaxError + REND + POINT;
             instruction.ErrorRule = SyntaxError + SEMICOLON
                 | SyntaxError + REND
                 ;
-
-            
-
-
-            assignmentST.Rule = ID + P_EQUAL + expression + SEMICOLON
-                ;
-
-            
-
-            
-
-            whileST.Rule = RWHILE + expression + RDO + statements + SEMICOLON
-                ;
-
-            printST.Rule = RWRITE + LEFTPAR + expression + RIGHTPAR + SEMICOLON
-                | RWRITELN + LEFTPAR + expression + RIGHTPAR + SEMICOLON
-                ;
-
-            
-            main.ErrorRule = SyntaxError + REND + POINT;
-
             #endregion
 
             #region Preferences
