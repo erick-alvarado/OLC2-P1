@@ -7,10 +7,11 @@ using _OLC2__Proyecto_1.Symbol_;
 
 namespace _OLC2__Proyecto_1.Abstract
 {
-    public abstract class Instruction
+    public abstract class Expression
     {
         public int line, column;
-        public abstract object execute(Environment_ environment);
+        public abstract Return execute(Environment_ environment);
+
         public abstract void setLineColumn(int line, int column);
     }
 }

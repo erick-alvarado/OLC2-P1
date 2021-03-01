@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Irony.Parsing;
+using _OLC2__Proyecto_1.Symbol_;
 namespace _OLC2__Proyecto_1.Gramm
 {
     class ErrorHandler

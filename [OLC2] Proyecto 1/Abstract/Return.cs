@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _OLC2__Proyecto_1.Abstract
 {
-    class Return
+    public class Return
     {
         public object value;
         public Type_ type;

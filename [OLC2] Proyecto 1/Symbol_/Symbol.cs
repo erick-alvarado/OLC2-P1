@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using _OLC2__Proyecto_1.Abstract;
-namespace _OLC2__Proyecto_1.Symbol
+namespace _OLC2__Proyecto_1.Symbol_
 {
-    class Symbol
+    public class Symbol
     {
         public object value;
         public String id;

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _OLC2__Proyecto_1.Gramm
+namespace _OLC2__Proyecto_1.Symbol_
 {
     class Error
     {

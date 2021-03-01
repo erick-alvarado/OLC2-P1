@@ -1,0 +1,54 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using _OLC2__Proyecto_1.Abstract;
+namespace _OLC2__Proyecto_1.Symbol_
+{
+    public class Environment_
+    {
+        private LinkedList<Symbol> variables;
+        public Environment_ prev;
+        public Environment_(Environment_ prev = null)
+        {
+            this.prev = prev;
+            this.variables = new LinkedList<Symbol>();
+        }
+
+        public void saveVar(String id, object value, Type_ type)
+        {
+            Environment_ env = this;
+            while (env != null)
+            {
+                foreach (Symbol vari in env.variables)
+                {
+                    if (vari.id == id)
+                    {
+                        vari.value = value;
+                        return;
+                    }
+                }
+                env = env.prev;
+            }
+            this.variables.AddLast(new Symbol(value, id, type));
+        }
+
+        public Symbol getVar(String id)
+        {
+            Environment_ env = this;
+            while (env != null)
+            {
+                foreach (Symbol vari in env.variables)
+                {
+                    if (vari.id == id)
+                    {
+                        return vari;
+                    }
+                }
+                env = env.prev;
+            }
+            return null;
+        }
+    }
+}

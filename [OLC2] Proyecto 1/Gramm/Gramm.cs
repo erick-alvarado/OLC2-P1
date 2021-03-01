@@ -189,7 +189,7 @@ namespace _OLC2__Proyecto_1.Gramm
             #endregion
 
             #region Grammar
-            start.Rule = RPROGRAM + ID + SEMICOLON + globalVariables /*+ functionList */+ main
+            start.Rule = RPROGRAM + ID + SEMICOLON + globalVariables+ main
                 ;
 
             globalVariables.Rule = declarationList
@@ -217,6 +217,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
 
             declarationVar.Rule = idList+ POINTS+ type + EQUAL + expression  //TODO validar en semantico que idList solo tenga 1 ID
+                | idList + POINTS + ID + EQUAL + expression
                 |  idList + POINTS + type 
                 | idList + POINTS + ID 
                 ;
