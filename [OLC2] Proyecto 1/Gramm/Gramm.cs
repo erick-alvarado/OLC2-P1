@@ -224,14 +224,10 @@ namespace _OLC2__Proyecto_1.Gramm
             
 
             declarationType.Rule = idList + EQUAL + type + SEMICOLON
-                | ID + EQUAL + ROBJECT + RVAR + declarationObj +declarationList + REND + SEMICOLON
+                | ID + EQUAL + ROBJECT +declarationList + REND + SEMICOLON //TODO validar no funcioens y procedimientos
                 | ID + EQUAL + RARRAY + LEFTCOR + type  + RIGHTCOR + ROF +type+SEMICOLON;
                 ;
 
-            declarationObj.Rule = declarationObj + argument + SEMICOLON
-                | argument + SEMICOLON
-                | Empty
-                ;
             idList.Rule = idList + COMMA + ID
                 | ID
                 ;

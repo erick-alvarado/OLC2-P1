@@ -21,6 +21,8 @@ namespace _OLC2__Proyecto_1.Expressions
 
             this.setLineColumn(line, column);
         }
+        //Hacer un segundo execute para cuando solo se declaran variabless
+
         public override Return execute(Environment_ environment)
         {
             Symbol vari = environment.getVar(this.id);

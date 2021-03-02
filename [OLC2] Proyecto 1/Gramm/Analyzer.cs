@@ -7,6 +7,7 @@ using Irony.Parsing;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
 using _OLC2__Proyecto_1.Instructions.Variables;
+using _OLC2__Proyecto_1.Expressions;
 
 namespace _OLC2__Proyecto_1.Gramm
 {
@@ -160,7 +161,8 @@ namespace _OLC2__Proyecto_1.Gramm
                 ParseTreeNode id = root.ChildNodes.ElementAt(0);
                 if(id.ChildNodes.Count== 1)
                 {
-                    return new Declaration(root.ChildNodes.ElementAt(0).ChildNodes.ElementAt(0).Token.ValueString, type(root.ChildNodes.ElementAt(2)), expression(root.ChildNodes.ElementAt(4)),root.Token.Location.Line,root.Token.Location.Column);
+                    LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
+                    return new Declaration(ids, type(root.ChildNodes.ElementAt(2)), expression(root.ChildNodes.ElementAt(4)),root.Token.Location.Line,root.Token.Location.Column);
                 }
                 else
                 {
@@ -171,21 +173,35 @@ namespace _OLC2__Proyecto_1.Gramm
             else
             {
                 Type_ t = type(root.ChildNodes.ElementAt(2));
-                List<String> ids = idList(root.ChildNodes.ElementAt(0));
+                LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
                 return new Declaration(ids, type(root.ChildNodes.ElementAt(2)), root.Token.Location.Line, root.Token.Location.Column);
 
             }
         }
-        public Declaration declarationType(ParseTreeNode root)
+        public DeclarationType declarationType(ParseTreeNode root)
         {
-
+            if (root.ChildNodes.Count == 4)
+            {
+                LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
+                return new DeclarationType(ids, type(root.ChildNodes.ElementAt(2)));
+            }
+            else if (root.ChildNodes.Count == 6)
+            {
+                LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
+                return new DeclarationType(ids, declarationList(root.ChildNodes.ElementAt(3)));
+            }
+            else
+            {
+                LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
+                return new DeclarationType(ids, type(root.ChildNodes.ElementAt(4)), type(root.ChildNodes.ElementAt(7)));
+            }
         }
-        public List<String> idList(ParseTreeNode root)
+        public LinkedList<Expression> idList(ParseTreeNode root)
         {
-            List<String> l = new List<String>();
+            LinkedList<Expression> l = new LinkedList<Expression>();
             for(int i =0; i< root.ChildNodes.Count; i++)
             {
-                l.Add(root.ChildNodes.ElementAt(i).Token.ValueString);
+                l.AddLast(new Access(root.ChildNodes.ElementAt(i).Token.ValueString, root.ChildNodes.ElementAt(i).Token.Location.Line, root.ChildNodes.ElementAt(i).Token.Location.Column));
             }
             return l;
         }
@@ -203,6 +219,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 case "boolean":
                     return Type_.BOOLEAN;
                 case "id":
+                    //TODO arreglar para que busque el type
                     return type(root.ChildNodes.ElementAt(0));
             }
             return Type_.NULL;

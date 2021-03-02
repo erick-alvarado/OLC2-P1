@@ -7,26 +7,33 @@ using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
 namespace _OLC2__Proyecto_1.Instructions.Variables
 {
-    class Declaration : Instruction
+    class DeclarationType : Instruction
     {
-        private LinkedList<Expression> idList= new LinkedList<Expression>();
         private Type_ type;
-        private Expression value;
+        private Type_ type2;
+        private LinkedList<Expression> idList = new LinkedList<Expression>();
+        private LinkedList<Instruction> declarationList = new LinkedList<Instruction>();
 
-        public Declaration(LinkedList<Expression> id, Type_ type, int line, int column)
+        //Declaration Type 
+        public DeclarationType(LinkedList<Expression> idList, Type_ type)
         {
-            this.idList = id;
+            this.idList = idList;
             this.type = type;
-
-            setLineColumn(line, column);
         }
-        public Declaration(LinkedList<Expression> id, Type_ type, Expression value, int line, int column)
-        {
-            this.idList = id;
-            this.type = type;
-            this.value = value;
 
-            setLineColumn(line, column);
+        
+        //Declaration Object
+        public DeclarationType(LinkedList<Expression> idList, Type_ type, Type_ type2)
+        {
+            this.idList = idList;
+            this.type = type;
+            this.type2 = type2;
+        }
+        //Declaration array
+        public DeclarationType(LinkedList<Expression> idList, LinkedList<Instruction> declarationList)
+        {
+            this.idList = idList;
+            this.declarationList = declarationList;
         }
         public override object execute(Environment_ environment)
         {
