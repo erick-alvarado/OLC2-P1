@@ -53,6 +53,10 @@
     <Compile Include="Abstract\Instruction.cs" />
     <Compile Include="Abstract\Return.cs" />
     <Compile Include="Expressions\Access.cs" />
+    <Compile Include="Expressions\Arithmetic.cs" />
+    <Compile Include="Expressions\Literal.cs" />
+    <Compile Include="Expressions\Logical.cs" />
+    <Compile Include="Expressions\Relational.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +64,8 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Gramm\Analyzer.cs" />
+    <Compile Include="Instructions\Variables\DeclarationType.cs" />
+    <Compile Include="Instructions\Variables\Declaration.cs" />
     <Compile Include="Symbol_\Error.cs" />
     <Compile Include="Gramm\ErrorHandler.cs" />
     <Compile Include="Gramm\Gramm.cs" />
