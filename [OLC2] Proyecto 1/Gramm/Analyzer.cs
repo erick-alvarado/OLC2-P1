@@ -14,7 +14,7 @@ namespace _OLC2__Proyecto_1.Gramm
     class Analyzer
     {
         public static String output;
-        public List<Error> errors;
+        public List<Error_> errors;
         public Analyzer()
         {
             output = "";
@@ -27,13 +27,13 @@ namespace _OLC2__Proyecto_1.Gramm
 
             ParseTree tree = parser.Parse(input);
             ParseTreeNode root = tree.Root;
-
+            Environment_ environment = new Environment_(null,"Global");
             ErrorHandler errorHandler = new ErrorHandler(tree, root);
+
             if (!errorHandler.hasErrors())
             {
                 LinkedList<Instruction> AST = start(root);
-                Console.WriteLine("Saber que pedo");
-                /*Environment_ environment = new Environment_();
+                
                 foreach (Instruction ins in AST)
                 {
                     try
@@ -46,9 +46,10 @@ namespace _OLC2__Proyecto_1.Gramm
                     }
                     catch (Exception e)
                     {
-                        throw e;
+                        //this.errors.Add(e.Message);
                     }
-                }*/
+                }
+                
             }
             else
             {
@@ -160,23 +161,22 @@ namespace _OLC2__Proyecto_1.Gramm
         {
             if (root.ChildNodes.Count == 5)
             {
-                ParseTreeNode id = root.ChildNodes.ElementAt(0);
-                if(id.ChildNodes.Count== 1)
-                {
-                    LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
-                    return new Declaration(ids, type(root.ChildNodes.ElementAt(2)), expression(root.ChildNodes.ElementAt(4)),root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
-                }
-                else
-                {
-                    throw new Error_(id.Token.Location.Line, id.Token.Location.Column, "Semantico", "Declaracion con asignacion a multiples variables");
-                }
+                LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
+                return new Declaration(ids, type(root.ChildNodes.ElementAt(2)), expression(root.ChildNodes.ElementAt(4)), root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
 
             }
             else
             {
                 Type_ t = type(root.ChildNodes.ElementAt(2));
-                LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
-                return new Declaration(ids, type(root.ChildNodes.ElementAt(2)), root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
+                LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
+                if ( t== Type_.ID)
+                {
+                    return new Declaration(ids, t, root.ChildNodes.ElementAt(2).ChildNodes.ElementAt(0).Token.Text, root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
+                }
+                else
+                {
+                    return new Declaration(ids,t, root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
+                }
 
             }
         }
@@ -184,23 +184,37 @@ namespace _OLC2__Proyecto_1.Gramm
         {
             if (root.ChildNodes.Count == 4)
             {
-                LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
+                LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
                 return new DeclarationType(ids, type(root.ChildNodes.ElementAt(2)), root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
             }
             else if (root.ChildNodes.Count == 6)
             {
-                LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
+                LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
                 return new DeclarationType(ids, declarationList(root.ChildNodes.ElementAt(3)), root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
             }
             else
             {
-                LinkedList<Expression> ids = idList(root.ChildNodes.ElementAt(0));
-                return new DeclarationType(ids, type(root.ChildNodes.ElementAt(4)), type(root.ChildNodes.ElementAt(7)), root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
+                LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
+                Type_ t1 = type(root.ChildNodes.ElementAt(4));
+                Type_ t2 = type(root.ChildNodes.ElementAt(7));
+                LinkedList<Expression> exp1=new LinkedList<Expression>();
+                LinkedList<Expression> exp2 = new LinkedList<Expression>();
+                if (t1 == Type_.SUBRANGE)
+                {
+                    exp1.AddLast(expression(root.ChildNodes.ElementAt(4).ChildNodes.ElementAt(0)));
+                    exp1.AddLast(expression(root.ChildNodes.ElementAt(4).ChildNodes.ElementAt(3)));
+                }
+                if (t2 == Type_.SUBRANGE)
+                {
+                    exp2.AddLast(expression(root.ChildNodes.ElementAt(7).ChildNodes.ElementAt(0)));
+                    exp2.AddLast(expression(root.ChildNodes.ElementAt(7).ChildNodes.ElementAt(3)));
+                }
+                return new DeclarationType(ids, t1,t2 ,exp1,exp2, root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
             }
         }
-        public LinkedList<Expression> idList(ParseTreeNode root)
+        public LinkedList<Access> idList(ParseTreeNode root)
         {
-            LinkedList<Expression> l = new LinkedList<Expression>();
+            LinkedList<Access> l = new LinkedList<Access>();
             if(root.ChildNodes.Count == 0)
             {
                 l.AddLast(access(root));
@@ -211,14 +225,28 @@ namespace _OLC2__Proyecto_1.Gramm
                 l.AddLast(access(root.ChildNodes.ElementAt(0)));
                 return l;
             }
-            l.Concat(idList(root.ChildNodes.ElementAt(0)));
+            l = idList(root.ChildNodes.ElementAt(0));
+            Console.WriteLine("nel");
             l.AddLast(access(root.ChildNodes.ElementAt(2)));
             
             return l;
         }
         public Type_ type(ParseTreeNode root)
         {
-            String tag = root.ChildNodes.ElementAt(0).Token.ValueString.ToLower();
+            String tag = "";
+            if (root.ChildNodes.Count == 0)
+            {
+                tag = root.Token.Terminal.Name.ToLower();
+            }
+            else if (root.ChildNodes.Count == 4)
+            {
+                return Type_.SUBRANGE;
+            }
+            else
+            {
+                tag = root.ChildNodes.ElementAt(0).Token.Terminal.Name.ToLower();
+                //tag = root.ChildNodes.ElementAt(0).Token.ValueString.ToLower();
+            }
             switch (tag)
             {
                 case "integer":
@@ -230,8 +258,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 case "boolean":
                     return Type_.BOOLEAN;
                 case "id":
-                    //TODO arreglar para que busque el type
-                    return type(root.ChildNodes.ElementAt(0));
+                    return Type_.ID;
             }
             return Type_.NULL;
         }
@@ -310,7 +337,15 @@ namespace _OLC2__Proyecto_1.Gramm
                     case "access":
                         return access(root.ChildNodes.ElementAt(0).ChildNodes.ElementAt(0));
                     case "INTEGER":
-                        return new Literal(int.Parse(value), Type_.INTEGER, line,column);
+                        try
+                        {
+                            return new Literal(int.Parse(value), Type_.INTEGER, line, column);
+
+                        }
+                        catch (Exception e)
+                        {
+                            return new Literal(Double.Parse(value), Type_.REAL, line, column);
+                        }
                     case "REAL":
                         return new Literal(Double.Parse(value), Type_.REAL, line,column);
                     case "STR":

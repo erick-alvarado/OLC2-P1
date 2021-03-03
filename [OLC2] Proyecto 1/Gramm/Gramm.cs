@@ -13,8 +13,8 @@ namespace _OLC2__Proyecto_1.Gramm
         {
             #region RE
             StringLiteral STR = new StringLiteral("STR", "'");
-            var INTEGER = new NumberLiteral("INTEGER");
             var REAL = new RegexBasedTerminal("REAL", "[0-9]+'.'[0-9]+");
+            var INTEGER = new NumberLiteral("INTEGER");
             IdentifierTerminal ID = new IdentifierTerminal("ID");
 
             CommentTerminal lineComment = new CommentTerminal("lineComment", "//", "\n", "\r\n");
@@ -128,6 +128,8 @@ namespace _OLC2__Proyecto_1.Gramm
 
             // TYPES
             NonTerminal type = new NonTerminal("type");
+            NonTerminal subrange = new NonTerminal("subrange");
+
 
             // FUNCTIONS
             NonTerminal functionST = new NonTerminal("functionST");
@@ -217,15 +219,16 @@ namespace _OLC2__Proyecto_1.Gramm
 
 
             declarationVar.Rule = idList+ POINTS+ type + EQUAL + expression  //TODO validar en semantico que idList solo tenga 1 ID
-                | idList + POINTS + ID + EQUAL + expression
                 |  idList + POINTS + type 
-                | idList + POINTS + ID 
                 ;
             
 
             declarationType.Rule = idList + EQUAL + type + SEMICOLON
                 | ID + EQUAL + ROBJECT +declarationList + REND + SEMICOLON //TODO validar no funcioens y procedimientos
-                | ID + EQUAL + RARRAY + LEFTCOR + type  + RIGHTCOR + ROF +type+SEMICOLON;
+                | ID + EQUAL + RARRAY + LEFTCOR + type  + RIGHTCOR + ROF +type+SEMICOLON
+                | ID + EQUAL + RARRAY + LEFTCOR + type + RIGHTCOR + ROF + subrange + SEMICOLON
+                | ID + EQUAL + RARRAY + LEFTCOR + subrange + RIGHTCOR + ROF + type + SEMICOLON
+                | ID + EQUAL + RARRAY + LEFTCOR + subrange + RIGHTCOR + ROF + subrange + SEMICOLON
                 ;
 
             idList.Rule = idList + COMMA + ID
@@ -311,8 +314,10 @@ namespace _OLC2__Proyecto_1.Gramm
                 | FALSE
                 | NULL
                 ;
-            type.Rule = RINTEGER | RSTRING | RREAL | RBOOLEAN | RVOID
-                | expression + POINT + POINT + expression
+            type.Rule = RREAL | RINTEGER | RSTRING |  RBOOLEAN | RVOID | ID
+                ;
+
+            subrange.Rule = expression + POINT + POINT + expression
                 ;
             access.Rule = ID
                 ;

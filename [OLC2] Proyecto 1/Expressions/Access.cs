@@ -27,8 +27,12 @@ namespace _OLC2__Proyecto_1.Expressions
         {
             Symbol vari = environment.getVar(this.id);
             if (vari == null)
-                throw new Error_(this.line, this.column, "Semantico", "La variable no existe");
+                throw new Error_(this.line, this.column, "Semantico", "La variable no existe: "+this.id);
             return new Return(vari.value, vari.type);
+        }
+        public String getId()
+        {
+            return this.id;
         }
 
         public override void setLineColumn(int line, int column)

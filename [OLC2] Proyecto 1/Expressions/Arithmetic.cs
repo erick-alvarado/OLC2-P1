@@ -18,8 +18,7 @@ namespace _OLC2__Proyecto_1.Expressions
     {
         private Expression left, right;
         private ArithmeticOption type;
-
-        // Binary Operations
+        
         public Arithmetic(Expression left, Expression right, ArithmeticOption type, int line, int column)
         {
             this.left = left;
@@ -29,7 +28,6 @@ namespace _OLC2__Proyecto_1.Expressions
             this.setLineColumn(line, column);
         }
 
-        // Unary Operations
         public Arithmetic(Expression right, ArithmeticOption type, int line, int column)
         {
             this.right = right;
@@ -59,16 +57,8 @@ namespace _OLC2__Proyecto_1.Expressions
                         {
                             return new Return(Double.Parse(leftValue.value.ToString()) + Double.Parse(rightValue.value.ToString()), Type_.REAL);
                         }
-                        else
-                        {
-                            // ERROR
-                        }
                     }
-                    else
-                    {
-                        // ERROR
-                    }
-                    break;
+                    throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
                 // TODO: Hacer más validaciones
                 case ArithmeticOption.MINUS:
                     if(leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
@@ -81,9 +71,8 @@ namespace _OLC2__Proyecto_1.Expressions
                     }
                     else
                     {
-                        // ERROR
+                        throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
                     }
-                    break;
                 case ArithmeticOption.TIMES:
                     if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
                     {
@@ -95,9 +84,8 @@ namespace _OLC2__Proyecto_1.Expressions
                     }
                     else
                     {
-                        // ERROR
+                        throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
                     }
-                    break;
                 default:
                     if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
                     {
@@ -109,12 +97,9 @@ namespace _OLC2__Proyecto_1.Expressions
                     }
                     else
                     {
-                        // ERROR
+                        throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
                     }
-                    break;
             }
-
-            return null;
         }
 
         public override void setLineColumn(int line, int column)

@@ -25,6 +25,10 @@ namespace _OLC2__Proyecto_1.Abstract
         BOOLEAN =3,
         NULL=4,
         BREAK=5,
-        CONTINUE=6
+        CONTINUE=6,
+        ID = 7,
+        SUBRANGE = 8,
+        DEFAULT =9
+
     }
 }

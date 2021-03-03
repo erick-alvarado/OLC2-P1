@@ -10,10 +10,12 @@ namespace _OLC2__Proyecto_1.Symbol_
     {
         private LinkedList<Symbol> variables;
         public Environment_ prev;
-        public Environment_(Environment_ prev = null)
+        public String name;
+        public Environment_(Environment_ prev = null, String name="")
         {
             this.prev = prev;
             this.variables = new LinkedList<Symbol>();
+            this.name = name;
         }
 
         public void saveVar(String id, object value, Type_ type)

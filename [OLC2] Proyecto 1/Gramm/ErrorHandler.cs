@@ -11,7 +11,7 @@ namespace _OLC2__Proyecto_1.Gramm
     {
         private ParseTree tree;
         private ParseTreeNode root;
-        public List<Error> errors = new List<Error>();
+        public List<Error_> errors = new List<Error_>();
 
         public ErrorHandler(ParseTree tree, ParseTreeNode root)
         {
@@ -37,7 +37,7 @@ namespace _OLC2__Proyecto_1.Gramm
                         }
                     }
                     
-                    errors.Add(new Error(error.Location.Line, error.Location.Column,type, error.Message, ""));
+                    errors.Add(new Error_(error.Location.Line, error.Location.Column,type, error.Message, ""));
                 }
                 return true;
             }

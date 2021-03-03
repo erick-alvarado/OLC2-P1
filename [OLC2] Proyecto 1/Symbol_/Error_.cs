@@ -9,14 +9,15 @@ namespace _OLC2__Proyecto_1.Symbol_
     class Error_ : Exception
     {
         public int line, column;
-        public String type, msg;
+        public String type, msg,scope;
 
-        public Error_(int line, int column, String type, String msg)
+        public Error_(int line, int column, String type, String msg, String scope="")
         {
             this.line = line;
             this.column = column;
             this.type = type;
             this.msg = msg;
+            this.scope = scope;
         }
     }
 }
