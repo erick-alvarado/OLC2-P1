@@ -59,7 +59,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 {
                     i.execute(temp);
                 }
-                environment.saveVar(id, temp, type);
+                environment.saveVar(id, temp, type,"object");
 
             }
             else if(this.type!=Type_.DEFAULT && this.type2 == Type_.DEFAULT && this.expression2.Count == 0)
@@ -73,7 +73,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                     }
                     else
                     {
-                        environment.saveVar(e.getId(), null, type);
+                        environment.saveVar(e.getId(), null, type,"type");
                     }
                 }
             }

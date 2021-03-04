@@ -18,7 +18,7 @@ namespace _OLC2__Proyecto_1.Symbol_
             this.name = name;
         }
 
-        public void saveVar(String id, object value, Type_ type)
+        public void saveVar(String id, object value, Type_ type, String type_name)
         {
             Environment_ env = this;
             while (env != null)
@@ -33,7 +33,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                 }
                 env = env.prev;
             }
-            this.variables.AddLast(new Symbol(value, id, type));
+            this.variables.AddLast(new Symbol(value, id, type,type_name));
         }
 
         public Symbol getVar(String id)

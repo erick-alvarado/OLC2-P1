@@ -65,8 +65,9 @@
     </Compile>
     <Compile Include="Gramm\Analyzer.cs" />
     <Compile Include="Instructions\Variables\Declara.cs" />
-    <Compile Include="Instructions\Variables\DeclarationType.cs" />
     <Compile Include="Instructions\Variables\Declaration.cs" />
+    <Compile Include="Instructions\Variables\DeclarationType.cs" />
+    <Compile Include="Instructions\Variables\DeclarationVar.cs" />
     <Compile Include="Gramm\ErrorHandler.cs" />
     <Compile Include="Gramm\Gramm.cs" />
     <Compile Include="Program.cs" />

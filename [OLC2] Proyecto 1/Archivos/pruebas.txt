@@ -1,8 +1,7 @@
 ﻿program Hello;
-type
-days, age = integer;
-type
-daysge = integer;
+const
+PI = 3.141592654;
+const
+PIs = 3.141592654;
 begin
-
 end.

@@ -11,12 +11,14 @@ namespace _OLC2__Proyecto_1.Symbol_
         public object value;
         public String id;
         public Type_ type;
+        public String type_name;
 
-        public Symbol(object value, string id, Type_ type)
+        public Symbol(object value, string id, Type_ type,String type_name)
         {
             this.value = value;
             this.id = id;
             this.type = type;
+            this.type_name = type_name;
         }
     }
 }

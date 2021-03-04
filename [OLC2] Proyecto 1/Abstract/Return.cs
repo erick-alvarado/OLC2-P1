@@ -28,7 +28,6 @@ namespace _OLC2__Proyecto_1.Abstract
         CONTINUE=6,
         ID = 7,
         SUBRANGE = 8,
-        DEFAULT =9
-
+        DEFAULT =9,
     }
 }
