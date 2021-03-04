@@ -79,7 +79,42 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             }
             else
             {
+                Expression value = this.expression2.First();
+                Return start = value != null ? value.execute(environment) : new Return(null, Type_.INTEGER);
+
+                Expression value2 = this.expression2.First();
+                Return end = value2 != null ? value2.execute(environment) : new Return(null, Type_.INTEGER);
+
+                if(start.value!=null && end.value != null)
+                {
+                    int s,e;
+                    try
+                    {
+                        s = (int)start.value;
+                        e = (int)end.value;
+                        switch (this.type2)
+                        {
+                            case Type_.BOOLEAN:
+                                Array<bool> l = new Array<bool>(s, e, null, "boolean", Type_.BOOLEAN);
+                                environment.saveVar(this.idList.First().id,l,)
+                                break;
+                            case Type_.STRING:
+                                Array<bool> l = new Array<bool>(s, e, null, "boolean", Type_.BOOLEAN);
+                                break;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        throw new Error_(this.line, this.column, "Semantico", "Inicio y fin de array no validos");
+                    }
+                    
+                }
+                else
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "Inicio y fin de array no validos");
+                }
                 //array
+                
             }
             //TODO ESTA SHIT HAY QUE CAMBIARLA
             //Return val = this.value != null ? this.value.execute(environment) : new Return(null, type);

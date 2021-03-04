@@ -220,7 +220,7 @@ namespace _OLC2__Proyecto_1.Gramm
             int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
             int column = root.ChildNodes.ElementAt(1).Token.Location.Column;
             l.AddLast(new Declaration(root.ChildNodes.ElementAt(0).Token.Text, expression(root.ChildNodes.ElementAt(2)),line,column ));
-            return null;
+            return l;
         }
         public LinkedList<Access> idList(ParseTreeNode root)
         {
