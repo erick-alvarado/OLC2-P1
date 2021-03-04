@@ -64,6 +64,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Gramm\Analyzer.cs" />
+    <Compile Include="Instructions\Variables\Declara.cs" />
     <Compile Include="Instructions\Variables\DeclarationType.cs" />
     <Compile Include="Instructions\Variables\Declaration.cs" />
     <Compile Include="Gramm\ErrorHandler.cs" />

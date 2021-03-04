@@ -1,9 +1,8 @@
 ﻿program Hello;
 type
-	Rectangle = object
-	var 
-		l : integer;
-end;
+days, age = integer;
+type
+daysge = integer;
 begin
 
 end.

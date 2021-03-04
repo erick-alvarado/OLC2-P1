@@ -38,11 +38,11 @@ namespace _OLC2__Proyecto_1.Gramm
                 {
                     try
                     {
-                        var ret = ins.execute(environment);
+                       var ret = ins.execute(environment);
                         if (ret != null)
                         {
-                            // Error semantico.
-                        }
+                            // Error semantico. validar idlist =1
+                        } 
                     }
                     catch (Exception e)
                     {
@@ -85,16 +85,18 @@ namespace _OLC2__Proyecto_1.Gramm
             if (root.ChildNodes.Count == 2)
             {
                 LinkedList<Instruction> list = declarationList(root.ChildNodes.ElementAt(0));
-                list.Concat(declara(root.ChildNodes.ElementAt(1)));
+                list.AddLast(declara(root.ChildNodes.ElementAt(1)));
+                Console.WriteLine("verificando");
                 return list;
             }
             else
             {
-                LinkedList<Instruction> list = declara(root.ChildNodes.ElementAt(0));
+                LinkedList<Instruction> list = new LinkedList<Instruction>();
+                list.AddLast(declara(root.ChildNodes.ElementAt(0)));
                 return list;
             }
         }
-        public LinkedList<Instruction> declara(ParseTreeNode root)
+        public Declara declara(ParseTreeNode root)
         {
             String tag = root.ChildNodes.ElementAt(0).Term.Name;
             if (root.ChildNodes.Count == 2)
@@ -102,10 +104,10 @@ namespace _OLC2__Proyecto_1.Gramm
                 switch (tag)
                 {
                     case "var":
-                        LinkedList<Instruction> list = declarationListVar(root.ChildNodes.ElementAt(1));
+                        Declara list = new Declara(declarationListVar(root.ChildNodes.ElementAt(1)));
                         return list;
                     case "type":
-                        LinkedList<Instruction> list2 = declarationListType(root.ChildNodes.ElementAt(1));
+                        Declara list2 = new Declara(declarationListType(root.ChildNodes.ElementAt(1)));
                         return list2;
                     /*case "RCONST":
                         LinkedList<Instruction> list = declaration(root.ChildNodes.ElementAt(1));
@@ -144,7 +146,7 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         public LinkedList<Instruction> declarationListType(ParseTreeNode root)
         {
-            if (root.ChildNodes.Count == 3)
+            if (root.ChildNodes.Count == 2)
             {
                 LinkedList<Instruction> list = declarationListType(root.ChildNodes.ElementAt(0));
                 list.AddLast(declarationType(root.ChildNodes.ElementAt(1)));
@@ -327,10 +329,16 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             else
             {
+               
                 String type = root.ChildNodes.ElementAt(0).Term.ToString();
                 String value = root.ChildNodes.ElementAt(0).Token != null ? root.ChildNodes.ElementAt(0).Token.ValueString : root.ChildNodes.ElementAt(0).Term.Name;
-                int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
-                int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                int line=0;
+                int column = 0;
+                if (type != "access")
+                {
+                    line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                    column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                }
                 //TODO agregar llamada a funciones
                 switch (type)
                 {

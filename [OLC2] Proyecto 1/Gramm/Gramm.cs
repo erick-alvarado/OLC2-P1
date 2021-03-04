@@ -224,11 +224,11 @@ namespace _OLC2__Proyecto_1.Gramm
             
 
             declarationType.Rule = idList + EQUAL + type + SEMICOLON
-                | ID + EQUAL + ROBJECT +declarationList + REND + SEMICOLON //TODO validar no funcioens y procedimientos
-                | ID + EQUAL + RARRAY + LEFTCOR + type  + RIGHTCOR + ROF +type+SEMICOLON
-                | ID + EQUAL + RARRAY + LEFTCOR + type + RIGHTCOR + ROF + subrange + SEMICOLON
-                | ID + EQUAL + RARRAY + LEFTCOR + subrange + RIGHTCOR + ROF + type + SEMICOLON
-                | ID + EQUAL + RARRAY + LEFTCOR + subrange + RIGHTCOR + ROF + subrange + SEMICOLON
+                | idList + EQUAL + ROBJECT +declarationList + REND + SEMICOLON //TODO validar no funcioens y procedimientos
+                | idList + EQUAL + RARRAY + LEFTCOR + type  + RIGHTCOR + ROF +type+SEMICOLON
+                | idList + EQUAL + RARRAY + LEFTCOR + type + RIGHTCOR + ROF + subrange + SEMICOLON
+                | idList + EQUAL + RARRAY + LEFTCOR + subrange + RIGHTCOR + ROF + type + SEMICOLON
+                | idList + EQUAL + RARRAY + LEFTCOR + subrange + RIGHTCOR + ROF + subrange + SEMICOLON
                 ;
 
             idList.Rule = idList + COMMA + ID

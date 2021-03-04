@@ -12,8 +12,8 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
     {
         private Type_ type= Type_.DEFAULT;
         private Type_ type2= Type_.DEFAULT;
-        private LinkedList<Expression> expression;
-        private LinkedList<Expression> expression2;
+        private LinkedList<Expression> expression= new LinkedList<Expression>();
+        private LinkedList<Expression> expression2= new LinkedList<Expression>();
         private LinkedList<Access> idList = new LinkedList<Access>();
         private LinkedList<Instruction> declarationList = new LinkedList<Instruction>();
 
@@ -45,9 +45,46 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         }
         public override object execute(Environment_ environment)
         {
+            if (this.declarationList.Count!=0)
+            {
+                //Declaracion Object
+                String id = this.idList.First().id;
+                if (environment.getVar(id) != null)
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente:"+id);
+                }
+
+                Environment_ temp = new Environment_(null, id);
+                foreach (Instruction i in this.declarationList)
+                {
+                    i.execute(temp);
+                }
+                environment.saveVar(id, temp, type);
+
+            }
+            else if(this.type!=Type_.DEFAULT && this.type2 == Type_.DEFAULT && this.expression2.Count == 0)
+            {
+                //Declaracion type normal
+                foreach (Access e in idList)
+                {
+                    if (environment.getVar(e.getId()) != null)
+                    {
+                        throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente");
+                    }
+                    else
+                    {
+                        environment.saveVar(e.getId(), null, type);
+                    }
+                }
+            }
+            else
+            {
+                //array
+            }
             //TODO ESTA SHIT HAY QUE CAMBIARLA
             //Return val = this.value != null ? this.value.execute(environment) : new Return(null, type);
             //environment.saveVar(id, val.value, type);
+            
             return null;
         }
         public override void setLineColumn(int line, int column)

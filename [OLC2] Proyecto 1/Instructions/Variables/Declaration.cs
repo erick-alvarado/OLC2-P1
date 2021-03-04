@@ -74,7 +74,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                     }
                     catch(Exception e)
                     {
-                        //TODO Parsear para los arrays
+                        //TODO Parsear para los arrays y funciones
                         Console.WriteLine(e);
                     }
                 }
@@ -83,7 +83,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             {
                 if (environment.getVar(e.getId()) != null)
                 {
-                    throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente");
+                    throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente:"+e.getId());
                 }
                 else
                 {
