@@ -6,18 +6,12 @@ using _OLC2__Proyecto_1.Symbol_;
 
 namespace _OLC2__Proyecto_1.Expressions
 {
-    public enum LogicalOption
-    {
-        NOT = 0,
-        AND = 1,
-        OR = 2
-    }
     class Logical : Expression
     {
         private Expression left, right;
         private LogicalOption type;
 
-        // Binary Operations
+       
         public Logical(Expression left, Expression right, LogicalOption type, int line, int column)
         {
             this.left = left;
@@ -26,7 +20,7 @@ namespace _OLC2__Proyecto_1.Expressions
 
             this.setLineColumn(line, column);
         }
-        // Unary Operations
+        //Minus
         public Logical(Expression right, LogicalOption type, int line, int column)
         {
             this.right = right;
@@ -38,7 +32,6 @@ namespace _OLC2__Proyecto_1.Expressions
         {
             Return leftValue = this.left != null ? this.left.execute(environment) : new Return(0, Type_.INTEGER);
             Return rightValue = this.right.execute(environment);
-
             switch (this.type)
             {
                 case LogicalOption.NOT:
@@ -55,5 +48,11 @@ namespace _OLC2__Proyecto_1.Expressions
         {
             this.line = line; this.column = column;
         }
+    }
+    public enum LogicalOption
+    {
+        NOT = 0,
+        AND = 1,
+        OR = 2
     }
 }

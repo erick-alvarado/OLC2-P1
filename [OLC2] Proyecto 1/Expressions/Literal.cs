@@ -8,14 +8,13 @@ namespace _OLC2__Proyecto_1.Expressions
 {
     public class Literal : Expression
     {
-        private object value;
         private Type_ type;
+        private object value;
 
         public Literal(object value, Type_ type, int line, int column)
         {
             this.value = value;
             this.type = type;
-
             this.setLineColumn(line, column);
         }
 
@@ -23,19 +22,18 @@ namespace _OLC2__Proyecto_1.Expressions
         {
             switch (this.type)
             {
-                case Type_.REAL:
-                    return new Return(Double.Parse(this.value.ToString()), this.type);
-                case Type_.INTEGER:
-                    return new Return(int.Parse(this.value.ToString()), this.type);
-                case Type_.BOOLEAN:
-                    return new Return(Boolean.Parse(this.value.ToString()), this.type);
                 case Type_.STRING:
                     return new Return(this.value.ToString(), this.type);
+                case Type_.INTEGER:
+                    return new Return(int.Parse(this.value.ToString()), this.type);
+                case Type_.REAL:
+                    return new Return(Double.Parse(this.value.ToString()), this.type);
+                case Type_.BOOLEAN:
+                    return new Return(Boolean.Parse(this.value.ToString()), this.type);
                 default:
-                    throw new NotImplementedException();
+                    throw new Error_(this.line, this.column, "Semantico", "Tipo no existente");
             }
         }
-
         public override void setLineColumn(int line, int column)
         {
             this.line = line;

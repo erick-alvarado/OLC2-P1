@@ -12,7 +12,7 @@ namespace _OLC2__Proyecto_1.Symbol_
         public String name;
         public int start, end;
         public Type_ type;
-        public T[] value;
+        public T[] value= new T[1];
 
         public Array(int start, int end,String name, T val, Type_ type)
         {
@@ -20,6 +20,8 @@ namespace _OLC2__Proyecto_1.Symbol_
             this.end = end;
             this.name = name;
             this.type = type;
+            int range = System.Math.Abs(start) + System.Math.Abs(end);
+            this.value = new T[range];
             fillArray(val);
         }
         private void fillArray(T val)

@@ -1,7 +1,14 @@
 ﻿program Hello;
-const
-PI = 3.141592654;
-const
-PIs = 3.141592654;
+var 
+message:string  = ' Welcome to the world of Pascal ';
+firstname: string = 'Erick';
+surname: string = 'Alvarado';
 begin
+
+   writeln('Please enter your first name: ');
+   writeln('Please enter your surname: ');
+   
+   writeln;
+   writeln(message, ' ', firstname, ' ', surname);
 end.
+

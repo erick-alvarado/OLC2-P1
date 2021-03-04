@@ -355,6 +355,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 | RWRITELN + LEFTPAR + expressionList + RIGHTPAR + SEMICOLON
                 | RWRITE + LEFTPAR + expressionList + RIGHTPAR
                 | RWRITELN + LEFTPAR + expressionList + RIGHTPAR
+                | RWRITELN + SEMICOLON
                 ;
 
             //ErrorRule

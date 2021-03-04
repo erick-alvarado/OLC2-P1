@@ -8,6 +8,8 @@ using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
 using _OLC2__Proyecto_1.Instructions.Variables;
 using _OLC2__Proyecto_1.Expressions;
+using _OLC2__Proyecto_1.Instructions.Conditions;
+using _OLC2__Proyecto_1.Instructions;
 
 namespace _OLC2__Proyecto_1.Gramm
 {
@@ -60,14 +62,14 @@ namespace _OLC2__Proyecto_1.Gramm
         public LinkedList<Instruction> start(ParseTreeNode root)
         {
             LinkedList<Instruction> list = globalVariables(root.ChildNodes.ElementAt(3));
-            /*LinkedList<Instruction> mainL = main(root.ChildNodes.ElementAt(4));
-            foreach (var mainIns in mainL)
+            LinkedList<Instruction> instructions = instructionList(root.ChildNodes.ElementAt(4).ChildNodes.ElementAt(1));
+            foreach (var i in instructions)
             {
-                list.AddLast(mainIns);
+                list.AddLast(i);
             }
-            */
             return list;
         }
+        //GLOBAL VARIABLES
         public LinkedList<Instruction> globalVariables(ParseTreeNode root)
         {
             String tag = root.ChildNodes.ElementAt(0).Term.Name;
@@ -240,6 +242,103 @@ namespace _OLC2__Proyecto_1.Gramm
             l.AddLast(access(root.ChildNodes.ElementAt(2)));
             
             return l;
+        }
+        
+        
+        public LinkedList<Instruction> instructionList(ParseTreeNode root)
+        {
+
+            if (root.ChildNodes.Count == 2)
+            {
+                LinkedList<Instruction> list = instructionList(root.ChildNodes.ElementAt(0));
+                list.AddLast(instruction(root.ChildNodes.ElementAt(1)));
+                return list;
+            }
+            else
+            {
+                LinkedList<Instruction> list = new LinkedList<Instruction>();
+                list.AddLast(instruction(root.ChildNodes.ElementAt(0)));
+                return list;
+            }
+
+        }
+        public Instruction instruction(ParseTreeNode root)
+        {
+            String tag = root.ChildNodes.ElementAt(0).Term.Name;
+            switch (tag)
+            {
+                case "ifST":
+                    Instruction list = ifST(root.ChildNodes.ElementAt(0));
+                    return list;
+                case "printST":
+                    Instruction print = printST(root.ChildNodes.ElementAt(0));
+                    return print;
+                default:
+                    return new Empty();
+            }
+        }
+        public Instruction printST(ParseTreeNode root)
+        {
+            if (root.ChildNodes.Count == 2)
+            {
+                Literal fake = new Literal("", Type_.STRING, 0, 0);
+                LinkedList<Expression> ee = new LinkedList<Expression>();
+                ee.AddLast(fake);
+                return new Print(ee, false);
+
+            }
+            String tag = root.ChildNodes.ElementAt(0).Term.Name.ToLower();
+            LinkedList<Expression> e = expressionList(root.ChildNodes.ElementAt(2));
+            if (tag == "write")
+            {
+                return new Print(e,false);
+            }
+            else
+            {
+                return new Print(e, true);
+            }
+        }
+        public LinkedList<Expression> expressionList(ParseTreeNode root)
+        {
+            if (root.ChildNodes.Count == 3)
+            {
+                LinkedList<Expression> list = expressionList(root.ChildNodes.ElementAt(0));
+                list.AddLast(expression(root.ChildNodes.ElementAt(2)));
+                return list;
+            }
+            else
+            {
+                LinkedList<Expression> list = new LinkedList<Expression>();
+                list.AddLast(expression(root.ChildNodes.ElementAt(0)));
+                return list;
+            }
+        }
+        public Instruction ifST(ParseTreeNode root)
+        {
+            Expression e = expression(root.ChildNodes.ElementAt(1));
+            Statement s = statements(root.ChildNodes.ElementAt(3));
+            switch (root.ChildNodes.Count)
+            {
+                case 4:
+                    return new If(e,s);
+                case 6:
+                    String tag = root.ChildNodes.ElementAt(5).Term.Name;
+                    if (tag == "ifST")
+                    {
+                        If temp =(If) ifST(root.ChildNodes.ElementAt(5));
+                        return new If(e, s, null,temp);
+                    }
+                    else
+                    {
+                        Statement s2 = statements(root.ChildNodes.ElementAt(5));
+                        return new If(e, s, s2, null);
+                    }
+            }
+                return null;
+        }
+        public Statement statements(ParseTreeNode root)
+        {
+            return new Statement(instructionList(root.ChildNodes.ElementAt(1)), root.ChildNodes.ElementAt(0).Token.Location.Line, root.ChildNodes.ElementAt(0).Token.Location.Column);
         }
         public Type_ type(ParseTreeNode root)
         {

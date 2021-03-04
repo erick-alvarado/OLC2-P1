@@ -6,15 +6,6 @@ using _OLC2__Proyecto_1.Symbol_;
 
 namespace _OLC2__Proyecto_1.Expressions
 {
-    public enum RelationalOption
-    {
-        LESS = 0,
-        GREATER = 1,
-        LESSEQ = 2,
-        GREAEQ = 3,
-        EQUALSEQUALS = 4,
-        DISTINT = 5
-    }
     class Relational : Expression
     {
         private Expression left, right;
@@ -29,7 +20,6 @@ namespace _OLC2__Proyecto_1.Expressions
 
             this.setLineColumn(line, column);
         }
-
         public override Return execute(Environment_ environment)
         {
             Return leftValue = this.left.execute(environment);
@@ -52,10 +42,18 @@ namespace _OLC2__Proyecto_1.Expressions
             }
             return null;
         }
-
         public override void setLineColumn(int line, int column)
         {
             this.line = line; this.column = column;
         }
+    }
+    public enum RelationalOption
+    {
+        LESS = 0,
+        GREATER = 1,
+        LESSEQ = 2,
+        GREAEQ = 3,
+        EQUALSEQUALS = 4,
+        DISTINT = 5
     }
 }

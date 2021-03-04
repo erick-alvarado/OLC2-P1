@@ -83,5 +83,10 @@ namespace _OLC2__Proyecto_1
         {
 
         }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

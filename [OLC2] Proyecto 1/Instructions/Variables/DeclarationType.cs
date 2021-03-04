@@ -79,10 +79,15 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             }
             else
             {
-                Expression value = this.expression2.First();
+                String id = this.idList.First().id;
+                if (environment.getVar(id) != null)
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente:" + id);
+                }
+                Expression value = this.expression.First();
                 Return start = value != null ? value.execute(environment) : new Return(null, Type_.INTEGER);
 
-                Expression value2 = this.expression2.First();
+                Expression value2 = this.expression.Last();
                 Return end = value2 != null ? value2.execute(environment) : new Return(null, Type_.INTEGER);
 
                 if(start.value!=null && end.value != null)
@@ -95,15 +100,26 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                         switch (this.type2)
                         {
                             case Type_.BOOLEAN:
-                                Array<bool> l = new Array<bool>(s, e, null, "boolean", Type_.BOOLEAN);
-                                environment.saveVar(this.idList.First().id,l,)
+                                Array<bool> l = new Array<bool>(s,e,this.idList.First().id,false,Type_.BOOLEAN);
+                                environment.saveVar(this.idList.First().id, l, Type_.BOOLEAN, "array");
                                 break;
                             case Type_.STRING:
-                                Array<bool> l = new Array<bool>(s, e, null, "boolean", Type_.BOOLEAN);
+                                Array<String> l1 = new Array<String>(s, e, this.idList.First().id, "", Type_.STRING);
+                                environment.saveVar(this.idList.First().id, l1, Type_.STRING, "array");
                                 break;
+                            case Type_.INTEGER:
+                                Array<int> l2 = new Array<int>(s, e, this.idList.First().id, 0, Type_.INTEGER);
+                                environment.saveVar(this.idList.First().id, l2, Type_.INTEGER, "array");
+                                break;
+                            case Type_.REAL:
+                                Array<float> l3 = new Array<float>(s, e, this.idList.First().id, 0, Type_.REAL);
+                                environment.saveVar(this.idList.First().id, l3, Type_.REAL, "array");
+                                break;
+                            default:
+                                throw new Error_(this.line, this.column, "Semantico", "No se puede hacer arrays de tipo:" + id);
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception se)
                     {
                         throw new Error_(this.line, this.column, "Semantico", "Inicio y fin de array no validos");
                     }
@@ -113,12 +129,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Inicio y fin de array no validos");
                 }
-                //array
-                
             }
-            //TODO ESTA SHIT HAY QUE CAMBIARLA
-            //Return val = this.value != null ? this.value.execute(environment) : new Return(null, type);
-            //environment.saveVar(id, val.value, type);
             
             return null;
         }

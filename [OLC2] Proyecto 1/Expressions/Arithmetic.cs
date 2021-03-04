@@ -59,7 +59,6 @@ namespace _OLC2__Proyecto_1.Expressions
                         }
                     }
                     throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
-                // TODO: Hacer más validaciones
                 case ArithmeticOption.MINUS:
                     if(leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
                     {
