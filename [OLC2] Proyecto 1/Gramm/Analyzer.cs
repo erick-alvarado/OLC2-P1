@@ -338,7 +338,16 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         public Statement statements(ParseTreeNode root)
         {
-            return new Statement(instructionList(root.ChildNodes.ElementAt(1)), root.ChildNodes.ElementAt(0).Token.Location.Line, root.ChildNodes.ElementAt(0).Token.Location.Column);
+            if (root.ChildNodes.Count == 1)
+            {
+                return new Statement(instructionList(root.ChildNodes.ElementAt(0)),0, 0);
+
+            }
+            else
+            {
+                return new Statement(instructionList(root.ChildNodes.ElementAt(1)), root.ChildNodes.ElementAt(0).Token.Location.Line, root.ChildNodes.ElementAt(0).Token.Location.Column);
+
+            }
         }
         public Type_ type(ParseTreeNode root)
         {
