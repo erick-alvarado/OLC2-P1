@@ -10,7 +10,7 @@ namespace _OLC2__Proyecto_1.Instructions
 {
     class Statement : Instruction
     {
-        private LinkedList<Instruction> code;
+        private LinkedList<Instruction> code = new LinkedList<Instruction>();
 
         public Statement(LinkedList<Instruction> code, int line, int column)
         {

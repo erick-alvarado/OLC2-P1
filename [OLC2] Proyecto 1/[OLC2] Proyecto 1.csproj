@@ -67,6 +67,7 @@
     <Compile Include="Instructions\Conditions\Case.cs" />
     <Compile Include="Instructions\Conditions\CaseList.cs" />
     <Compile Include="Instructions\Conditions\If.cs" />
+    <Compile Include="Instructions\Loops\RepeatUntil.cs" />
     <Compile Include="Instructions\Loops\While.cs" />
     <Compile Include="Instructions\Print.cs" />
     <Compile Include="Instructions\Statement.cs" />
