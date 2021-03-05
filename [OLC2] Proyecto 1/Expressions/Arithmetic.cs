@@ -40,64 +40,72 @@ namespace _OLC2__Proyecto_1.Expressions
         {
             Return leftValue = this.left != null ? this.left.execute(environment) : new Return(0, Type_.INTEGER);
             Return rightValue = this.right.execute(environment);
-
-            switch (this.type)
+            try
             {
-                case ArithmeticOption.PLUS:
-                    if(leftValue.type == Type_.STRING || rightValue.type == Type_.STRING)
-                    {
-                        return new Return(leftValue.value.ToString() + rightValue.value.ToString(), Type_.STRING);
-                    }
-                    else if(leftValue.type == Type_.INTEGER && rightValue.type == Type_.INTEGER)
-                    {
-                        return new Return(int.Parse(leftValue.value.ToString()) + int.Parse(rightValue.value.ToString()), Type_.INTEGER);
-                    }else if(leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
-                    {
-                        if ((leftValue.type == Type_.INTEGER || rightValue.type == Type_.INTEGER) || (leftValue.type == Type_.REAL && rightValue.type == Type_.REAL))
+                switch (this.type)
+                {
+                    case ArithmeticOption.PLUS:
+                        if (leftValue.type == Type_.STRING || rightValue.type == Type_.STRING)
                         {
-                            return new Return(Double.Parse(leftValue.value.ToString()) + Double.Parse(rightValue.value.ToString()), Type_.REAL);
+                            return new Return(leftValue.value.ToString() + rightValue.value.ToString(), Type_.STRING);
                         }
-                    }
-                    throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
-                case ArithmeticOption.MINUS:
-                    if(leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
-                    {
-                        return new Return(Double.Parse(leftValue.value.ToString()) - Double.Parse(rightValue.value.ToString()), Type_.REAL);
-                    }
-                    else if(leftValue.type == Type_.INTEGER && rightValue.type == Type_.INTEGER)
-                    {
-                        return new Return(int.Parse(leftValue.value.ToString()) - int.Parse(rightValue.value.ToString()), Type_.INTEGER);
-                    }
-                    else
-                    {
+                        else if (leftValue.type == Type_.INTEGER && rightValue.type == Type_.INTEGER)
+                        {
+                            return new Return(int.Parse(leftValue.value.ToString()) + int.Parse(rightValue.value.ToString()), Type_.INTEGER);
+                        }
+                        else if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
+                        {
+                            if ((leftValue.type == Type_.INTEGER || rightValue.type == Type_.INTEGER) || (leftValue.type == Type_.REAL && rightValue.type == Type_.REAL))
+                            {
+                                return new Return(Double.Parse(leftValue.value.ToString()) + Double.Parse(rightValue.value.ToString()), Type_.REAL);
+                            }
+                        }
                         throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
-                    }
-                case ArithmeticOption.TIMES:
-                    if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
-                    {
-                        return new Return(Double.Parse(leftValue.value.ToString()) * Double.Parse(rightValue.value.ToString()), Type_.REAL);
-                    }
-                    else if (leftValue.type == Type_.INTEGER && rightValue.type == Type_.INTEGER)
-                    {
-                        return new Return(int.Parse(leftValue.value.ToString()) * int.Parse(rightValue.value.ToString()), Type_.INTEGER);
-                    }
-                    else
-                    {
-                        throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
-                    }
-                default:
-                    if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
-                    {
-                        return new Return(Double.Parse(leftValue.value.ToString()) / Double.Parse(rightValue.value.ToString()), Type_.REAL);
-                    }
-                    else if (leftValue.type == Type_.INTEGER && rightValue.type == Type_.INTEGER)
-                    {
-                        return new Return(int.Parse(leftValue.value.ToString()) / int.Parse(rightValue.value.ToString()), Type_.INTEGER);
-                    }
-                    else
-                    {
-                        throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
-                    }
+                    case ArithmeticOption.MINUS:
+                        if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
+                        {
+                            return new Return(Double.Parse(leftValue.value.ToString()) - Double.Parse(rightValue.value.ToString()), Type_.REAL);
+                        }
+                        else if (leftValue.type == Type_.INTEGER && rightValue.type == Type_.INTEGER)
+                        {
+                            return new Return(int.Parse(leftValue.value.ToString()) - int.Parse(rightValue.value.ToString()), Type_.INTEGER);
+                        }
+                        else
+                        {
+                            throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
+                        }
+                    case ArithmeticOption.TIMES:
+                        if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
+                        {
+                            return new Return(Double.Parse(leftValue.value.ToString()) * Double.Parse(rightValue.value.ToString()), Type_.REAL);
+                        }
+                        else if (leftValue.type == Type_.INTEGER && rightValue.type == Type_.INTEGER)
+                        {
+                            return new Return(int.Parse(leftValue.value.ToString()) * int.Parse(rightValue.value.ToString()), Type_.INTEGER);
+                        }
+                        else
+                        {
+                            throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
+                        }
+                    default:
+                        if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
+                        {
+                            return new Return(Double.Parse(leftValue.value.ToString()) / Double.Parse(rightValue.value.ToString()), Type_.REAL);
+                        }
+                        else if (leftValue.type == Type_.INTEGER && rightValue.type == Type_.INTEGER)
+                        {
+                            return new Return(int.Parse(leftValue.value.ToString()) / int.Parse(rightValue.value.ToString()), Type_.INTEGER);
+                        }
+                        else
+                        {
+                            throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
+                        }
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new Error_(this.line, this.column, "Semantico", "Operacion aritmetica sobre un tipo de dato incorrecto");
             }
         }
 

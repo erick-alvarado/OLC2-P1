@@ -244,7 +244,6 @@ namespace _OLC2__Proyecto_1.Gramm
             return l;
         }
         
-        
         public LinkedList<Instruction> instructionList(ParseTreeNode root)
         {
 
@@ -270,6 +269,9 @@ namespace _OLC2__Proyecto_1.Gramm
                 case "ifST":
                     Instruction list = ifST(root.ChildNodes.ElementAt(0));
                     return list;
+                case "caseST":
+                    Instruction list1 = caseST(root.ChildNodes.ElementAt(0));
+                    return list1;
                 case "printST":
                     Instruction print = printST(root.ChildNodes.ElementAt(0));
                     return print;
@@ -313,6 +315,8 @@ namespace _OLC2__Proyecto_1.Gramm
                 return list;
             }
         }
+
+        //CONDITIONS
         public Instruction ifST(ParseTreeNode root)
         {
             Expression e = expression(root.ChildNodes.ElementAt(1));
@@ -336,6 +340,39 @@ namespace _OLC2__Proyecto_1.Gramm
             }
                 return null;
         }
+        public Instruction caseST(ParseTreeNode root)
+        {
+            Expression exp = expression(root.ChildNodes.ElementAt(1));
+            LinkedList<CaseList> caselist = caseList(root.ChildNodes.ElementAt(3));
+
+            int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+            int column = root.ChildNodes.ElementAt(0).Token.Location.Line;
+            if (root.ChildNodes.Count == 6)
+            {
+                return new Case(line, column,exp, caselist);
+            }
+            else
+            {
+                Statement state = statements(root.ChildNodes.ElementAt(5));
+                return new Case(line, column,exp, caselist, state);
+            }
+        }
+        public LinkedList<CaseList> caseList(ParseTreeNode root)
+        {
+            if (root.ChildNodes.Count == 4)
+            {
+                LinkedList<CaseList> list = caseList(root.ChildNodes.ElementAt(0));
+                list.AddLast(new CaseList(expressionList(root.ChildNodes.ElementAt(1)), statements(root.ChildNodes.ElementAt(3))));
+                return list;
+            }
+            else
+            {
+                LinkedList<CaseList> list = new LinkedList<CaseList>();
+                list.AddLast(new CaseList(expressionList(root.ChildNodes.ElementAt(0)), statements(root.ChildNodes.ElementAt(2))));
+                return list;
+            }
+        }
+
         public Statement statements(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 1)
@@ -464,7 +501,6 @@ namespace _OLC2__Proyecto_1.Gramm
                         try
                         {
                             return new Literal(int.Parse(value), Type_.INTEGER, line, column);
-
                         }
                         catch (Exception e)
                         {

@@ -24,22 +24,29 @@ namespace _OLC2__Proyecto_1.Expressions
         {
             Return leftValue = this.left.execute(environment);
             Return rightValue = this.right.execute(environment);
-
-            switch (this.type)
+            try
             {
-                case RelationalOption.LESS:
-                    return new Return(Double.Parse(leftValue.value.ToString()) < Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
-                case RelationalOption.GREATER:
-                    return new Return(Double.Parse(leftValue.value.ToString()) > Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
-                case RelationalOption.LESSEQ:
-                    return new Return(Double.Parse(leftValue.value.ToString()) <= Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
-                case RelationalOption.GREAEQ:
-                    return new Return(Double.Parse(leftValue.value.ToString()) >= Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
-                case RelationalOption.EQUALSEQUALS:
-                    return new Return(Double.Parse(leftValue.value.ToString()) == Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
-                case RelationalOption.DISTINT:
-                    return new Return(Double.Parse(leftValue.value.ToString()) != Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                switch (this.type)
+                {
+                    case RelationalOption.LESS:
+                        return new Return(Double.Parse(leftValue.value.ToString()) < Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                    case RelationalOption.GREATER:
+                        return new Return(Double.Parse(leftValue.value.ToString()) > Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                    case RelationalOption.LESSEQ:
+                        return new Return(Double.Parse(leftValue.value.ToString()) <= Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                    case RelationalOption.GREAEQ:
+                        return new Return(Double.Parse(leftValue.value.ToString()) >= Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                    case RelationalOption.EQUALSEQUALS:
+                        return new Return(Double.Parse(leftValue.value.ToString()) == Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                    case RelationalOption.DISTINT:
+                        return new Return(Double.Parse(leftValue.value.ToString()) != Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                }
             }
+            catch(Exception e)
+            {
+                throw new Error_(this.line, this.column, "Semantico", "Comparacion de tipos no validos");
+            }
+
             return null;
         }
         public override void setLineColumn(int line, int column)

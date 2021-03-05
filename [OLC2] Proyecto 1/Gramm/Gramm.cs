@@ -36,7 +36,6 @@ namespace _OLC2__Proyecto_1.Gramm
             var GREAT_EQ = ToTerm(">=");
             var LESS_EQ = ToTerm("<=");
             var DISTINCT = ToTerm("<>");
-            var EQ_EQ = ToTerm("==");
             var GREAT = ToTerm(">");
             var LESS = ToTerm("<");
 

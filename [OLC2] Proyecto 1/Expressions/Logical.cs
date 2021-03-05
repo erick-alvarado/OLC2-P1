@@ -32,15 +32,24 @@ namespace _OLC2__Proyecto_1.Expressions
         {
             Return leftValue = this.left != null ? this.left.execute(environment) : new Return(0, Type_.INTEGER);
             Return rightValue = this.right.execute(environment);
-            switch (this.type)
+            try
             {
-                case LogicalOption.NOT:
-                    return new Return(!Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
-                case LogicalOption.AND:
-                    return new Return(Boolean.Parse(leftValue.value.ToString()) && Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
-                case LogicalOption.OR:
-                    return new Return(Boolean.Parse(leftValue.value.ToString()) || Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                switch (this.type)
+                {
+                    case LogicalOption.NOT:
+                        return new Return(!Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                    case LogicalOption.AND:
+                        return new Return(Boolean.Parse(leftValue.value.ToString()) && Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                    case LogicalOption.OR:
+                        return new Return(Boolean.Parse(leftValue.value.ToString()) || Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                }
             }
+            catch(Exception e)
+            {
+                throw new Error_(this.line, this.column, "Semantico", "Operacion logica sobre un tipo de dato incorrecto");
+
+            }
+            
             return null;
         }
 
