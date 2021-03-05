@@ -28,7 +28,15 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
                 }
                 if (temp.value.Equals(val.value))
                 {
-                    this.statements.execute(environment);
+                    object check = this.statements.execute(environment);
+                    if (check != null)
+                    {
+                        Expressions.Access a = (Expressions.Access)check;
+                        if (a.id.Equals("CONTINUE"))
+                        {
+                            throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.id);
+                        }
+                    }
                     return true;
                 }
             }
