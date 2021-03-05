@@ -67,8 +67,11 @@
     <Compile Include="Instructions\Conditions\Case.cs" />
     <Compile Include="Instructions\Conditions\CaseList.cs" />
     <Compile Include="Instructions\Conditions\If.cs" />
+    <Compile Include="Instructions\Loops\While.cs" />
     <Compile Include="Instructions\Print.cs" />
     <Compile Include="Instructions\Statement.cs" />
+    <Compile Include="Instructions\Transfer\Break.cs" />
+    <Compile Include="Instructions\Variables\Assignment.cs" />
     <Compile Include="Instructions\Variables\Declara.cs" />
     <Compile Include="Instructions\Variables\Declaration.cs" />
     <Compile Include="Instructions\Variables\DeclarationType.cs" />
@@ -81,6 +84,7 @@
     <Compile Include="Symbol_\Empty.cs" />
     <Compile Include="Symbol_\Environment.cs" />
     <Compile Include="Symbol_\Error_.cs" />
+    <Compile Include="Symbol_\Main.cs" />
     <Compile Include="Symbol_\Symbol.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -110,5 +114,6 @@
   <ItemGroup>
     <Content Include="Archivos\pruebas.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

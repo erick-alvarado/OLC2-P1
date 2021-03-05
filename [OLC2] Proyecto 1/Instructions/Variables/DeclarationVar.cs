@@ -87,6 +87,24 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 }
                 else
                 {
+                    if (val.value == null)
+                    {
+                        switch (type)
+                        {
+                            case Type_.BOOLEAN:
+                                val.value = false;
+                                break;
+                            case Type_.STRING:
+                                val.value = "";
+                                break;
+                            case Type_.INTEGER:
+                                val.value = 0;
+                                break;
+                            case Type_.REAL:
+                                val.value = 0.000000000000000000000000;
+                                break;
+                        }
+                    }
                     environment.saveVar(e.getId(), val.value, type,"var");
                 }
             }

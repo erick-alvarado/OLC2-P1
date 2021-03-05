@@ -10,6 +10,8 @@ using _OLC2__Proyecto_1.Instructions.Variables;
 using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Instructions.Conditions;
 using _OLC2__Proyecto_1.Instructions;
+using _OLC2__Proyecto_1.Instructions.Loops;
+using _OLC2__Proyecto_1.Instructions.Transfer;
 
 namespace _OLC2__Proyecto_1.Gramm
 {
@@ -59,14 +61,12 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             return output;
         }
+        
         public LinkedList<Instruction> start(ParseTreeNode root)
         {
             LinkedList<Instruction> list = globalVariables(root.ChildNodes.ElementAt(3));
-            LinkedList<Instruction> instructions = instructionList(root.ChildNodes.ElementAt(4).ChildNodes.ElementAt(1));
-            foreach (var i in instructions)
-            {
-                list.AddLast(i);
-            }
+            Main main = new Main(instructionList(root.ChildNodes.ElementAt(4).ChildNodes.ElementAt(1)));
+            list.AddLast(main);
             return list;
         }
         //GLOBAL VARIABLES
@@ -82,6 +82,14 @@ namespace _OLC2__Proyecto_1.Gramm
                     return new LinkedList<Instruction>();
             }
         }
+        public Assignment assignmentST(ParseTreeNode root)
+        {
+            int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
+            int column = root.ChildNodes.ElementAt(1).Token.Location.Column;
+            String id = root.ChildNodes.ElementAt(0).Token.Text;
+            return new Assignment(line, column, id, expression(root.ChildNodes.ElementAt(2)));
+        }
+        //DECLARATION
         public LinkedList<Instruction> declarationList(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 2)
@@ -244,6 +252,7 @@ namespace _OLC2__Proyecto_1.Gramm
             return l;
         }
         
+        //INSTRUCTIONS
         public LinkedList<Instruction> instructionList(ParseTreeNode root)
         {
 
@@ -275,6 +284,22 @@ namespace _OLC2__Proyecto_1.Gramm
                 case "printST":
                     Instruction print = printST(root.ChildNodes.ElementAt(0));
                     return print;
+                case "whileST":
+                    Instruction w = whileST(root.ChildNodes.ElementAt(0));
+                    return w;
+                case "assignmentST":
+                    Instruction ass = assignmentST(root.ChildNodes.ElementAt(0));
+                    return ass;
+                case "break":
+                    int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                    int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                    Break br = new Break(line,column,"BREAK");
+                    return br;
+                case "continue":
+                    int line1 = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                    int column1 = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                    Break cc = new Break(line1, column1, "CONTINUE");
+                    return cc;
                 default:
                     return new Empty();
             }
@@ -372,6 +397,17 @@ namespace _OLC2__Proyecto_1.Gramm
                 return list;
             }
         }
+
+        //LOOPS
+        public Instruction whileST(ParseTreeNode root)
+        {
+            Expression e = expression(root.ChildNodes.ElementAt(1));
+            Statement st = statements(root.ChildNodes.ElementAt(3));
+            int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+            int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+            return new While(line,column,e,st);
+        }
+
 
         public Statement statements(ParseTreeNode root)
         {

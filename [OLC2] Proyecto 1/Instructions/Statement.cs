@@ -15,7 +15,6 @@ namespace _OLC2__Proyecto_1.Instructions
         public Statement(LinkedList<Instruction> code, int line, int column)
         {
             this.code = code;
-
             setLineColumn(line, column);
         }
         public override object execute(Environment_ environment)
