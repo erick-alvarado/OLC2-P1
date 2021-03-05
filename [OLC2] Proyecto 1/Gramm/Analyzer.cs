@@ -288,6 +288,9 @@ namespace _OLC2__Proyecto_1.Gramm
                 case "whileST":
                     Instruction w = whileST(root.ChildNodes.ElementAt(0));
                     return w;
+                case "forDoST":
+                    Instruction fo = forDoST(root.ChildNodes.ElementAt(0));
+                    return fo;
                 case "repeatUntilST":
                     Instruction re = repeatUntilST(root.ChildNodes.ElementAt(0));
                     return re;
@@ -419,7 +422,15 @@ namespace _OLC2__Proyecto_1.Gramm
             int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
             return new RepeatUntil(line, column, e, st);
         }
-
+        public Instruction forDoST(ParseTreeNode root)
+        {
+            Assignment ass = assignmentST(root.ChildNodes.ElementAt(1));
+            Expression e = expression(root.ChildNodes.ElementAt(3));
+            Statement st = statements(root.ChildNodes.ElementAt(5));
+            int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+            int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+            return new For(line, column,ass, e, st);
+        }
 
         public Statement statements(ParseTreeNode root)
         {

@@ -36,6 +36,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             environment.saveVar(b.id, b.value, b.type, b.type_name);
             return null;
         }
+        public String getId()
+        {
+            return this.id;
+        }
         public override void setLineColumn(int line, int column)
         {
             this.line = line; this.column = column;
