@@ -14,13 +14,13 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
     {
         private String id;
         public LinkedList<Expression> parameterList = new LinkedList<Expression>();//Lo que trae de la llamada
-        public LinkedList<Argument> argumentList = new LinkedList<Argument>();//Lo que tiene originalmente
+        public LinkedList<Instruction> argumentList = new LinkedList<Instruction>();//Lo que tiene originalmente
         private LinkedList<Instruction> declarationList = new LinkedList<Instruction>();
         private Statement statements;
-        private Type_ return_;
+        public Type_ return_;
         private bool exec = true;
         public Environment_ environmentAux;
-        public Function(int line, int column,string id, LinkedList<Argument> argumentList, LinkedList<Instruction> declarationList, Statement statements, Type_ return_)
+        public Function(int line, int column,string id, LinkedList<Instruction> argumentList, LinkedList<Instruction> declarationList, Statement statements, Type_ return_)
         {
             this.id = id;
             this.argumentList = argumentList;
@@ -34,7 +34,13 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
             if (this.exec)
             {
                 this.exec = false;
+                if (environment.getVar(this.id) != null)
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "La variable ya existe:" + this.id);
+                }
+                environment.saveVar(this.id, this, this.return_, "function");
                 this.environmentAux = new Environment_(environment, this.id);
+                
             }
             else
             {
@@ -43,10 +49,20 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                 {
                     i.execute(this.environmentAux);
                 }
-                object obj = this.statements.execute(environment);
+                object obj = this.statements.execute(this.environmentAux);
                 if (obj != null)
                 {
-                    Break a = (Break)obj;
+                    Break a = null;
+                    try
+                    {
+                        a = (Break)obj;
+                    }
+                    catch(Exception e)
+                    {
+                        Symbol b = (Symbol)obj;
+                        Literal n = new Literal(b.value, b.type, 0, 0);
+                        a = new Break(0,0,"F",n);
+                    }
                     if (a.type.Equals("BREAK")|| a.type.Equals("CONTINUE"))
                     {
                         throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);

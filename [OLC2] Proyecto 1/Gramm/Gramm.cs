@@ -133,7 +133,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
             // FUNCTIONS
             NonTerminal functionST = new NonTerminal("functionST");
-            NonTerminal callFuncST = new NonTerminal("callFunST");
+            NonTerminal callFuncST = new NonTerminal("callFuncST");
 
             //Procedures
             NonTerminal procedureST = new NonTerminal("procedureST");
@@ -262,6 +262,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 | callFuncST
                 | RBREAK + SEMICOLON
                 | RCONTINUE + SEMICOLON
+                | REXIT + LEFTPAR + expression + RIGHTPAR + SEMICOLON
                 | Empty
                 ;
 

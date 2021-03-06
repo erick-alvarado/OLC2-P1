@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace _OLC2__Proyecto_1.Instructions
 {
-    class callFunction: Expression
+    class callFunction2: Instruction
     {
         private String id;
         private LinkedList<Expression> parameterList = new LinkedList<Expression>();
         public LinkedList<Instruction> argumentList = new LinkedList<Instruction>();
         
-        public callFunction(int line, int column, string id, LinkedList<Expression> parameterList)
+        public callFunction2(int line, int column, string id, LinkedList<Expression> parameterList)
         {
             this.id = id;
             this.parameterList = parameterList;
             setLineColumn(line, column);
         }
-        public override Return execute(Environment_ environment)
+        public override object execute(Environment_ environment)
         {
             Symbol b = environment.getVar(this.id);
             if (b == null)
@@ -34,23 +34,6 @@ namespace _OLC2__Proyecto_1.Instructions
                 Function f = (Function)b.value;
                 this.argumentList = f.argumentList;
                 int index = 0;
-                object val = null;
-                switch (f.return_)
-                {
-                    case Type_.BOOLEAN:
-                        val = false;
-                        break;
-                    case Type_.STRING:
-                        val = "";
-                        break;
-                    case Type_.INTEGER:
-                        val = 0;
-                        break;
-                    case Type_.REAL:
-                        val = 0.000000000000000000000000;
-                        break;
-                }
-                f.environmentAux.saveVar(this.id, val, f.return_, "var");
                 foreach (Argument i in this.argumentList)
                 {
                     foreach (Access id in i.idList)
@@ -64,7 +47,7 @@ namespace _OLC2__Proyecto_1.Instructions
                         index++;
                     }
                 }
-                if (this.parameterList.Count != index)
+                if (this.parameterList.Count != index+1)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Numero incorrecto de arguments");
                 }
@@ -87,7 +70,7 @@ namespace _OLC2__Proyecto_1.Instructions
             {
                 throw new Error_(this.line, this.column, "Semantico", "No existe la funcion:"+this.id);
             }
-            return new Return(0,Type_.INTEGER);
+            return null;
         }
 
         public override void setLineColumn(int line, int column)

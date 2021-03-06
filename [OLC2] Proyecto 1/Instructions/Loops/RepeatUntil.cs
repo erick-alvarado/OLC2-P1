@@ -24,7 +24,7 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
         public override object execute(Environment_ environment)
         {
             Return condition;
-            bool var; 
+            bool var=false; 
             int F = 0;
             do
             {

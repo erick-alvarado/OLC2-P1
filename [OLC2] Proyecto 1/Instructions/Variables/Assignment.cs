@@ -33,8 +33,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);
             }
             b.value = newVal.value;
-            environment.saveVar(b.id, b.value, b.type, b.type_name);
-            return null;
+            return environment.saveVar(b.id, b.value, b.type, b.type_name);
         }
         public String getId()
         {

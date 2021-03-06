@@ -1,13 +1,29 @@
-﻿program whileLoop;
+﻿program exFunction;
 var
-   a: integer=10;
+   a, b, ret : integer;
+
+(*function definition *)
+function max(num1, num2: integer): integer;
+var
+   (* local variable declaration *)
+   result: integer;
 
 begin
-break;
-   while  a < 20  do
+   if (num1 > num2) then
+      result := num1
    
+   else
    begin
-      writeln('value of a: ', a);
-      a := a + 1;
-   end;
+      result := num2;
+      end;
+   max := result;
+end;
+
+begin
+   a := 100;
+   b := 200;
+   (* calling a function to get max value *)
+   ret := max(a, b);
+   
+   writeln( 'Max value is : ', ret );
 end.

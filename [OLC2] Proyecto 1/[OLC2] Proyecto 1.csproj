@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="Gramm\Analyzer.cs" />
     <Compile Include="Instructions\Argument.cs" />
+    <Compile Include="Instructions\Functions\callFunction2.cs" />
     <Compile Include="Instructions\Functions\callFunction.cs" />
     <Compile Include="Instructions\Conditions\Case.cs" />
     <Compile Include="Instructions\Conditions\CaseList.cs" />

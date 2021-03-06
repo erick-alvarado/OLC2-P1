@@ -12,6 +12,7 @@ using _OLC2__Proyecto_1.Instructions.Conditions;
 using _OLC2__Proyecto_1.Instructions;
 using _OLC2__Proyecto_1.Instructions.Loops;
 using _OLC2__Proyecto_1.Instructions.Transfer;
+using _OLC2__Proyecto_1.Instructions.Functions;
 
 namespace _OLC2__Proyecto_1.Gramm
 {
@@ -42,7 +43,14 @@ namespace _OLC2__Proyecto_1.Gramm
                 {
                     try
                     {
-                       var ret = ins.execute(environment);
+                        object ret=null;
+                        try
+                        {
+                            ret = ins.execute(environment);
+                        }catch(Exception e)
+                        {
+
+                        }
                         if (ret != null)
                         {
                             Break a = (Break)ret;
@@ -106,7 +114,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 return list;
             }
         }
-        public Declara declara(ParseTreeNode root)
+        public Instruction declara(ParseTreeNode root)
         {
             String tag = root.ChildNodes.ElementAt(0).Term.Name;
             if (root.ChildNodes.Count == 2)
@@ -122,20 +130,18 @@ namespace _OLC2__Proyecto_1.Gramm
                     case "const":
                         Declara list3 = new Declara(declaration(root.ChildNodes.ElementAt(1)));
                         return list3;
+                    
                 }
             }
             else
             {
-                /*
                 switch (tag)
                 {
                     case "functionST":
-                        //LinkedList<Instruction> list = functionSt(root.ChildNodes.ElementAt(1));
-                        return list;
-                    case "procedureST":
-                        //LinkedList<Instruction> list = procedureSt(root.ChildNodes.ElementAt(1));
-                        return list;
-                }*/
+                        Function func = functionST(root.ChildNodes.ElementAt(0));
+                        return func;
+                    
+                }
             }
             return null;
         }
@@ -298,7 +304,7 @@ namespace _OLC2__Proyecto_1.Gramm
                     Instruction ass = assignmentST(root.ChildNodes.ElementAt(0));
                     return ass;
                 case "callFuncST":
-                    Instruction callf = callFuncST(root.ChildNodes.ElementAt(0));
+                    callFunction2 callf = callFuncST2(root.ChildNodes.ElementAt(0));
                     return callf;
                 case "break":
                     int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
@@ -443,9 +449,132 @@ namespace _OLC2__Proyecto_1.Gramm
             }
         }
 
-        public Instruction callFuncST(ParseTreeNode root)
+
+        //FUNCTIONS
+        public Function functionST(ParseTreeNode root)
         {
+            int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+            int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+            String id = root.ChildNodes.ElementAt(1).Token.Text;
+            LinkedList<Instruction> argument = argumentList(root.ChildNodes.ElementAt(3));
+            LinkedList<Instruction> declaration = declarationList(root.ChildNodes.ElementAt(8));
+            Statement statement = statements(root.ChildNodes.ElementAt(9));
+            Type_ typ = type(root.ChildNodes.ElementAt(6));
+            return new Function(line,column,id,argument,declaration,statement,typ);
+        }
+        public Function procedureST(ParseTreeNode root)
+        {
+            int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+            int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+            String id = root.ChildNodes.ElementAt(1).Token.Text;
+            LinkedList<Instruction> argument = argumentList(root.ChildNodes.ElementAt(3));
+            LinkedList<Instruction> declaration = declarationList(root.ChildNodes.ElementAt(6));
+            Statement statement = statements(root.ChildNodes.ElementAt(7));
+            return new Function(line, column, id, argument, declaration, statement, Type_.VOID);
+        }
+        public callFunction callFuncST(ParseTreeNode root)
+        {
+            if (root.ChildNodes.Count == 5)
+            {
+                String id = root.ChildNodes.ElementAt(0).Token.Text;
+                LinkedList<Expression> parameter = parameterList(root.ChildNodes.ElementAt(2));
+                int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
+                int column = root.ChildNodes.ElementAt(1).Token.Location.Column;
+                return new callFunction(line, column,id,parameter);
+
+            }
+            else
+            {
+
+            }
             return null;
+        }
+        public callFunction2 callFuncST2(ParseTreeNode root)
+        {
+            if (root.ChildNodes.Count == 5)
+            {
+                String id = root.ChildNodes.ElementAt(0).Token.Text;
+                LinkedList<Expression> parameter = parameterList(root.ChildNodes.ElementAt(2));
+                int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
+                int column = root.ChildNodes.ElementAt(1).Token.Location.Column;
+                return new callFunction2(line, column, id, parameter);
+
+            }
+            else
+            {
+
+            }
+            return null;
+        }
+        public LinkedList<Expression> parameterList(ParseTreeNode root)
+        {
+            if (root.ChildNodes.Count == 3)
+            {
+                LinkedList<Expression> list = parameterList(root.ChildNodes.ElementAt(0));
+                list.AddLast(expression(root.ChildNodes.ElementAt(2)));
+                return list;
+            }
+            else
+            {
+                if (root.ChildNodes.ElementAt(0).ChildNodes.Count != 0)
+                {
+                    LinkedList<Expression> list = new LinkedList<Expression>();
+                    list.AddLast(expression(root.ChildNodes.ElementAt(0)));
+                    return list;
+                }
+                else
+                {
+                    LinkedList<Expression> list = new LinkedList<Expression>();
+                    return list;
+                }
+            }
+        }
+        
+        public LinkedList<Instruction> argumentList(ParseTreeNode root)
+        {
+            if (root.ChildNodes.Count == 3)
+            {
+                LinkedList<Instruction> list = argumentList(root.ChildNodes.ElementAt(0));
+                list.AddLast(argument(root.ChildNodes.ElementAt(1)));
+                return list;
+            }
+            else
+            {
+                if (root.ChildNodes.ElementAt(0).ChildNodes.Count != 0)
+                {
+                    LinkedList<Instruction> list = new LinkedList<Instruction>();
+                    list.AddLast(argument(root.ChildNodes.ElementAt(0)));
+                    return list;
+                }
+                else
+                {
+                    LinkedList<Instruction> list = new LinkedList<Instruction>();
+                    list.AddLast(new Empty());
+                    return list;
+                }
+            }
+        }
+        public Argument argument(ParseTreeNode root)
+        {
+            
+            if (root.ChildNodes.Count == 3)
+            {
+                int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
+                int column = root.ChildNodes.ElementAt(1).Token.Location.Column;
+                LinkedList<Access> idlist = idList(root.ChildNodes.ElementAt(0));
+
+                Argument ar = new Argument(line, column, idlist, type(root.ChildNodes.ElementAt(2)), false);
+                return ar;
+            }
+            else
+            {
+
+                int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                LinkedList<Access> idlist = idList(root.ChildNodes.ElementAt(1));
+                Argument ar = new Argument(line, column, idlist, type(root.ChildNodes.ElementAt(3)), true);
+                return ar;
+            }
         }
 
         public Statement statements(ParseTreeNode root)
@@ -562,7 +691,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 String value = root.ChildNodes.ElementAt(0).Token != null ? root.ChildNodes.ElementAt(0).Token.ValueString : root.ChildNodes.ElementAt(0).Term.Name;
                 int line=0;
                 int column = 0;
-                if (type != "access")
+                if (type != "access" && type!= "callFuncST")
                 {
                     line = root.ChildNodes.ElementAt(0).Token.Location.Line;
                     column = root.ChildNodes.ElementAt(0).Token.Location.Column;
@@ -591,6 +720,9 @@ namespace _OLC2__Proyecto_1.Gramm
                         return new Literal(false, Type_.BOOLEAN, line,column);
                     case "NULL":
                         return new Literal(null, Type_.NULL, line,column);
+                    case "callFuncST":
+                        callFunction callf = callFuncST(root.ChildNodes.ElementAt(0));
+                        return callf;
                 }
                 return null;
             }

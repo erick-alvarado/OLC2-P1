@@ -35,7 +35,7 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
                         Break a = (Break)check;
                         if (a.type.Equals("CONTINUE"))
                         {
-                            throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.id);
+                            throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
                         }
                         else
                         {
