@@ -32,7 +32,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
             ParseTree tree = parser.Parse(input);
             ParseTreeNode root = tree.Root;
-            Environment_ environment = new Environment_(null,"Global");
+            Environment_ environment = new Environment_(null,"Global$");
             ErrorHandler errorHandler = new ErrorHandler(tree, root);
 
             if (!errorHandler.hasErrors())
@@ -49,7 +49,7 @@ namespace _OLC2__Proyecto_1.Gramm
                             ret = ins.execute(environment);
                         }catch(Exception e)
                         {
-
+                             
                         }
                         if (ret != null)
                         {
@@ -177,11 +177,22 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         public DeclarationVar declarationVar(ParseTreeNode root)
         {
+            int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
+            int column = root.ChildNodes.ElementAt(1).Token.Location.Line;
             if (root.ChildNodes.Count == 5)
             {
                 LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
-                return new DeclarationVar(ids, type(root.ChildNodes.ElementAt(2)), expression(root.ChildNodes.ElementAt(4)), root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
-
+                Type_ t = type(root.ChildNodes.ElementAt(2));
+                Expression exp = expression(root.ChildNodes.ElementAt(4));
+                if(t == Type_.ID)
+                {
+                    String id = root.ChildNodes.ElementAt(2).ChildNodes.ElementAt(0).Token.Text;
+                    return new DeclarationVar(line, column, ids, t, id, exp);
+                }
+                else
+                {
+                    return new DeclarationVar(line, column, ids, t,"" ,exp);
+                }
             }
             else
             {
@@ -189,11 +200,12 @@ namespace _OLC2__Proyecto_1.Gramm
                 LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
                 if ( t== Type_.ID)
                 {
-                    return new DeclarationVar(ids, t, root.ChildNodes.ElementAt(2).ChildNodes.ElementAt(0).Token.Text, root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
+                    String id = root.ChildNodes.ElementAt(2).ChildNodes.ElementAt(0).Token.Text;
+                    return new DeclarationVar(line, column, ids, t, id);
                 }
                 else
                 {
-                    return new DeclarationVar(ids,t, root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
+                    return new DeclarationVar(line, column, ids, t);
                 }
 
             }
@@ -279,7 +291,11 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         public Instruction instruction(ParseTreeNode root)
         {
-            String tag = root.ChildNodes.ElementAt(0).Term.Name;
+            String tag = "";
+            if (root.ChildNodes.Count != 0)
+            {
+                tag = root.ChildNodes.ElementAt(0).Term.Name;
+            }
             switch (tag)
             {
                 case "ifST":
@@ -579,16 +595,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
         public Statement statements(ParseTreeNode root)
         {
-            if (root.ChildNodes.Count == 1)
-            {
-                return new Statement(instructionList(root.ChildNodes.ElementAt(0)),0, 0);
-
-            }
-            else
-            {
                 return new Statement(instructionList(root.ChildNodes.ElementAt(1)), root.ChildNodes.ElementAt(0).Token.Location.Line, root.ChildNodes.ElementAt(0).Token.Location.Column);
-
-            }
         }
         public Type_ type(ParseTreeNode root)
         {

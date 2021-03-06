@@ -237,7 +237,7 @@ namespace _OLC2__Proyecto_1.Gramm
             assignmentST.Rule = ID + P_EQUAL + expression 
                 ;
             statements.Rule = RBEGIN + instructionList + REND + SEMICOLON
-                | instructionList
+                
                 ;
 
             //MAIN

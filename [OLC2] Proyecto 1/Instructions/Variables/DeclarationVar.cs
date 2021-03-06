@@ -15,25 +15,11 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         private String id;
         private Expression value;
 
-        public DeclarationVar(LinkedList<Access> id, Type_ type, int line, int column)
+        public DeclarationVar(int line, int column, LinkedList<Access> idList, Type_ type,String id="", Expression value = null)
         {
-            this.idList = id;
+            this.idList = idList;
             this.type = type;
-
-            setLineColumn(line, column);
-        }
-        public DeclarationVar(LinkedList<Access> id, Type_ type, String id_, int line, int column)
-        {
-            this.idList = id;
-            this.type = type;
-            this.id = id_;
-
-            setLineColumn(line, column);
-        }
-        public DeclarationVar(LinkedList<Access> id, Type_ type, Expression value, int line, int column)
-        {
-            this.idList = id;
-            this.type = type;
+            this.id = id;
             this.value = value;
 
             setLineColumn(line, column);
@@ -47,7 +33,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Declaracion con asignacion a multiples variables ");
                 }
-                if (this.type != val.type)
+                if (this.type != val.type&& this.type!=Type_.ID)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Declaracion con asignacion de tipo incorrecto");
                 }
@@ -59,8 +45,14 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 {
                     throw new Error_(this.line, this.column, "Semantico", "El tipo no existe: " + this.id);
                 }
-                if (val == null) { 
+                if (temp.type != val.type && val.value!=null)
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "Declaracion con asignacion de tipo incorrecto");
+
+                }
+                if (val.value == null) { 
                     val.value = temp.value;
+                    this.type = temp.type;
                 }
                 else
                 {

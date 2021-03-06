@@ -1,29 +1,11 @@
-﻿program exFunction;
-var
-   a, b, ret : integer;
+﻿program Greetings;
+const
+message = ' Welcome to the world of Pascal ';
 
-(*function definition *)
-function max(num1, num2: integer): integer;
+type
+name = string;
 var
-   (* local variable declaration *)
-   result: integer;
+firstname, surname: name;
 
 begin
-   if (num1 > num2) then
-      result := num1
-   
-   else
-   begin
-      result := num2;
-      end;
-   max := result;
-end;
-
-begin
-   a := 100;
-   b := 200;
-   (* calling a function to get max value *)
-   ret := max(a, b);
-   
-   writeln( 'Max value is : ', ret );
 end.

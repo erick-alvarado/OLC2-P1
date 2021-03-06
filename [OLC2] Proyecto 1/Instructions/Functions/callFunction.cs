@@ -70,7 +70,35 @@ namespace _OLC2__Proyecto_1.Instructions
                 }
                 f.parameterList = this.parameterList;
                 object ret = f.execute(environment);
-                
+                index = 0;
+                //Este metodo solo diosito y yo sabemos lo que hicimos a las 3:57am con desesperacion
+                foreach (Argument i in this.argumentList)
+                {
+                    foreach (Access id in i.idList)
+                    {
+                        if (i.rvar)
+                        {
+                            if (i.type == Type_.ID)
+                            {
+                                foreach(Access a in i.idList)
+                                {
+                                    Symbol value = f.environmentAux.getVar(a.getId());
+                                    try
+                                    {
+                                        Access atemp = (Access)this.parameterList.ElementAt(index);
+                                        environment.saveVar(atemp.getId(), value.value, value.type, value.type_name);
+                                    }
+                                    catch (Exception e)
+                                    {
+
+                                    }
+                                }
+                            }
+                        }
+                        index++;
+                    }
+                }
+
                 if (ret != null)
                 {
                     Return temp = (Return)ret;
