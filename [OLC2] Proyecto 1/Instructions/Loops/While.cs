@@ -41,6 +41,13 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
                     {
                         break;
                     }
+                    else if (a.id.Equals("CONTINUE"))
+                    {
+                    }
+                    else
+                    {
+                        throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.id);
+                    }
                 }
                 condition = this.condition.execute(environment);
                 var = (bool)condition.value;

@@ -64,9 +64,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Gramm\Analyzer.cs" />
+    <Compile Include="Instructions\Argument.cs" />
+    <Compile Include="Instructions\Functions\callFunction.cs" />
     <Compile Include="Instructions\Conditions\Case.cs" />
     <Compile Include="Instructions\Conditions\CaseList.cs" />
     <Compile Include="Instructions\Conditions\If.cs" />
+    <Compile Include="Instructions\Functions\Function.cs" />
     <Compile Include="Instructions\Loops\RepeatUntil.cs" />
     <Compile Include="Instructions\Loops\For.cs" />
     <Compile Include="Instructions\Loops\While.cs" />

@@ -14,13 +14,14 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
         private Assignment assignment;
         private Expression condition;
         private Statement statements;
+        private bool up;
 
-
-        public For(int line, int column,Assignment assignment, Expression condition, Statement statements)
+        public For(int line, int column,Assignment assignment, Expression condition, Statement statements, bool up)
         {
             this.condition = condition;
             this.statements = statements;
             this.assignment = assignment;
+            this.up = up;
             setLineColumn(line, column);
 
         }
@@ -40,7 +41,16 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
                 throw new Error_(this.line, this.column, "Semantico", "La condicion debe ser integer");
             }
             int F = 0;
-            while ((int)initial.value<=(int)condition.value)
+            bool cond;
+            if (this.up)
+            {
+                cond = (int)initial.value <= (int)condition.value;
+            }
+            else
+            {
+                cond = (int)initial.value >= (int)condition.value;
+            }
+            while (cond)
             {
                 
                 F++;
@@ -52,14 +62,30 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
                     {
                         break;
                     }
+                    else if (a.id.Equals("CONTINUE"))
+                    {
+                    }
+                    else
+                    {
+                        throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.id);
+                    }
                 }
                 if (F > 1000)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Ciclo sin fin");
                 }
                 initial = environment.getVar(this.assignment.getId());
-                initial.value = (int)initial.value + 1;
+                if (this.up){
+                    initial.value = (int)initial.value + 1;
+                    cond = (int)initial.value <= (int)condition.value;
+                }
+                else
+                {
+                    initial.value = (int)initial.value - 1;
+                    cond = (int)initial.value >= (int)condition.value;
+                }
                 environment.saveVar(initial.id, initial.value, initial.type, initial.type_name);
+                
             }
             return null;
         }

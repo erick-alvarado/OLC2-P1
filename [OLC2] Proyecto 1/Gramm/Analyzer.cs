@@ -297,6 +297,9 @@ namespace _OLC2__Proyecto_1.Gramm
                 case "assignmentST":
                     Instruction ass = assignmentST(root.ChildNodes.ElementAt(0));
                     return ass;
+                case "callFuncST":
+                    Instruction callf = callFuncST(root.ChildNodes.ElementAt(0));
+                    return callf;
                 case "break":
                     int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
                     int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
@@ -429,7 +432,20 @@ namespace _OLC2__Proyecto_1.Gramm
             Statement st = statements(root.ChildNodes.ElementAt(5));
             int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
             int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
-            return new For(line, column,ass, e, st);
+            String tag = root.ChildNodes.ElementAt(2).Term.Name;
+            if (tag == "to")
+            {
+                return new For(line, column, ass, e, st,true);
+            }
+            else
+            {
+                return new For(line, column, ass, e, st,false);
+            }
+        }
+
+        public Instruction callFuncST(ParseTreeNode root)
+        {
+            return null;
         }
 
         public Statement statements(ParseTreeNode root)
@@ -585,5 +601,8 @@ namespace _OLC2__Proyecto_1.Gramm
             int column = root.Token.Location.Column;
             return new Access(root.Token.ValueString, line,column);
         }
+
+       
+
     }
 }

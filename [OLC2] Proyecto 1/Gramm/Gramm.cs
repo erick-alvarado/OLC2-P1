@@ -86,6 +86,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
             var RFOR = ToTerm("for");
             var RTO = ToTerm("to");
+            var RDOWNTO = ToTerm("downto");
 
             var RBREAK = ToTerm("break");
             var RCONTINUE = ToTerm("continue");
@@ -320,9 +321,9 @@ namespace _OLC2__Proyecto_1.Gramm
             access.Rule = ID
                 ;
             // Functions
-            functionST.Rule = RFUNCTION + ID + LEFTPAR + argumentList + RIGHTPAR+ POINTS + type + SEMICOLON+ declarationList + RBEGIN + instructionList + REND + SEMICOLON
+            functionST.Rule = RFUNCTION + ID + LEFTPAR + argumentList + RIGHTPAR+ POINTS + type + SEMICOLON+ declarationList + statements
                 ;
-            procedureST.Rule = RPROCEDURE + ID + LEFTPAR + argumentList + RIGHTPAR +  SEMICOLON + declarationList + RBEGIN + instructionList + REND + SEMICOLON
+            procedureST.Rule = RPROCEDURE + ID + LEFTPAR + argumentList + RIGHTPAR +  SEMICOLON + declarationList + statements 
                 ;
             callFuncST.Rule = ID + LEFTPAR + parameterList + RIGHTPAR + SEMICOLON
                 | RGRAFICARTS + LEFTPAR + RIGHTPAR + SEMICOLON;
@@ -333,12 +334,11 @@ namespace _OLC2__Proyecto_1.Gramm
                 | Empty
                 ;
             argumentList.Rule = argumentList + SEMICOLON + argument
-               | argumentList + SEMICOLON + declarationVar
                | argument
-               | RVAR+ declarationVar
                | Empty
                ;
             argument.Rule = idList + POINTS + type
+                | RVAR + idList + POINTS + type
                 ;
            
             //LOOPS
@@ -346,6 +346,7 @@ namespace _OLC2__Proyecto_1.Gramm
             whileST.Rule = RWHILE + expression + RDO + statements 
                 ;
             forDoST.Rule = RFOR + assignmentST + RTO + expression + RDO +statements
+                | RFOR + assignmentST + RDOWNTO + expression + RDO + statements
                 ;
             repeatUntilST.Rule = RREPEAT + statements + RUNTIL + expression + SEMICOLON
                 ;
