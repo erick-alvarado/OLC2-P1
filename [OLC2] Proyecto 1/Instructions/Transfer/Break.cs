@@ -10,15 +10,17 @@ namespace _OLC2__Proyecto_1.Instructions.Transfer
 {
     class Break: Instruction
     {
-        private String type;
-        public Break(int line, int column, String type)
+        public String type;
+        public Expression e;
+        public Break(int line, int column, String type, Expression e = null)
         {
             this.type = type;
+            this.e = e;
             setLineColumn(line, column);
         }
         public override object execute(Environment_ environment)
         {
-            return new Expressions.Access(this.type,this.line,this.column);
+            return new Break(this.line,this.column,this.type,this.e);
         }
         public override void setLineColumn(int line, int column)
         {

@@ -1,4 +1,5 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
+using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Symbol_;
 using System;
 using System.Collections.Generic;
@@ -20,7 +21,12 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         {
             foreach(Instruction i in this.declara)
             {
-                i.execute(environment);
+                object check = i.execute(environment);
+                if (check != null)
+                {
+                    Break a = (Break)check;
+                    throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
+                }
             }
             return null;
         }

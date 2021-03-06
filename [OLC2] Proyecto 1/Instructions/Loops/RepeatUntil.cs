@@ -1,4 +1,5 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
+using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Symbol_;
 using System;
 using System.Collections.Generic;
@@ -31,17 +32,18 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
                 object br = statements.execute(environment);
                 if (br != null)
                 {
-                    Expressions.Access a = (Expressions.Access)br;
-                    if (a.id.Equals("BREAK"))
+                    Break a = (Break)br;
+                    if (a.type.Equals("BREAK"))
                     {
                         break;
                     }
-                    else if (a.id.Equals("CONTINUE"))
+                    else if (a.type.Equals("CONTINUE"))
                     {
+                        continue;
                     }
                     else
                     {
-                        throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.id);
+                        return a;
                     }
                 }
                 condition = this.condition.execute(environment);

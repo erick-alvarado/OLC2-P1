@@ -72,7 +72,7 @@ namespace _OLC2__Proyecto_1.Expressions
                         }
                         else
                         {
-                            throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
+                            throw new Error_(this.line, this.column, "Semantico", "No se puede restar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
                         }
                     case ArithmeticOption.TIMES:
                         if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
@@ -85,9 +85,13 @@ namespace _OLC2__Proyecto_1.Expressions
                         }
                         else
                         {
-                            throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
+                            throw new Error_(this.line, this.column, "Semantico", "No se puede multiplicar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
                         }
                     default:
+                        if (rightValue.Equals(0))
+                        {
+                            throw new Error_(this.line, this.column, "Semantico", "No se puede dividir sobre 0 ");
+                        }
                         if (leftValue.type == Type_.REAL || rightValue.type == Type_.REAL)
                         {
                             return new Return(Double.Parse(leftValue.value.ToString()) / Double.Parse(rightValue.value.ToString()), Type_.REAL);
@@ -98,7 +102,7 @@ namespace _OLC2__Proyecto_1.Expressions
                         }
                         else
                         {
-                            throw new Error_(this.line, this.column, "Semantico", "No se puede sumar " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
+                            throw new Error_(this.line, this.column, "Semantico", "No se puede dividir " + leftValue.type.ToString() + " con " + rightValue.type.ToString());
                         }
                 }
 

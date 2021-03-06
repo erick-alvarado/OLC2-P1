@@ -45,8 +45,8 @@ namespace _OLC2__Proyecto_1.Gramm
                        var ret = ins.execute(environment);
                         if (ret != null)
                         {
-                            Access a = (Access)ret;
-                            throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.id);
+                            Break a = (Break)ret;
+                            throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
                         }
                     }
                     catch (Exception e)

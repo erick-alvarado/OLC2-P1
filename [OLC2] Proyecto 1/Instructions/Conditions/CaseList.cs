@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using _OLC2__Proyecto_1.Abstract;
+using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Symbol_;
 
 namespace _OLC2__Proyecto_1.Instructions.Conditions
@@ -31,10 +32,14 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
                     object check = this.statements.execute(environment);
                     if (check != null)
                     {
-                        Expressions.Access a = (Expressions.Access)check;
-                        if (a.id.Equals("CONTINUE"))
+                        Break a = (Break)check;
+                        if (a.type.Equals("CONTINUE"))
                         {
                             throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.id);
+                        }
+                        else
+                        {
+                            return a;
                         }
                     }
                     return true;

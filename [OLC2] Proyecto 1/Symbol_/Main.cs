@@ -1,4 +1,5 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
+using _OLC2__Proyecto_1.Instructions.Transfer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,8 +23,8 @@ namespace _OLC2__Proyecto_1.Symbol_
                 object check = i.execute(environment);
                 if (check != null)
                 {
-                    Expressions.Access a = (Expressions.Access)check;
-                    throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" +a.id);
+                    Break a = (Break)check;
+                    throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
                 }
             }
             return null;
