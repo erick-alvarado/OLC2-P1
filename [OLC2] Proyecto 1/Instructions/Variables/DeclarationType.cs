@@ -5,47 +5,39 @@ using System.Text;
 using System.Threading.Tasks;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Expressions;
+using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Symbol_;
+using Array = _OLC2__Proyecto_1.Symbol_.Array;
+
 namespace _OLC2__Proyecto_1.Instructions.Variables
 {
     class DeclarationType : Instruction
     {
+        private LinkedList<Access> idList = new LinkedList<Access>();
         private Type_ type= Type_.DEFAULT;
         private Type_ type2= Type_.DEFAULT;
+        private String idName;
+        private String idName2;
         private LinkedList<Expression> expression= new LinkedList<Expression>();
         private LinkedList<Expression> expression2= new LinkedList<Expression>();
-        private LinkedList<Access> idList = new LinkedList<Access>();
         private LinkedList<Instruction> declarationList = new LinkedList<Instruction>();
 
-        //Declaration Type 
-        public DeclarationType(LinkedList<Access> idList, Type_ type, int line, int column)
+        public DeclarationType(int line, int column, LinkedList<Access> idList, Type_ type, Type_ type2, string idName, string idName2, LinkedList<Expression> expression, LinkedList<Expression> expression2, LinkedList<Instruction> declarationList)
         {
             this.idList = idList;
-            this.type = type;
-            setLineColumn(line, column);
-        }
-
-
-        //Declaration ARRAY
-        public DeclarationType(LinkedList<Access> idList, Type_ type, Type_ type2, LinkedList<Expression> expression, LinkedList<Expression> expression2, int line, int column)
-        {
             this.type = type;
             this.type2 = type2;
-            this.idList = idList;
+            this.idName = idName;
+            this.idName2 = idName2;
             this.expression = expression;
             this.expression2 = expression2;
-            setLineColumn(line, column);
-        }
-        //Declaration OBJECT
-        public DeclarationType(LinkedList<Access> idList, LinkedList<Instruction> declarationList, int line, int column)
-        {
-            this.idList = idList;
             this.declarationList = declarationList;
             setLineColumn(line, column);
         }
+
         public override object execute(Environment_ environment)
         {
-            if (this.declarationList.Count!=0)
+            if (this.declarationList!=null)
             {
                 //Declaracion Object
                 String id = this.idList.First().id;
@@ -57,78 +49,103 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 Environment_ temp = new Environment_(null, id);
                 foreach (Instruction i in this.declarationList)
                 {
-                    i.execute(temp);
+                    object check = i.execute(temp);
+                    if (check != null)
+                    {
+                        Break a = (Break)check;
+                        throw new Error_(a.line, a.column, "Semantico", "Sentencia fuera de contexto:" + a.type);
+                    }
                 }
                 environment.saveVar(id, temp, type,"object");
 
             }
-            else if(this.type!=Type_.DEFAULT && this.type2 == Type_.DEFAULT && this.expression2.Count == 0)
+            else if(this.type!=Type_.DEFAULT && this.type2 == Type_.DEFAULT && this.expression2 == null && this.expression == null)
             {
                 //Declaracion type normal
                 foreach (Access e in idList)
                 {
-                    if (environment.getVar(e.getId()) != null)
+                    Symbol b = environment.getVar(e.getId());
+                    if ( b != null)
                     {
                         throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente");
                     }
                     else
                     {
-                        environment.saveVar(e.getId(), null, type,"type");
+                        if (this.type == Type_.ID)
+                        {
+                            environment.saveVar(e.getId(), b.value, b.type, "type");
+                        }
+                        else
+                        {
+                            environment.saveVar(e.getId(), null, type, "type");
+                        }
                     }
                 }
             }
             else
-            {
+            {//Declaracion array
                 String id = this.idList.First().id;
                 if (environment.getVar(id) != null)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente:" + id);
                 }
-                Expression value = this.expression.First();
-                Return start = value != null ? value.execute(environment) : new Return(null, Type_.INTEGER);
-
-                Expression value2 = this.expression.Last();
-                Return end = value2 != null ? value2.execute(environment) : new Return(null, Type_.INTEGER);
-
-                if(start.value!=null && end.value != null)
+                Expression value, value2;
+                Return start, end;
+                if (this.expression != null)
                 {
-                    int s,e;
-                    try
+                    value = this.expression.First();
+                    start = value != null ? value.execute(environment) : new Return(null, Type_.INTEGER);
+                    value2 = this.expression.Last();
+                    end = value2 != null ? value2.execute(environment) : new Return(null, Type_.INTEGER);
+                    if (start.value != null && end.value != null)
                     {
-                        s = (int)start.value;
-                        e = (int)end.value;
-                        switch (this.type2)
+                        int s, e;
+                        try
                         {
-                            case Type_.BOOLEAN:
-                                Array<bool> l = new Array<bool>(s,e,this.idList.First().id,false,Type_.BOOLEAN);
-                                environment.saveVar(this.idList.First().id, l, Type_.BOOLEAN, "array");
-                                break;
-                            case Type_.STRING:
-                                Array<String> l1 = new Array<String>(s, e, this.idList.First().id, "", Type_.STRING);
-                                environment.saveVar(this.idList.First().id, l1, Type_.STRING, "array");
-                                break;
-                            case Type_.INTEGER:
-                                Array<int> l2 = new Array<int>(s, e, this.idList.First().id, 0, Type_.INTEGER);
-                                environment.saveVar(this.idList.First().id, l2, Type_.INTEGER, "array");
-                                break;
-                            case Type_.REAL:
-                                Array<float> l3 = new Array<float>(s, e, this.idList.First().id, 0, Type_.REAL);
-                                environment.saveVar(this.idList.First().id, l3, Type_.REAL, "array");
-                                break;
-                            default:
-                                throw new Error_(this.line, this.column, "Semantico", "No se puede hacer arrays de tipo:" + id);
+                            s = (int)start.value;
+                            e = (int)end.value;
+                            switch (this.type2)
+                            {
+                                case Type_.BOOLEAN:
+                                    Array l = new Array(s, e, this.idList.First().id, false, Type_.BOOLEAN);
+                                    environment.saveVar(this.idList.First().id, l, Type_.BOOLEAN, "array");
+                                    break;
+                                case Type_.STRING:
+                                    Array l1 = new Array(s, e, this.idList.First().id, "", Type_.STRING);
+                                    environment.saveVar(this.idList.First().id, l1, Type_.STRING, "array");
+                                    break;
+                                case Type_.INTEGER:
+                                    Array l2 = new Array(s, e, this.idList.First().id, 0, Type_.INTEGER);
+                                    environment.saveVar(this.idList.First().id, l2, Type_.INTEGER, "array");
+                                    break;
+                                case Type_.REAL:
+                                    Array l3 = new Array(s, e, this.idList.First().id, 0, Type_.REAL);
+                                    environment.saveVar(this.idList.First().id, l3, Type_.REAL, "array");
+                                    break;
+                                case Type_.ID:
+                                    Symbol b = environment.getVar(this.idName2);
+                                    Array l4 = new Array(s, e, this.idList.First().id, b.value, Type_.ID);
+                                    environment.saveVar(this.idList.First().id, l4, Type_.ID, "array");
+                                    break;
+                                default:
+                                    throw new Error_(this.line, this.column, "Semantico", "No se puede hacer arrays de tipo:" + id);
+                            }
                         }
+                        catch (Exception se)
+                        {
+                            throw new Error_(this.line, this.column, "Semantico", "Inicio y fin de array no validos");
+                        }
+
                     }
-                    catch (Exception se)
+                    else
                     {
                         throw new Error_(this.line, this.column, "Semantico", "Inicio y fin de array no validos");
                     }
-                    
                 }
-                else
-                {
-                    throw new Error_(this.line, this.column, "Semantico", "Inicio y fin de array no validos");
-                }
+                
+                
+
+                
             }
             
             return null;

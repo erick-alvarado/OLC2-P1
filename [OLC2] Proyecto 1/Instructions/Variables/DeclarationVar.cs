@@ -50,6 +50,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                     throw new Error_(this.line, this.column, "Semantico", "Declaracion con asignacion de tipo incorrecto");
 
                 }
+                //TODO Verificar todo esto
                 this.type = temp.type;
                 if (val.value == null) { 
                     val.value = temp.value;

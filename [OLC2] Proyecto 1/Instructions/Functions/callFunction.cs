@@ -5,17 +5,15 @@ using _OLC2__Proyecto_1.Symbol_;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _OLC2__Proyecto_1.Instructions
 {
-    class callFunction: Expression
+    class callFunction : Expression
     {
         private String id;
         private LinkedList<Expression> parameterList = new LinkedList<Expression>();
         public LinkedList<Instruction> argumentList = new LinkedList<Instruction>();
-        
+
         public callFunction(int line, int column, string id, LinkedList<Expression> parameterList)
         {
             this.id = id;
@@ -29,93 +27,78 @@ namespace _OLC2__Proyecto_1.Instructions
             {
                 throw new Error_(this.line, this.column, "Semantico", "No existe la variable:" + this.id);
             }
+            Function f = null;
             try
             {
-                Function f = (Function)b.value;
-                this.argumentList = f.argumentList;
-                int index = 0;
-                object val = null;
-                switch (f.return_)
+                f = (Function)b.value;
+            }
+            catch (Exception e)
+            {
+                throw new Error_(this.line, this.column, "Semantico", "No existe la funcion:" + this.id);
+            }
+            this.argumentList = f.argumentList;
+            int index = 0;
+            foreach (Argument i in this.argumentList)
+            {
+                foreach (Access id in i.idList)
                 {
-                    case Type_.BOOLEAN:
-                        val = false;
-                        break;
-                    case Type_.STRING:
-                        val = "";
-                        break;
-                    case Type_.INTEGER:
-                        val = 0;
-                        break;
-                    case Type_.REAL:
-                        val = 0.000000000000000000000000;
-                        break;
-                }
-                f.environmentAux.saveVar(this.id, val, f.return_, "var");
-                foreach (Argument i in this.argumentList)
-                {
-                    foreach (Access id in i.idList)
+                    Return r = this.parameterList.ElementAt(index).execute(environment);
+                    if (r.type != i.type)
                     {
-                        Return r = this.parameterList.ElementAt(index).execute(environment);
-                        if (r.type != i.type)
-                        {
-                            throw new Error_(i.line, i.column, "Semantico", "Tipo de parametro incorrecto:"+Enum.GetName(typeof(Type_),r.type)+" se esperaba:"+ Enum.GetName(typeof(Type_), i.type));
-                        }
-                        f.environmentAux.saveVar(id.id,r.value,r.type,"var");
-                        index++;
+                        throw new Error_(i.line, i.column, "Semantico", "Tipo de parametro incorrecto:" + Enum.GetName(typeof(Type_), r.type) + " se esperaba:" + Enum.GetName(typeof(Type_), i.type));
                     }
+                    f.environmentAux.saveVar(id.id, r.value, r.type, "var");
+                    index++;
                 }
-                if (this.parameterList.Count != index)
+            }
+            if (this.parameterList.Count != index)
+            {
+                throw new Error_(this.line, this.column, "Semantico", "Numero incorrecto de arguments");
+            }
+            f.parameterList = this.parameterList;
+            object ret = f.execute(environment);
+            index = 0;
+            //Este metodo solo diosito y yo sabemos lo que hicimos a las 3:57am con desesperacion
+            foreach (Argument i in this.argumentList)
+            {
+                foreach (Access id in i.idList)
                 {
-                    throw new Error_(this.line, this.column, "Semantico", "Numero incorrecto de arguments");
-                }
-                f.parameterList = this.parameterList;
-                object ret = f.execute(environment);
-                index = 0;
-                //Este metodo solo diosito y yo sabemos lo que hicimos a las 3:57am con desesperacion
-                foreach (Argument i in this.argumentList)
-                {
-                    foreach (Access id in i.idList)
+                    if (i.rvar)
                     {
-                        if (i.rvar)
+                        if (i.type == Type_.ID)
                         {
-                            if (i.type == Type_.ID)
+                            foreach (Access a in i.idList)
                             {
-                                foreach(Access a in i.idList)
+                                Symbol value = f.environmentAux.getVar(a.getId());
+                                try
                                 {
-                                    Symbol value = f.environmentAux.getVar(a.getId());
-                                    try
-                                    {
-                                        Access atemp = (Access)this.parameterList.ElementAt(index);
-                                        environment.saveVar(atemp.getId(), value.value, value.type, value.type_name);
-                                    }
-                                    catch (Exception e)
-                                    {
+                                    Access atemp = (Access)this.parameterList.ElementAt(index);
+                                    environment.saveVar(atemp.getId(), value.value, value.type, value.type_name);
+                                }
+                                catch (Exception e)
+                                {
 
-                                    }
                                 }
                             }
                         }
-                        index++;
                     }
+                    index++;
                 }
+            }
 
-                if (ret != null)
-                {
-                    Return temp = (Return)ret;
-                    if (temp.type.Equals(Type_.ID))
-                    {
-                        Symbol aux = f.environmentAux.getVar((String)temp.value);
-                        Return n = new Return(aux.value, aux.type);
-                        return n;
-                    }
-                    return temp;
-                }
-            }
-            catch(Exception e)
+            if (ret != null)
             {
-                throw new Error_(this.line, this.column, "Semantico", "No existe la funcion:"+this.id);
+                Return temp = (Return)ret;
+                if (temp.type.Equals(Type_.ID))
+                {
+                    Symbol aux = f.environmentAux.getVar((String)temp.value);
+                    Return n = new Return(aux.value, aux.type);
+                    return n;
+                }
+                return temp;
             }
-            return new Return(0,Type_.INTEGER);
+
+            return new Return(0, Type_.INTEGER);
         }
 
         public override void setLineColumn(int line, int column)

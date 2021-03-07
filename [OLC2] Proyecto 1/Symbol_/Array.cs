@@ -7,31 +7,31 @@ using System.Threading.Tasks;
 
 namespace _OLC2__Proyecto_1.Symbol_
 {
-    public class Array<T>
+    public class Array
     {
         public String name;
         public int start, end;
         public Type_ type;
-        public T[] value= new T[1];
+        public object[] value= new object[1];
 
-        public Array(int start, int end,String name, T val, Type_ type)
+        public Array(int start, int end,String name, object val, Type_ type)
         {
             this.start = start;
             this.end = end;
             this.name = name;
             this.type = type;
             int range = System.Math.Abs(start) + System.Math.Abs(end);
-            this.value = new T[range];
+            this.value = new object[range];
             fillArray(val);
         }
-        private void fillArray(T val)
+        private void fillArray(object val)
         {
             for(int i = this.start; i<end; i++)
             {
                 this.value[i] = val;
             }
         }
-        public void saveVar(int pos, T value, int line , int column)
+        public void saveVar(int pos, object value, int line , int column)
         {
             if (pos < this.start || pos > this.end)
             {
@@ -40,7 +40,7 @@ namespace _OLC2__Proyecto_1.Symbol_
             else
             {
                 try{
-                    T v = value;
+                    object v = value;
                     this.value[pos] = value;
                 }
                 catch (Exception e)

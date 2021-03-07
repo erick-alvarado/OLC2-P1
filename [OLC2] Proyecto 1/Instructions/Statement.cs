@@ -1,4 +1,5 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
+using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Symbol_;
 using System;
 using System.Collections.Generic;
@@ -23,13 +24,15 @@ namespace _OLC2__Proyecto_1.Instructions
             {
                 try
                 {
-                    object ret = instr.execute(environment);
-                    if (ret != null)
-                        return ret;
+                    object check = instr.execute(environment);
+                    if (check != null) 
+                    { 
+                        return check;
+                    }
                 }
                 catch (Exception e)
                 {
-                    throw e;
+                    Gramm.Analyzer.errors.Add((Error_)e);
                 }
             }
             return null;

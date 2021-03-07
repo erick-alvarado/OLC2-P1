@@ -19,7 +19,7 @@ namespace _OLC2__Proyecto_1.Gramm
     class Analyzer
     {
         public static String output;
-        public List<Error_> errors;
+        public static List<Error_> errors= new List<Error_>();
         public Analyzer()
         {
             output = "";
@@ -41,32 +41,23 @@ namespace _OLC2__Proyecto_1.Gramm
                 
                 foreach (Instruction ins in AST)
                 {
+                    object ret = null;
                     try
                     {
-                        object ret=null;
-                        try
-                        {
-                            ret = ins.execute(environment);
-                        }catch(Exception e)
-                        {
-                             
-                        }
+                        ret = ins.execute(environment);
                         if (ret != null)
                         {
                             Break a = (Break)ret;
-                            throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
+                            Analyzer.errors.Add( new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type));
                         }
                     }
                     catch (Exception e)
                     {
-                        //this.errors.Add(e.Message);
+                        Analyzer.errors.Add((Error_)e);
                     }
+
                 }
                 
-            }
-            else
-            {
-                this.errors = errorHandler.errors;
             }
             return output;
         }
@@ -212,23 +203,36 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         public DeclarationType declarationType(ParseTreeNode root)
         {
+            LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
+            int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
+            int column = root.ChildNodes.ElementAt(1).Token.Location.Column;
+            //Type normal
             if (root.ChildNodes.Count == 4)
             {
-                LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
-                return new DeclarationType(ids, type(root.ChildNodes.ElementAt(2)), root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
-            }
+                Type_ t = type(root.ChildNodes.ElementAt(2));
+                if (t == Type_.ID)
+                {
+                    String id = root.ChildNodes.ElementAt(2).Token.Text;
+                    return new DeclarationType(line, column, ids, t, Type_.DEFAULT, id, "", null, null, null);
+                }
+                else
+                {
+                    return new DeclarationType(line, column, ids, t, Type_.DEFAULT, "", "", null, null, null);
+                }
+            }//Type object
             else if (root.ChildNodes.Count == 6)
             {
-                LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
-                return new DeclarationType(ids, declarationList(root.ChildNodes.ElementAt(3)), root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
+                LinkedList<Instruction> dl = declarationList(root.ChildNodes.ElementAt(3));
+                return new DeclarationType(line,column,ids,Type_.ID,Type_.DEFAULT,"","",null,null,dl);
             }
             else
             {
-                LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
                 Type_ t1 = type(root.ChildNodes.ElementAt(4));
                 Type_ t2 = type(root.ChildNodes.ElementAt(7));
                 LinkedList<Expression> exp1=new LinkedList<Expression>();
                 LinkedList<Expression> exp2 = new LinkedList<Expression>();
+                String id1="";
+                String id2="";
                 if (t1 == Type_.SUBRANGE)
                 {
                     exp1.AddLast(expression(root.ChildNodes.ElementAt(4).ChildNodes.ElementAt(0)));
@@ -239,7 +243,15 @@ namespace _OLC2__Proyecto_1.Gramm
                     exp2.AddLast(expression(root.ChildNodes.ElementAt(7).ChildNodes.ElementAt(0)));
                     exp2.AddLast(expression(root.ChildNodes.ElementAt(7).ChildNodes.ElementAt(3)));
                 }
-                return new DeclarationType(ids, t1,t2 ,exp1,exp2, root.ChildNodes.ElementAt(1).Token.Location.Line, root.ChildNodes.ElementAt(1).Token.Location.Column);
+                if (t1 == Type_.ID)
+                {
+                    id1 = root.ChildNodes.ElementAt(4).Token.Text;
+                }
+                if (t2 == Type_.ID)
+                {
+                    id2 = root.ChildNodes.ElementAt(7).Token.Text;
+                }
+                return new DeclarationType(line,column,ids,t1,t2,id1,id2,exp1,exp2,null);
             }
         }
 

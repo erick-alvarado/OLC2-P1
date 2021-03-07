@@ -21,12 +21,21 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         {
             foreach(Instruction i in this.declara)
             {
-                object check = i.execute(environment);
-                if (check != null)
+                try
                 {
-                    Break a = (Break)check;
-                    throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
+                    object check = i.execute(environment);
+                    if (check != null)
+                    {
+                        Break a = (Break)check;
+                        Gramm.Analyzer.errors.Add(new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type));
+                        //throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
+                    }
                 }
+                catch (Exception e)
+                {
+                    Gramm.Analyzer.errors.Add((Error_)e);
+                }
+
             }
             return null;
         }

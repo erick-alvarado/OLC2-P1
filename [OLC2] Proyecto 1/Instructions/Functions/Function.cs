@@ -39,8 +39,26 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     throw new Error_(this.line, this.column, "Semantico", "La variable ya existe:" + this.id);
                 }
                 environment.saveVar(this.id, this, this.return_, "function");
-                this.environmentAux = new Environment_(environment, this.id);
-                
+
+                object val = null;
+                switch (this.return_)
+                {
+                    case Type_.BOOLEAN:
+                        val = false;
+                        break;
+                    case Type_.STRING:
+                        val = "";
+                        break;
+                    case Type_.INTEGER:
+                        val = 0;
+                        break;
+                    case Type_.REAL:
+                        val = 0.000000000000000000000000;
+                        break;
+                }
+                this.environmentAux = new Environment_(null, this.id);
+                this.environmentAux.saveVar(this.id, val, this.return_, "var");
+                this.environmentAux.prev= environment;
             }
             else
             {
@@ -50,7 +68,11 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     i.execute(this.environmentAux);
                 }
                 object obj = this.statements.execute(this.environmentAux);
-                if (obj != null)
+                if(this.return_!=Type_.VOID && obj == null)
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "La funcion debe retornar un valor de tipo:"+ Enum.GetName(typeof(Type_), this.return_));
+                }
+                if (obj != null && this.return_!=Type_.VOID)
                 {
                     Break a = null;
                     try
@@ -95,6 +117,10 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                         }
                         
                     }
+                }
+                else
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "El procedimiento no debe de retornar ningun valor" + Enum.GetName(typeof(Type_), this.return_));
                 }
 
             }
