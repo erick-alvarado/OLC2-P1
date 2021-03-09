@@ -1,30 +1,23 @@
-﻿program exFunction;
-var
-   a, b, ret : integer;
+﻿program factorial;
 
-(*function definition *)
-function max(num1, num2: integer): integer;
-var
-   (* local variable declaration *)
-   result: integer;
-
+function fact(n: integer): real;
 begin
-   if (num1 > num2) then
-   begin
-      result := num1
-   end;
-   else
-   begin
-      result := num2;
-   max := result;
-end;
+    if (n = 0) then
+    begin
+        fact := 1
+    end;
+    else
+    begin
+        fact := n * fact(n - 1);
+    end;
 end;
 
+var
+    n: integer;
+
 begin
-   a := 100;
-   b := 200;
-   (* calling a function to get max value *)
-   ret := max(a, b);
-   
-   writeln( 'Max value is : ', ret );
+    for n := 0 to 2 do
+    begin
+        writeln(n, '! = ', fact(n));
+    end;
 end.

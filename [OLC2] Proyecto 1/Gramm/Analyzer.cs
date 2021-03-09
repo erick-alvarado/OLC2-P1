@@ -107,9 +107,9 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         public Instruction declara(ParseTreeNode root)
         {
-            String tag = root.ChildNodes.ElementAt(0).Term.Name;
             if (root.ChildNodes.Count == 2)
             {
+                String tag = root.ChildNodes.ElementAt(0).Term.Name;
                 switch (tag)
                 {
                     case "var":
@@ -124,8 +124,9 @@ namespace _OLC2__Proyecto_1.Gramm
                     
                 }
             }
-            else
+            if (root.ChildNodes.Count == 1)
             {
+                String tag = root.ChildNodes.ElementAt(0).Term.Name;
                 switch (tag)
                 {
                     case "functionST":
@@ -134,7 +135,7 @@ namespace _OLC2__Proyecto_1.Gramm
                     
                 }
             }
-            return null;
+            return new Empty();
         }
         public LinkedList<Instruction> declarationListVar(ParseTreeNode root)
         {
@@ -407,7 +408,7 @@ namespace _OLC2__Proyecto_1.Gramm
                         return new If(e, s, s2, null);
                     }
             }
-                return null;
+                return new Empty();
         }
         public Instruction caseST(ParseTreeNode root)
         {
@@ -502,7 +503,9 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         public callFunction callFuncST(ParseTreeNode root)
         {
-            if (root.ChildNodes.Count == 5)
+            String tag = root.ChildNodes.ElementAt(0).Term.Name;
+
+            if (tag=="ID")
             {
                 String id = root.ChildNodes.ElementAt(0).Token.Text;
                 LinkedList<Expression> parameter = parameterList(root.ChildNodes.ElementAt(2));
@@ -513,9 +516,8 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             else
             {
-
+                return null;
             }
-            return null;
         }
         public callFunction2 callFuncST2(ParseTreeNode root)
         {

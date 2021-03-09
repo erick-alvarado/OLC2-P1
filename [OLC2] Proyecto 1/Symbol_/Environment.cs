@@ -44,6 +44,27 @@ namespace _OLC2__Proyecto_1.Symbol_
             
             return null;
         }
+        public Symbol saveVarActual(String id, object value, Type_ type, String type_name)
+        {
+            Environment_ env = this;
+            foreach (Symbol vari in env.variables)
+            {
+                if (vari.id == id)
+                {
+                    vari.value = value;
+                    if (vari.id == this.name)
+                    {
+                        return getVar(id);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            }
+            this.variables.AddLast(new Symbol(value, id, type, type_name));
+            return null;
+        }
 
         public Symbol getVar(String id)
         {
@@ -53,6 +74,22 @@ namespace _OLC2__Proyecto_1.Symbol_
                 foreach (Symbol vari in env.variables)
                 {
                     if (vari.id == id)
+                    {
+                        return vari;
+                    }
+                }
+                env = env.prev;
+            }
+            return null;
+        }
+        public Symbol getFunc(String id)
+        {
+            Environment_ env = this;
+            while (env != null)
+            {
+                foreach (Symbol vari in env.variables)
+                {
+                    if (vari.id == id && vari.type_name=="function")
                     {
                         return vari;
                     }

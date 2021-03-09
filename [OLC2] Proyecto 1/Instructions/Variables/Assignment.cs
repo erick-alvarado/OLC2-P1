@@ -28,9 +28,12 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 throw new Error_(this.line, this.column, "Semantico", "No existe la variable:"+this.id);
             }
             Return newVal = this.expression.execute(environment);
-            if (newVal.type != b.type)
+            if (newVal.type != b.type )
             {
-                throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);
+                if(!(b.type == Type_.REAL && newVal.type == Type_.INTEGER))
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);
+                }
             }
             b.value = newVal.value;
             return environment.saveVar(b.id, b.value, b.type, b.type_name);

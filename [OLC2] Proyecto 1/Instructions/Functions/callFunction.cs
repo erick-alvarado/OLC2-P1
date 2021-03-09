@@ -22,7 +22,8 @@ namespace _OLC2__Proyecto_1.Instructions
         }
         public override Return execute(Environment_ environment)
         {
-            Symbol b = environment.getVar(this.id);
+            
+            Symbol b = environment.getFunc(this.id);
             if (b == null)
             {
                 throw new Error_(this.line, this.column, "Semantico", "No existe la variable:" + this.id);
@@ -47,7 +48,7 @@ namespace _OLC2__Proyecto_1.Instructions
                     {
                         throw new Error_(i.line, i.column, "Semantico", "Tipo de parametro incorrecto:" + Enum.GetName(typeof(Type_), r.type) + " se esperaba:" + Enum.GetName(typeof(Type_), i.type));
                     }
-                    f.environmentAux.saveVar(id.id, r.value, r.type, "var");
+                    f.environmentAux.saveVarActual(id.id, r.value, r.type, "var");
                     index++;
                 }
             }

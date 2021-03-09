@@ -327,6 +327,7 @@ namespace _OLC2__Proyecto_1.Gramm
             procedureST.Rule = RPROCEDURE + ID + LEFTPAR + argumentList + RIGHTPAR +  SEMICOLON + declarationList + statements 
                 ;
             callFuncST.Rule = ID + LEFTPAR + parameterList + RIGHTPAR + SEMICOLON
+                | ID + LEFTPAR + parameterList + RIGHTPAR
                 | RGRAFICARTS + LEFTPAR + RIGHTPAR + SEMICOLON;
                 ;
 

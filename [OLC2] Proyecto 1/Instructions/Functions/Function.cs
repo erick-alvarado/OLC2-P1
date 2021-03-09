@@ -57,7 +57,10 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                         break;
                 }
                 this.environmentAux = new Environment_(null, this.id);
-                this.environmentAux.saveVar(this.id, val, this.return_, "var");
+                if(this.return_!= Type_.VOID)
+                {
+                    this.environmentAux.saveVar(this.id, val, this.return_, "var");
+                }
                 this.environmentAux.prev= environment;
             }
             else
