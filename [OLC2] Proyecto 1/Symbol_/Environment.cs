@@ -8,7 +8,7 @@ namespace _OLC2__Proyecto_1.Symbol_
 {
     public class Environment_
     {
-        private LinkedList<Symbol> variables;
+        public LinkedList<Symbol> variables;
         public Environment_ prev;
         public String name;
         public Environment_(Environment_ prev = null, String name="")

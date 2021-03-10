@@ -21,6 +21,7 @@ namespace _OLC2__Proyecto_1.Gramm
         public static String output;
         public static List<Error_> errors= new List<Error_>();
         public ParseTreeNode root;
+        public Environment_ environment;
         public Analyzer()
         {
             output = "";
@@ -33,7 +34,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
             ParseTree tree = parser.Parse(input);
             root = tree.Root;
-            Environment_ environment = new Environment_(null,"Global$");
+            environment = new Environment_(null,"Global$");
             ErrorHandler errorHandler = new ErrorHandler(tree, root);
 
             if (!errorHandler.hasErrors())

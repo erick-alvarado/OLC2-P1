@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Text;
+using _OLC2__Proyecto_1.Symbol_;
+using _OLC2__Proyecto_1.Instructions.Functions;
 
 namespace _OLC2__Proyecto_1
 {
@@ -38,7 +40,15 @@ namespace _OLC2__Proyecto_1
 
         private void toolStripDropDownButton1_Click(object sender, EventArgs e)
         {
+            try
+            {
+                generateAst(n.root);
 
+            }
+            catch (Exception eaaaa)
+            {
+
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -129,7 +139,7 @@ namespace _OLC2__Proyecto_1
         }
         private void tablaDeSimbolosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            generateAst(n.root);
+            
         }
 
         private static void SaveToFile(String text, string filename)
@@ -137,6 +147,41 @@ namespace _OLC2__Proyecto_1
             TextWriter tw = new StreamWriter(filename);
             tw.WriteLine(text);
             tw.Close();
+        }
+        private void setVariables(Environment_ environment)
+        {
+            foreach(Symbol b in environment.variables)
+            {
+                data1.Rows.Add(b.id, b.type, b.type_name, environment.name, b.value);
+                if (b.type_name == "function")
+                {
+                    Function temp = (Function)b.value;
+                    setVariables(temp.environmentAux);
+                }
+                if (b.type_name == "object")
+                {
+                    Environment_ temp = (Environment_)b.value;
+                    setVariables(temp);
+                }
+
+            }
+        }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            data1.Rows.Clear();
+            data1.Refresh();
+            setVariables(n.environment);
+            data1.Sort(this.data1.Columns["Environment"], ListSortDirection.Descending);
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
