@@ -106,19 +106,20 @@ namespace _OLC2__Proyecto_1
             // tablaDeSimbolosToolStripMenuItem
             // 
             this.tablaDeSimbolosToolStripMenuItem.Name = "tablaDeSimbolosToolStripMenuItem";
-            this.tablaDeSimbolosToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.tablaDeSimbolosToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.tablaDeSimbolosToolStripMenuItem.Text = "Tabla de simbolos";
+            this.tablaDeSimbolosToolStripMenuItem.Click += new System.EventHandler(this.tablaDeSimbolosToolStripMenuItem_Click);
             // 
             // astToolStripMenuItem
             // 
             this.astToolStripMenuItem.Name = "astToolStripMenuItem";
-            this.astToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.astToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.astToolStripMenuItem.Text = "Ast";
             // 
             // erroresToolStripMenuItem
             // 
             this.erroresToolStripMenuItem.Name = "erroresToolStripMenuItem";
-            this.erroresToolStripMenuItem.Size = new System.Drawing.Size(212, 26);
+            this.erroresToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
             this.erroresToolStripMenuItem.Text = "Errores";
             // 
             // textBox1
@@ -131,6 +132,7 @@ namespace _OLC2__Proyecto_1
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox1.Size = new System.Drawing.Size(1350, 419);
             this.textBox1.TabIndex = 3;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // textBox2
             // 

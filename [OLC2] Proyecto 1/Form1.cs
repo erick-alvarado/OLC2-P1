@@ -1,4 +1,6 @@
 ﻿using _OLC2__Proyecto_1.Gramm;
+using _OLC2__Proyecto_1.Reports;
+using Irony.Parsing;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +16,10 @@ namespace _OLC2__Proyecto_1
 {
     public partial class Form1 : Form
     {
-        public Form1()
+
+        private Dot graphviz;
+        private Analyzer n;
+    public Form1()
         {
             InitializeComponent();
         }
@@ -73,7 +78,7 @@ namespace _OLC2__Proyecto_1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Analyzer n = new Analyzer();
+            n = new Analyzer();
           
             textBox2.Text= n.analyze(textBox1.Text);
 
@@ -87,6 +92,21 @@ namespace _OLC2__Proyecto_1
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        private static void generateAst(ParseTreeNode root)
+        {
+            String graphDot = Dot.getDot(root);
+            Console.WriteLine(graphDot);
+        }
+
+        private void tablaDeSimbolosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            generateAst(n.root);
         }
     }
 }

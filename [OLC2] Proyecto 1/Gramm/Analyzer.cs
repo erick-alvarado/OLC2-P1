@@ -20,6 +20,7 @@ namespace _OLC2__Proyecto_1.Gramm
     {
         public static String output;
         public static List<Error_> errors= new List<Error_>();
+        public ParseTreeNode root;
         public Analyzer()
         {
             output = "";
@@ -31,7 +32,7 @@ namespace _OLC2__Proyecto_1.Gramm
             Parser parser = new Parser(language);
 
             ParseTree tree = parser.Parse(input);
-            ParseTreeNode root = tree.Root;
+            root = tree.Root;
             Environment_ environment = new Environment_(null,"Global$");
             ErrorHandler errorHandler = new ErrorHandler(tree, root);
 
@@ -62,7 +63,7 @@ namespace _OLC2__Proyecto_1.Gramm
             return output;
         }
         
-        public LinkedList<Instruction> start(ParseTreeNode root)
+        private LinkedList<Instruction> start(ParseTreeNode root)
         {
             LinkedList<Instruction> list = globalVariables(root.ChildNodes.ElementAt(3));
             Main main = new Main(instructionList(root.ChildNodes.ElementAt(4).ChildNodes.ElementAt(1)));
@@ -70,7 +71,7 @@ namespace _OLC2__Proyecto_1.Gramm
             return list;
         }
         //GLOBAL VARIABLES
-        public LinkedList<Instruction> globalVariables(ParseTreeNode root)
+        private LinkedList<Instruction> globalVariables(ParseTreeNode root)
         {
             String tag = root.ChildNodes.ElementAt(0).Term.Name;
             switch (tag)
@@ -82,7 +83,7 @@ namespace _OLC2__Proyecto_1.Gramm
                     return new LinkedList<Instruction>();
             }
         }
-        public Assignment assignmentST(ParseTreeNode root)
+        private Assignment assignmentST(ParseTreeNode root)
         {
             int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
             int column = root.ChildNodes.ElementAt(1).Token.Location.Column;
@@ -90,7 +91,7 @@ namespace _OLC2__Proyecto_1.Gramm
             return new Assignment(line, column, id, expression(root.ChildNodes.ElementAt(2)));
         }
         //DECLARATION
-        public LinkedList<Instruction> declarationList(ParseTreeNode root)
+        private LinkedList<Instruction> declarationList(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 2)
             {
@@ -105,7 +106,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 return list;
             }
         }
-        public Instruction declara(ParseTreeNode root)
+        private Instruction declara(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 2)
             {
@@ -140,7 +141,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             return new Empty();
         }
-        public LinkedList<Instruction> declarationListVar(ParseTreeNode root)
+        private LinkedList<Instruction> declarationListVar(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 3)
             {
@@ -155,7 +156,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 return list;
             }
         }
-        public LinkedList<Instruction> declarationListType(ParseTreeNode root)
+        private LinkedList<Instruction> declarationListType(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 2)
             {
@@ -170,7 +171,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 return list;
             }
         }
-        public DeclarationVar declarationVar(ParseTreeNode root)
+        private DeclarationVar declarationVar(ParseTreeNode root)
         {
             int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
             int column = root.ChildNodes.ElementAt(1).Token.Location.Line;
@@ -205,7 +206,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
             }
         }
-        public DeclarationType declarationType(ParseTreeNode root)
+        private DeclarationType declarationType(ParseTreeNode root)
         {
             LinkedList<Access> ids = idList(root.ChildNodes.ElementAt(0));
             int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
@@ -259,7 +260,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
         }
 
-        public LinkedList<Instruction> declaration(ParseTreeNode root)
+        private LinkedList<Instruction> declaration(ParseTreeNode root)
         {
             LinkedList<Instruction> l = new LinkedList<Instruction>();
             int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
@@ -267,7 +268,7 @@ namespace _OLC2__Proyecto_1.Gramm
             l.AddLast(new Declaration(root.ChildNodes.ElementAt(0).Token.Text, expression(root.ChildNodes.ElementAt(2)),line,column ));
             return l;
         }
-        public LinkedList<Access> idList(ParseTreeNode root)
+        private LinkedList<Access> idList(ParseTreeNode root)
         {
             LinkedList<Access> l = new LinkedList<Access>();
             if(root.ChildNodes.Count == 0)
@@ -288,7 +289,7 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         
         //INSTRUCTIONS
-        public LinkedList<Instruction> instructionList(ParseTreeNode root)
+        private LinkedList<Instruction> instructionList(ParseTreeNode root)
         {
 
             if (root.ChildNodes.Count == 2)
@@ -305,7 +306,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
 
         }
-        public Instruction instruction(ParseTreeNode root)
+        private Instruction instruction(ParseTreeNode root)
         {
             String tag = "";
             if (root.ChildNodes.Count != 0)
@@ -352,7 +353,7 @@ namespace _OLC2__Proyecto_1.Gramm
                     return new Empty();
             }
         }
-        public Instruction printST(ParseTreeNode root)
+        private Instruction printST(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 2)
             {
@@ -373,7 +374,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 return new Print(e, true);
             }
         }
-        public LinkedList<Expression> expressionList(ParseTreeNode root)
+        private LinkedList<Expression> expressionList(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 3)
             {
@@ -390,7 +391,7 @@ namespace _OLC2__Proyecto_1.Gramm
         }
 
         //CONDITIONS
-        public Instruction ifST(ParseTreeNode root)
+        private Instruction ifST(ParseTreeNode root)
         {
             Expression e = expression(root.ChildNodes.ElementAt(1));
             Statement s = statements(root.ChildNodes.ElementAt(3));
@@ -413,7 +414,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
                 return new Empty();
         }
-        public Instruction caseST(ParseTreeNode root)
+        private Instruction caseST(ParseTreeNode root)
         {
             Expression exp = expression(root.ChildNodes.ElementAt(1));
             LinkedList<CaseList> caselist = caseList(root.ChildNodes.ElementAt(3));
@@ -430,7 +431,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 return new Case(line, column,exp, caselist, state);
             }
         }
-        public LinkedList<CaseList> caseList(ParseTreeNode root)
+        private LinkedList<CaseList> caseList(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 4)
             {
@@ -447,7 +448,7 @@ namespace _OLC2__Proyecto_1.Gramm
         }
 
         //LOOPS
-        public Instruction whileST(ParseTreeNode root)
+        private Instruction whileST(ParseTreeNode root)
         {
             Expression e = expression(root.ChildNodes.ElementAt(1));
             Statement st = statements(root.ChildNodes.ElementAt(3));
@@ -455,7 +456,7 @@ namespace _OLC2__Proyecto_1.Gramm
             int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
             return new While(line,column,e,st);
         }
-        public Instruction repeatUntilST(ParseTreeNode root)
+        private Instruction repeatUntilST(ParseTreeNode root)
         {
             Expression e = expression(root.ChildNodes.ElementAt(3));
             Statement st = statements(root.ChildNodes.ElementAt(1));
@@ -463,7 +464,7 @@ namespace _OLC2__Proyecto_1.Gramm
             int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
             return new RepeatUntil(line, column, e, st);
         }
-        public Instruction forDoST(ParseTreeNode root)
+        private Instruction forDoST(ParseTreeNode root)
         {
             Assignment ass = assignmentST(root.ChildNodes.ElementAt(1));
             Expression e = expression(root.ChildNodes.ElementAt(3));
@@ -483,7 +484,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
 
         //FUNCTIONS
-        public Function functionST(ParseTreeNode root)
+        private Function functionST(ParseTreeNode root)
         {
             int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
             int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
@@ -494,7 +495,7 @@ namespace _OLC2__Proyecto_1.Gramm
             Type_ typ = type(root.ChildNodes.ElementAt(6));
             return new Function(line,column,id,argument,declaration,statement,typ);
         }
-        public Function procedureST(ParseTreeNode root)
+        private Function procedureST(ParseTreeNode root)
         {
             int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
             int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
@@ -504,7 +505,7 @@ namespace _OLC2__Proyecto_1.Gramm
             Statement statement = statements(root.ChildNodes.ElementAt(7));
             return new Function(line, column, id, argument, declaration, statement, Type_.VOID);
         }
-        public callFunction callFuncST(ParseTreeNode root)
+        private callFunction callFuncST(ParseTreeNode root)
         {
             String tag = root.ChildNodes.ElementAt(0).Term.Name;
 
@@ -522,7 +523,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 return null;
             }
         }
-        public callFunction2 callFuncST2(ParseTreeNode root)
+        private callFunction2 callFuncST2(ParseTreeNode root)
         {
             String tag = root.ChildNodes.ElementAt(0).Term.Name;
 
@@ -540,7 +541,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 return null;
             }
         }
-        public LinkedList<Expression> parameterList(ParseTreeNode root)
+        private LinkedList<Expression> parameterList(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 3)
             {
@@ -564,7 +565,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
         }
         
-        public LinkedList<Instruction> argumentList(ParseTreeNode root)
+        private LinkedList<Instruction> argumentList(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 3)
             {
@@ -588,7 +589,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 }
             }
         }
-        public Argument argument(ParseTreeNode root)
+        private Argument argument(ParseTreeNode root)
         {
             
             if (root.ChildNodes.Count == 3)
@@ -611,11 +612,11 @@ namespace _OLC2__Proyecto_1.Gramm
             }
         }
 
-        public Statement statements(ParseTreeNode root)
+        private Statement statements(ParseTreeNode root)
         {
                 return new Statement(instructionList(root.ChildNodes.ElementAt(1)), root.ChildNodes.ElementAt(0).Token.Location.Line, root.ChildNodes.ElementAt(0).Token.Location.Column);
         }
-        public Type_ type(ParseTreeNode root)
+        private Type_ type(ParseTreeNode root)
         {
             String tag = "";
             if (root.ChildNodes.Count == 0)
@@ -646,7 +647,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             return Type_.NULL;
         }
-        public Expression expression(ParseTreeNode root)
+        private Expression expression(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 3)
             {
@@ -703,7 +704,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             return null;
         }
-        public Expression finalExp(ParseTreeNode root)
+        private Expression finalExp(ParseTreeNode root)
         {
             if (root.ChildNodes.Count == 3)
             {
@@ -752,7 +753,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 return null;
             }
         }
-        public Access access(ParseTreeNode root)
+        private Access access(ParseTreeNode root)
         {
             int line = root.Token.Location.Line;
             int column = root.Token.Location.Column;
