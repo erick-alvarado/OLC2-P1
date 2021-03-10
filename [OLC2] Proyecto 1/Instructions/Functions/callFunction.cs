@@ -66,20 +66,20 @@ namespace _OLC2__Proyecto_1.Instructions
                 {
                     if (i.rvar)
                     {
-                        if (i.type == Type_.ID)
+                        foreach (Access a in i.idList)
                         {
-                            foreach (Access a in i.idList)
+                            Symbol value = f.environmentAux.getVar(a.getId());
+                            try
                             {
-                                Symbol value = f.environmentAux.getVar(a.getId());
-                                try
+                                if (value != null)
                                 {
                                     Access atemp = (Access)this.parameterList.ElementAt(index);
                                     environment.saveVar(atemp.getId(), value.value, value.type, value.type_name);
                                 }
-                                catch (Exception e)
-                                {
+                            }
+                            catch (Exception e)
+                            {
 
-                                }
                             }
                         }
                     }

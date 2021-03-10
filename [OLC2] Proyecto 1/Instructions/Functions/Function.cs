@@ -123,7 +123,10 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                 }
                 else
                 {
-                    throw new Error_(this.line, this.column, "Semantico", "El procedimiento no debe de retornar ningun valor" + Enum.GetName(typeof(Type_), this.return_));
+                    if (obj != null)
+                    {
+                        throw new Error_(this.line, this.column, "Semantico", "El procedimiento no debe de retornar ningun valor" + Enum.GetName(typeof(Type_), this.return_));
+                    }
                 }
 
             }

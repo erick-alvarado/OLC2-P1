@@ -132,7 +132,10 @@ namespace _OLC2__Proyecto_1.Gramm
                     case "functionST":
                         Function func = functionST(root.ChildNodes.ElementAt(0));
                         return func;
-                    
+                    case "procedureST":
+                        Function proc = procedureST(root.ChildNodes.ElementAt(0));
+                        return proc;
+
                 }
             }
             return new Empty();
@@ -521,7 +524,9 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         public callFunction2 callFuncST2(ParseTreeNode root)
         {
-            if (root.ChildNodes.Count == 5)
+            String tag = root.ChildNodes.ElementAt(0).Term.Name;
+
+            if (tag == "ID")
             {
                 String id = root.ChildNodes.ElementAt(0).Token.Text;
                 LinkedList<Expression> parameter = parameterList(root.ChildNodes.ElementAt(2));
@@ -532,9 +537,8 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             else
             {
-
+                return null;
             }
-            return null;
         }
         public LinkedList<Expression> parameterList(ParseTreeNode root)
         {
@@ -565,7 +569,7 @@ namespace _OLC2__Proyecto_1.Gramm
             if (root.ChildNodes.Count == 3)
             {
                 LinkedList<Instruction> list = argumentList(root.ChildNodes.ElementAt(0));
-                list.AddLast(argument(root.ChildNodes.ElementAt(1)));
+                list.AddLast(argument(root.ChildNodes.ElementAt(2)));
                 return list;
             }
             else
