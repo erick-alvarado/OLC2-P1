@@ -166,6 +166,13 @@ namespace _OLC2__Proyecto_1
 
             }
         }
+        public void setErrors(List<Error_> list)
+        {
+            foreach(Error_ e in list)
+            {
+                data2.Rows.Add(e.type, e.msg, e.scope, e.line, e.column);
+            }
+        }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -176,6 +183,11 @@ namespace _OLC2__Proyecto_1
             data1.Rows.Clear();
             data1.Refresh();
             setVariables(n.environment);
+            data1.Sort(this.data1.Columns["Environment"], ListSortDirection.Descending);
+
+            data2.Rows.Clear();
+            data2.Refresh();
+            setErrors(Analyzer.errors);
             data1.Sort(this.data1.Columns["Environment"], ListSortDirection.Descending);
         }
 

@@ -51,13 +51,18 @@ namespace _OLC2__Proyecto_1
             this.Environment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label4 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.data2 = new System.Windows.Forms.DataGridView();
+            this.Type_ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Environment_ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Line = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data2)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -187,7 +192,7 @@ namespace _OLC2__Proyecto_1
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Controls.Add(this.data2);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.label3);
@@ -283,14 +288,56 @@ namespace _OLC2__Proyecto_1
             this.label4.Text = "Error";
             this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
-            // dataGridView1
+            // data2
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(198, 458);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.Size = new System.Drawing.Size(240, 150);
-            this.dataGridView1.TabIndex = 10;
+            this.data2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.data2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Type_,
+            this.Description,
+            this.Environment_,
+            this.Line,
+            this.Column});
+            this.data2.Location = new System.Drawing.Point(198, 458);
+            this.data2.Name = "data2";
+            this.data2.RowHeadersWidth = 51;
+            this.data2.RowTemplate.Height = 24;
+            this.data2.Size = new System.Drawing.Size(922, 150);
+            this.data2.TabIndex = 10;
+            // 
+            // Type_
+            // 
+            this.Type_.HeaderText = "Type";
+            this.Type_.MinimumWidth = 6;
+            this.Type_.Name = "Type_";
+            this.Type_.Width = 75;
+            // 
+            // Description
+            // 
+            this.Description.HeaderText = "Description";
+            this.Description.MinimumWidth = 6;
+            this.Description.Name = "Description";
+            this.Description.Width = 320;
+            // 
+            // Environment_
+            // 
+            this.Environment_.HeaderText = "Environment";
+            this.Environment_.MinimumWidth = 6;
+            this.Environment_.Name = "Environment_";
+            this.Environment_.Width = 125;
+            // 
+            // Line
+            // 
+            this.Line.HeaderText = "Line";
+            this.Line.MinimumWidth = 6;
+            this.Line.Name = "Line";
+            this.Line.Width = 50;
+            // 
+            // Column
+            // 
+            this.Column.HeaderText = "Column";
+            this.Column.MinimumWidth = 6;
+            this.Column.Name = "Column";
+            this.Column.Width = 50;
             // 
             // Form1
             // 
@@ -310,7 +357,7 @@ namespace _OLC2__Proyecto_1
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -339,7 +386,12 @@ namespace _OLC2__Proyecto_1
         private System.Windows.Forms.DataGridViewTextBoxColumn Environment;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView data2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type_;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Description;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Environment_;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Line;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column;
     }
 }
 

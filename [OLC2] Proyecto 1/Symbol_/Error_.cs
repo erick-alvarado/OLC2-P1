@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _OLC2__Proyecto_1.Symbol_
 {
-    class Error_ : Exception
+    public class Error_ : Exception
     {
         public int line, column;
         public String type, msg,scope;
