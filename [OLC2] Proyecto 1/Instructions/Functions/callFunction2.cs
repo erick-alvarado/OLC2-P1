@@ -1,6 +1,7 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Instructions.Functions;
+using _OLC2__Proyecto_1.Reports;
 using _OLC2__Proyecto_1.Symbol_;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,16 @@ namespace _OLC2__Proyecto_1.Instructions
         }
         public override object execute(Environment_ environment)
         {
+            if (this.line == -1010)
+            {
+                Environment_ tt = environment;
+                while (tt.prev != null)
+                {
+                    tt = tt.prev;
+                }
+                Graph.generateVar(tt);
+                return null;
+            }
 
             Symbol b = environment.getFunc(this.id);
             if (b == null)

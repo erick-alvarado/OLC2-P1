@@ -1,6 +1,7 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Instructions.Functions;
+using _OLC2__Proyecto_1.Reports;
 using _OLC2__Proyecto_1.Symbol_;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,10 @@ namespace _OLC2__Proyecto_1.Instructions
         }
         public override Return execute(Environment_ environment)
         {
-            
+            if(this.line== -1010)
+            {
+                throw new Error_(this.line, this.column, "Semantico", "No se puede declarar graficar_ts en una expresion:" + this.id);
+            }
             Symbol b = environment.getFunc(this.id);
             if (b == null)
             {

@@ -87,6 +87,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reports\Dot.cs" />
+    <Compile Include="Reports\Graph.cs" />
     <Compile Include="Symbol_\Array.cs" />
     <Compile Include="Symbol_\Empty.cs" />
     <Compile Include="Symbol_\Environment.cs" />

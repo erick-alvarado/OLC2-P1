@@ -20,8 +20,6 @@ namespace _OLC2__Proyecto_1
 {
     public partial class Form1 : Form
     {
-
-        private Dot graphviz;
         private Analyzer n;
     public Form1()
         {
@@ -40,15 +38,7 @@ namespace _OLC2__Proyecto_1
 
         private void toolStripDropDownButton1_Click(object sender, EventArgs e)
         {
-            try
-            {
-                generateAst(n.root);
-
-            }
-            catch (Exception eaaaa)
-            {
-
-            }
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -110,44 +100,14 @@ namespace _OLC2__Proyecto_1
         {
 
         }
-        private static void generateAst(ParseTreeNode root)
-        {
-            String graphDot = Dot.getDot(root);
-            var filename = "tree.txt";
-            SaveToFile(graphDot, filename);
-            System.Diagnostics.Process.Start(filename);
-            string path = Directory.GetCurrentDirectory();
-            GenerateGraph(filename, path);
-            System.Diagnostics.Process.Start("tree.svg");
-
-        }
-        private static void GenerateGraph(string filename, string path)
-        {
-            try
-            {
-                var command = string.Format("dot -Tsvg \"{0}\" -o \"{1}\"", Path.Combine(path, filename), Path.Combine(path, filename.Replace(".txt", ".svg")));
-                var procStartInfo = new System.Diagnostics.ProcessStartInfo("cmd", "/C " + command);
-                var proc = new System.Diagnostics.Process();
-                proc.StartInfo = procStartInfo;
-                proc.Start();
-                proc.WaitForExit();
-            } 
-            catch(Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
+       
+        
         private void tablaDeSimbolosToolStripMenuItem_Click(object sender, EventArgs e)
         {
             
         }
 
-        private static void SaveToFile(String text, string filename)
-        {
-            TextWriter tw = new StreamWriter(filename);
-            tw.WriteLine(text);
-            tw.Close();
-        }
+        
         private void setVariables(Environment_ environment)
         {
             foreach(Symbol b in environment.variables)
@@ -194,6 +154,30 @@ namespace _OLC2__Proyecto_1
         private void label4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void aSTToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Graph.generateAst(this.n.root);
+            }
+            catch (Exception eaaaa)
+            {
+
+            }
+        }
+
+        private void vARToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Graph.generateVar(this.n.environment);
+            }
+            catch (Exception eaaaa)
+            {
+
+            }
         }
     }
 }

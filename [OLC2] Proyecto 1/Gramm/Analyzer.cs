@@ -521,7 +521,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             else
             {
-                return null;
+                return new callFunction(-1010,0,"",null);
             }
         }
         private callFunction2 callFuncST2(ParseTreeNode root)
@@ -539,7 +539,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             else
             {
-                return null;
+                return new callFunction2(-1010, 0, "", null);
             }
         }
         private LinkedList<Expression> parameterList(ParseTreeNode root)
@@ -552,7 +552,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             else
             {
-                if (root.ChildNodes.ElementAt(0).ChildNodes.Count != 0)
+                if (root.ChildNodes.Count != 0)
                 {
                     LinkedList<Expression> list = new LinkedList<Expression>();
                     list.AddLast(expression(root.ChildNodes.ElementAt(0)));
@@ -576,7 +576,7 @@ namespace _OLC2__Proyecto_1.Gramm
             }
             else
             {
-                if (root.ChildNodes.ElementAt(0).ChildNodes.Count != 0)
+                if (root.ChildNodes.Count != 0)
                 {
                     LinkedList<Instruction> list = new LinkedList<Instruction>();
                     list.AddLast(argument(root.ChildNodes.ElementAt(0)));
@@ -585,7 +585,6 @@ namespace _OLC2__Proyecto_1.Gramm
                 else
                 {
                     LinkedList<Instruction> list = new LinkedList<Instruction>();
-                    list.AddLast(new Empty());
                     return list;
                 }
             }

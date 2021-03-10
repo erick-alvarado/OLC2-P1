@@ -42,27 +42,29 @@ namespace _OLC2__Proyecto_1
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.data1 = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.Nam = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Type_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Environment = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label4 = new System.Windows.Forms.Label();
             this.data2 = new System.Windows.Forms.DataGridView();
             this.Type_ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Environment_ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Line = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label4 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.data1 = new System.Windows.Forms.DataGridView();
+            this.Nam = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Type_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Environment = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.aSTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vARToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.data1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.data2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data1)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -95,7 +97,7 @@ namespace _OLC2__Proyecto_1
             this.toolStripDropDownButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1326, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1326, 31);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -105,18 +107,21 @@ namespace _OLC2__Proyecto_1
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(98, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(98, 28);
             this.toolStripButton1.Text = "Abrir archivo";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
             // 
             // toolStripDropDownButton1
             // 
             this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aSTToolStripMenuItem,
+            this.vARToolStripMenuItem});
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(49, 24);
-            this.toolStripDropDownButton1.Text = "AST";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(68, 28);
+            this.toolStripDropDownButton1.Text = "Report";
             this.toolStripDropDownButton1.Click += new System.EventHandler(this.toolStripDropDownButton1_Click);
             // 
             // textBox1
@@ -205,89 +210,6 @@ namespace _OLC2__Proyecto_1
             this.tabPage2.Text = "Tablas";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // data1
-            // 
-            this.data1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.data1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Nam,
-            this.Type,
-            this.Type_name,
-            this.Environment,
-            this.Value});
-            this.data1.Location = new System.Drawing.Point(198, 75);
-            this.data1.Name = "data1";
-            this.data1.RowHeadersWidth = 51;
-            this.data1.RowTemplate.Height = 24;
-            this.data1.Size = new System.Drawing.Size(922, 271);
-            this.data1.TabIndex = 0;
-            this.data1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(606, 22);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(140, 36);
-            this.label3.TabIndex = 7;
-            this.label3.Text = "Variables";
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(1164, 24);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(109, 34);
-            this.button3.TabIndex = 8;
-            this.button3.Text = "Actualizar";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click_1);
-            // 
-            // Nam
-            // 
-            this.Nam.HeaderText = "Name";
-            this.Nam.MinimumWidth = 6;
-            this.Nam.Name = "Nam";
-            this.Nam.Width = 125;
-            // 
-            // Type
-            // 
-            this.Type.HeaderText = "Type";
-            this.Type.MinimumWidth = 6;
-            this.Type.Name = "Type";
-            this.Type.Width = 125;
-            // 
-            // Type_name
-            // 
-            this.Type_name.HeaderText = "Type_name";
-            this.Type_name.MinimumWidth = 6;
-            this.Type_name.Name = "Type_name";
-            this.Type_name.Width = 125;
-            // 
-            // Environment
-            // 
-            this.Environment.HeaderText = "Environment";
-            this.Environment.MinimumWidth = 6;
-            this.Environment.Name = "Environment";
-            this.Environment.Width = 125;
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Value";
-            this.Value.MinimumWidth = 6;
-            this.Value.Name = "Value";
-            this.Value.Width = 125;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(596, 370);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(82, 36);
-            this.label4.TabIndex = 9;
-            this.label4.Text = "Error";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
             // data2
             // 
             this.data2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -339,6 +261,103 @@ namespace _OLC2__Proyecto_1
             this.Column.Name = "Column";
             this.Column.Width = 50;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(596, 370);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(82, 36);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Error";
+            this.label4.Click += new System.EventHandler(this.label4_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(1164, 24);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(109, 34);
+            this.button3.TabIndex = 8;
+            this.button3.Text = "Actualizar";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(606, 22);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(140, 36);
+            this.label3.TabIndex = 7;
+            this.label3.Text = "Variables";
+            // 
+            // data1
+            // 
+            this.data1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.data1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Nam,
+            this.Type,
+            this.Type_name,
+            this.Environment,
+            this.Value});
+            this.data1.Location = new System.Drawing.Point(198, 75);
+            this.data1.Name = "data1";
+            this.data1.RowHeadersWidth = 51;
+            this.data1.RowTemplate.Height = 24;
+            this.data1.Size = new System.Drawing.Size(922, 271);
+            this.data1.TabIndex = 0;
+            this.data1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // Nam
+            // 
+            this.Nam.HeaderText = "Name";
+            this.Nam.MinimumWidth = 6;
+            this.Nam.Name = "Nam";
+            this.Nam.Width = 125;
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Type";
+            this.Type.MinimumWidth = 6;
+            this.Type.Name = "Type";
+            this.Type.Width = 125;
+            // 
+            // Type_name
+            // 
+            this.Type_name.HeaderText = "Type_name";
+            this.Type_name.MinimumWidth = 6;
+            this.Type_name.Name = "Type_name";
+            this.Type_name.Width = 125;
+            // 
+            // Environment
+            // 
+            this.Environment.HeaderText = "Environment";
+            this.Environment.MinimumWidth = 6;
+            this.Environment.Name = "Environment";
+            this.Environment.Width = 125;
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Value";
+            this.Value.MinimumWidth = 6;
+            this.Value.Name = "Value";
+            this.Value.Width = 125;
+            // 
+            // aSTToolStripMenuItem
+            // 
+            this.aSTToolStripMenuItem.Name = "aSTToolStripMenuItem";
+            this.aSTToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.aSTToolStripMenuItem.Text = "AST";
+            this.aSTToolStripMenuItem.Click += new System.EventHandler(this.aSTToolStripMenuItem_Click);
+            // 
+            // vARToolStripMenuItem
+            // 
+            this.vARToolStripMenuItem.Name = "vARToolStripMenuItem";
+            this.vARToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.vARToolStripMenuItem.Text = "VAR";
+            this.vARToolStripMenuItem.Click += new System.EventHandler(this.vARToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -356,8 +375,8 @@ namespace _OLC2__Proyecto_1
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.data1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.data2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -392,6 +411,8 @@ namespace _OLC2__Proyecto_1
         private System.Windows.Forms.DataGridViewTextBoxColumn Environment_;
         private System.Windows.Forms.DataGridViewTextBoxColumn Line;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column;
+        private System.Windows.Forms.ToolStripMenuItem aSTToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem vARToolStripMenuItem;
     }
 }
 
