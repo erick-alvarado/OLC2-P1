@@ -39,7 +39,7 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
                     }
                     else if (a.type.Equals("CONTINUE"))
                     {
-                        continue;
+                        
                     }
                     else
                     {
