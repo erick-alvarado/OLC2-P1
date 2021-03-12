@@ -50,9 +50,5 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         {
             this.line = line; this.column = column;
         }
-        public override object Clone()
-        {
-            return this.MemberwiseClone();
-        }
     }
 }

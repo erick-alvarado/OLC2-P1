@@ -3,6 +3,7 @@ using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Instructions.Functions;
 using _OLC2__Proyecto_1.Reports;
 using _OLC2__Proyecto_1.Symbol_;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +36,34 @@ namespace _OLC2__Proyecto_1.Instructions
             Function f = null;
             try
             {
-                Function temp = (Function)b.value;
-                f = (Function)temp.Clone();
+                f = (Function)b.value;
+                Environment_ aux = f.environmentAux.prev;
+
+                f.environmentAux = new Environment_(null, this.id);
+
+                if (f.return_ != Type_.VOID)
+                {
+                    object val = null;
+                    switch (f.return_)
+                    {
+                        case Type_.BOOLEAN:
+                            val = false;
+                            break;
+                        case Type_.STRING:
+                            val = "";
+                            break;
+                        case Type_.INTEGER:
+                            val = 0;
+                            break;
+                        case Type_.REAL:
+                            val = 0.000000000000000000000000;
+                            break;
+                    }
+                    f.environmentAux.saveVar(f.id, val, f.return_, "var");
+                    f.initial = f.environmentAux.getVar(f.id);
+
+                }
+                f.environmentAux.prev = aux;
             }
             catch (Exception e)
             {
@@ -106,7 +133,6 @@ namespace _OLC2__Proyecto_1.Instructions
 
             return new Return(0, Type_.INTEGER);
         }
-
         public override void setLineColumn(int line, int column)
         {
             this.line = line; this.column = column;

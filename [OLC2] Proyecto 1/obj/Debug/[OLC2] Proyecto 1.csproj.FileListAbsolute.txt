@@ -10,3 +10,5 @@ C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1
 C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.csproj.CopyComplete
 C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.exe
 C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.pdb
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\Newtonsoft.Json.dll
+C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\Newtonsoft.Json.xml

@@ -65,9 +65,5 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
         {
             this.line = line; this.column = column;
         }
-        public override object Clone()
-        {
-            return this.MemberwiseClone();
-        }
     }
 }

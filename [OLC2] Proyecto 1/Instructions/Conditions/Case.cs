@@ -28,11 +28,29 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             foreach(CaseList c in this.caseList)
             {
                 c.setComparable(val);
-                exec = (bool) c.execute(environment);
-                if (exec == true)
+                object check = c.execute(environment);
+                try
                 {
-                    return null;
+                    Break a = (Break)check;
+                    if (a.type.Equals("CONTINUE"))
+                    {
+                        throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
+                    }
+                    else
+                    {
+                        return a;
+                    }
+                    
                 }
+                catch (Exception e)
+                {
+                    exec = (bool) check;
+                    if (exec == true)
+                    {
+                        return null;
+                    }
+                }
+                
             }
             if (this.statements != null)
             {
@@ -56,10 +74,6 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
         public override void setLineColumn(int line, int column)
         {
             this.line = line; this.column = column;
-        }
-        public override object Clone()
-        {
-            return this.MemberwiseClone();
         }
     }
 }

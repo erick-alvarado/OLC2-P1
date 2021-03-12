@@ -7,11 +7,11 @@ using _OLC2__Proyecto_1.Symbol_;
 
 namespace _OLC2__Proyecto_1.Abstract
 {
-    public abstract class Instruction: ICloneable
+    public abstract class Instruction
     {
         public int line, column;
 
-        public abstract object Clone();
+        
         public abstract object execute(Environment_ environment);
         public abstract void setLineColumn(int line, int column);
         

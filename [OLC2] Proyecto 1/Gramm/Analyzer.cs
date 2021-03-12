@@ -28,6 +28,7 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         public String analyze(String input)
         {
+            errors =new List<Error_>();
             Gramm grammar = new Gramm();
             LanguageData language = new LanguageData(grammar);
             Parser parser = new Parser(language);

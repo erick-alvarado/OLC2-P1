@@ -4,14 +4,18 @@ using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Symbol_;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace _OLC2__Proyecto_1.Instructions.Functions
 {
-    [Serializable()]
-    class Function : Instruction
+    //[Serializable()]
+    class Function : Instruction 
     {
         public String id;
         public LinkedList<Expression> parameterList = new LinkedList<Expression>();//Lo que trae de la llamada
@@ -21,6 +25,8 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
         public Type_ return_;
         public bool exec = true;
         public Environment_ environmentAux;
+
+
         public Symbol initial;
         public Function(int line, int column,string id, LinkedList<Instruction> argumentList, LinkedList<Instruction> declarationList, Statement statements, Type_ return_)
         {
@@ -31,11 +37,8 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
             this.return_ = return_;
             setLineColumn(line, column);
         }
-        public override object Clone()
-        {
-            return new Function(line,column,id,argumentList,declarationList,statements,return_);
-        }
-    public override object execute(Environment_ environment)
+
+        public override object execute(Environment_ environment)
         {
             if (this.exec)
             {
@@ -45,34 +48,11 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     throw new Error_(this.line, this.column, "Semantico", "La variable ya existe:" + this.id);
                 }
                 environment.saveVar(this.id, this, this.return_, "function");
-
-                object val = null;
-                switch (this.return_)
-                {
-                    case Type_.BOOLEAN:
-                        val = false;
-                        break;
-                    case Type_.STRING:
-                        val = "";
-                        break;
-                    case Type_.INTEGER:
-                        val = 0;
-                        break;
-                    case Type_.REAL:
-                        val = 0.000000000000000000000000;
-                        break;
-                }
-                this.environmentAux = new Environment_(null, this.id);
-                if(this.return_!= Type_.VOID)
-                {
-                    this.environmentAux.saveVar(this.id, val, this.return_, "var");
-                    this.initial = this.environmentAux.getVar(this.id);
-                }
-                this.environmentAux.prev= environment;
+                environmentAux = new Environment_(null, this.id);
+                environmentAux.prev = environment;
             }
             else
             {
-                
                 foreach (Instruction i in this.declarationList)
                 {
                     i.execute(this.environmentAux);
@@ -144,5 +124,6 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
         {
             this.line = line; this.column = column;
         }
+        
     }
 }

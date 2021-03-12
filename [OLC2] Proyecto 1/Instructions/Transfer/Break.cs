@@ -18,10 +18,6 @@ namespace _OLC2__Proyecto_1.Instructions.Transfer
             this.e = e;
             setLineColumn(line, column);
         }
-        public override object Clone()
-        {
-            return this.MemberwiseClone();
-        }
         public override object execute(Environment_ environment)
         {
             return new Break(this.line,this.column,this.type,this.e);
