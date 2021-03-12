@@ -41,7 +41,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             if (type == Type_.ID)
             {
                 Symbol temp = environment.getVar(this.id);
-                if (temp == null || temp.type_name=="var")
+                if (temp == null || temp.type_name=="var" || temp.type_name == "cons")
                 {
                     throw new Error_(this.line, this.column, "Semantico", "El tipo no existe: " + this.id);
                 }
@@ -74,7 +74,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             }
             foreach(Access e in idList)
             {
-                if (environment.getVar(e.getId()) != null)
+                if (environment.getVarActual(e.getId()) != null)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente:"+e.getId());
                 }
@@ -98,7 +98,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                                 break;
                         }
                     }
-                    environment.saveVar(e.getId(), val.value, type,"var");
+                    environment.saveVarActual(e.getId(), val.value, type,"var");
                 }
             }
             return null;
@@ -107,6 +107,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         {
             this.line = line;
             this.column = column;
+        }
+        public override object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

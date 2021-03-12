@@ -41,7 +41,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             {
                 //Declaracion Object
                 String id = this.idList.First().id;
-                if (environment.getVar(id) != null)
+                if (environment.getVarActual(id) != null)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente:"+id);
                 }
@@ -56,7 +56,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                         throw new Error_(a.line, a.column, "Semantico", "Sentencia fuera de contexto:" + a.type);
                     }
                 }
-                environment.saveVar(id, temp, type,"object");
+                environment.saveVarActual(id, temp, type,"object");
 
             }
             else if(this.type!=Type_.DEFAULT && this.type2 == Type_.DEFAULT && this.expression2 == null && this.expression == null)
@@ -64,7 +64,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 //Declaracion type normal
                 foreach (Access e in idList)
                 {
-                    Symbol b = environment.getVar(e.getId());
+                    Symbol b = environment.getVarActual(e.getId());
                     if ( b != null)
                     {
                         throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente");
@@ -73,11 +73,16 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                     {
                         if (this.type == Type_.ID)
                         {
-                            environment.saveVar(e.getId(), b.value, b.type, "type");
+                            Symbol temp = environment.getVar(this.idName);
+                            if (temp == null|| temp.type_name == "function" || temp.type_name == "var" || temp.type_name == "cons")
+                            {
+                                throw new Error_(this.line, this.column, "Semantico", "No existe el type:"+this.idName);
+                            }
+                            environment.saveVarActual(e.getId(), temp.value, temp.type, "type");
                         }
                         else
                         {
-                            environment.saveVar(e.getId(), null, type, "type");
+                            environment.saveVarActual(e.getId(), null, type, "type");
                         }
                     }
                 }
@@ -85,7 +90,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             else
             {//Declaracion array
                 String id = this.idList.First().id;
-                if (environment.getVar(id) != null)
+                if (environment.getVarActual(id) != null)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente:" + id);
                 }
@@ -108,24 +113,24 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                             {
                                 case Type_.BOOLEAN:
                                     Array l = new Array(s, e, this.idList.First().id, false, Type_.BOOLEAN);
-                                    environment.saveVar(this.idList.First().id, l, Type_.BOOLEAN, "array");
+                                    environment.saveVarActual(this.idList.First().id, l, Type_.BOOLEAN, "array");
                                     break;
                                 case Type_.STRING:
                                     Array l1 = new Array(s, e, this.idList.First().id, "", Type_.STRING);
-                                    environment.saveVar(this.idList.First().id, l1, Type_.STRING, "array");
+                                    environment.saveVarActual(this.idList.First().id, l1, Type_.STRING, "array");
                                     break;
                                 case Type_.INTEGER:
                                     Array l2 = new Array(s, e, this.idList.First().id, 0, Type_.INTEGER);
-                                    environment.saveVar(this.idList.First().id, l2, Type_.INTEGER, "array");
+                                    environment.saveVarActual(this.idList.First().id, l2, Type_.INTEGER, "array");
                                     break;
                                 case Type_.REAL:
                                     Array l3 = new Array(s, e, this.idList.First().id, 0, Type_.REAL);
-                                    environment.saveVar(this.idList.First().id, l3, Type_.REAL, "array");
+                                    environment.saveVarActual(this.idList.First().id, l3, Type_.REAL, "array");
                                     break;
                                 case Type_.ID:
                                     Symbol b = environment.getVar(this.idName2);
                                     Array l4 = new Array(s, e, this.idList.First().id, b.value, Type_.ID);
-                                    environment.saveVar(this.idList.First().id, l4, Type_.ID, "array");
+                                    environment.saveVarActual(this.idList.First().id, l4, Type_.ID, "array");
                                     break;
                                 default:
                                     throw new Error_(this.line, this.column, "Semantico", "No se puede hacer arrays de tipo:" + id);
@@ -154,6 +159,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         {
             this.line = line;
             this.column = column;
+        }
+        public override object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

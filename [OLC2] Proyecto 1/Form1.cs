@@ -11,8 +11,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
-using System.Text;
 using _OLC2__Proyecto_1.Symbol_;
 using _OLC2__Proyecto_1.Instructions.Functions;
 
@@ -178,6 +176,11 @@ namespace _OLC2__Proyecto_1
             {
 
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

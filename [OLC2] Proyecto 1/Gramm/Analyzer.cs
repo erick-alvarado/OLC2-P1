@@ -121,9 +121,8 @@ namespace _OLC2__Proyecto_1.Gramm
                         Declara list2 = new Declara(declarationListType(root.ChildNodes.ElementAt(1)));
                         return list2;
                     case "const":
-                        Declara list3 = new Declara(declaration(root.ChildNodes.ElementAt(1)));
+                        Declara list3 = new Declara(declarationListCons(root.ChildNodes.ElementAt(1)));
                         return list3;
-                    
                 }
             }
             if (root.ChildNodes.Count == 1)
@@ -169,6 +168,21 @@ namespace _OLC2__Proyecto_1.Gramm
             {
                 LinkedList<Instruction> list = new LinkedList<Instruction>();
                 list.AddLast(declarationType(root.ChildNodes.ElementAt(0)));
+                return list;
+            }
+        }
+        private LinkedList<Instruction> declarationListCons(ParseTreeNode root)
+        {
+            if (root.ChildNodes.Count == 2)
+            {
+                LinkedList<Instruction> list = declarationListCons(root.ChildNodes.ElementAt(0));
+                list.AddLast(declaration(root.ChildNodes.ElementAt(1)));
+                return list;
+            }
+            else
+            {
+                LinkedList<Instruction> list = new LinkedList<Instruction>();
+                list.AddLast(declaration(root.ChildNodes.ElementAt(0)));
                 return list;
             }
         }
@@ -261,13 +275,15 @@ namespace _OLC2__Proyecto_1.Gramm
             }
         }
 
-        private LinkedList<Instruction> declaration(ParseTreeNode root)
+        private Declaration declaration(ParseTreeNode root)
         {
-            LinkedList<Instruction> l = new LinkedList<Instruction>();
             int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
             int column = root.ChildNodes.ElementAt(1).Token.Location.Column;
-            l.AddLast(new Declaration(root.ChildNodes.ElementAt(0).Token.Text, expression(root.ChildNodes.ElementAt(2)),line,column ));
-            return l;
+            String id = root.ChildNodes.ElementAt(0).Token.Text;
+            Type_ typ = type(root.ChildNodes.ElementAt(2));
+            Expression e = expression(root.ChildNodes.ElementAt(4));
+
+            return new Declaration(id,e ,typ,line,column );
         }
         private LinkedList<Access> idList(ParseTreeNode root)
         {
@@ -283,7 +299,6 @@ namespace _OLC2__Proyecto_1.Gramm
                 return l;
             }
             l = idList(root.ChildNodes.ElementAt(0));
-            Console.WriteLine("nel");
             l.AddLast(access(root.ChildNodes.ElementAt(2)));
             
             return l;
@@ -350,6 +365,12 @@ namespace _OLC2__Proyecto_1.Gramm
                     int column1 = root.ChildNodes.ElementAt(0).Token.Location.Column;
                     Break cc = new Break(line1, column1, "CONTINUE");
                     return cc;
+                case "exit":
+                    int line2 = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                    int column2 = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                    Expression e = expression(root.ChildNodes.ElementAt(2));
+                    Break cc2 = new Break(line2, column2, "EXIT",e);
+                    return cc2;
                 default:
                     return new Empty();
             }
@@ -713,11 +734,11 @@ namespace _OLC2__Proyecto_1.Gramm
             else
             {
                
-                String type = root.ChildNodes.ElementAt(0).Term.ToString();
+                String type = root.ChildNodes.ElementAt(0).Term.ToString().ToUpper();
                 String value = root.ChildNodes.ElementAt(0).Token != null ? root.ChildNodes.ElementAt(0).Token.ValueString : root.ChildNodes.ElementAt(0).Term.Name;
                 int line=0;
                 int column = 0;
-                if (type != "access" && type!= "callFuncST")
+                if (type != "ACCESS" && type!= "CALLFUNCST")
                 {
                     line = root.ChildNodes.ElementAt(0).Token.Location.Line;
                     column = root.ChildNodes.ElementAt(0).Token.Location.Column;
@@ -725,8 +746,8 @@ namespace _OLC2__Proyecto_1.Gramm
                 //TODO agregar llamada a funciones
                 switch (type)
                 {
-                    case "access":
-                        return access(root.ChildNodes.ElementAt(0).ChildNodes.ElementAt(0));
+                    case "ACCESS":
+                        return access(root.ChildNodes.ElementAt(0));
                     case "INTEGER":
                         try
                         {
@@ -746,7 +767,7 @@ namespace _OLC2__Proyecto_1.Gramm
                         return new Literal(false, Type_.BOOLEAN, line,column);
                     case "NULL":
                         return new Literal(null, Type_.NULL, line,column);
-                    case "callFuncST":
+                    case "CALLFUNCST":
                         callFunction callf = callFuncST(root.ChildNodes.ElementAt(0));
                         return callf;
                 }
@@ -755,9 +776,36 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         private Access access(ParseTreeNode root)
         {
-            int line = root.Token.Location.Line;
-            int column = root.Token.Location.Column;
-            return new Access(root.Token.ValueString, line,column);
+            if (root.ChildNodes.Count == 0)
+            {
+                int line = root.Token.Location.Line;
+                int column = root.Token.Location.Column;
+                String id = root.Token.ValueString;
+                return new Access(line, column, id);
+            }
+            if (root.ChildNodes.Count == 1)
+            {
+                int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                String id = root.ChildNodes.ElementAt(0).Token.ValueString;
+                return new Access(line, column,id);
+            }
+            else if (root.ChildNodes.Count == 3)
+            {
+                int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                String id = root.ChildNodes.ElementAt(0).Token.ValueString;
+                String id2 = root.ChildNodes.ElementAt(2).Token.ValueString;
+
+                return new Access(line, column, id,id2);
+
+            }
+            else
+            {
+                return null;
+            }
+
+
         }
 
        

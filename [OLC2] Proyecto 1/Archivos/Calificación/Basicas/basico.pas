@@ -1,4 +1,4 @@
-﻿program basico;
+program basico;
 
     const
         V : boolean = true;
@@ -142,11 +142,9 @@ begin
     writeln('Repeat');
     i := 6;
     repeat
-    begin
         write('El valor de i: ');
         writeln(i);
         i := i - 2;
-    end;
     until (i = 0);
 
     writeln('-----------------------');
@@ -160,9 +158,8 @@ begin
 
     ImprimirValores();
 
-    
     IniciarValores();
-    {
+
     writeln('Dentro de Inicio');
     writeln(SumarNumeros(5, 5));
 
@@ -180,7 +177,6 @@ begin
     writeln('----------------------------------------');
     writeln('----ESPEREMOS QUE HAYA FUNCIONADO :D----');
     writeln('----------------------------------------');
-    }
 end;
 
 begin

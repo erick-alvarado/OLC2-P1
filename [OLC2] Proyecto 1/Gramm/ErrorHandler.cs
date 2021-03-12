@@ -25,7 +25,7 @@ namespace _OLC2__Proyecto_1.Gramm
             {
                 foreach(var error in tree.ParserMessages)
                 {
-                    Analyzer.output +="Error en fila " + error.Location.Line + ", columna " + error.Location.Column + ". " + error.Message + "\n";
+                    Analyzer.output +="Error en fila " + error.Location.Line + ", columna " + error.Location.Column + ". " + error.Message + "\r\n";
                     String type = error.Message[0]=='I' ? "Lex":"Syntax";
                     String expected="";
                     if (error.ParserState.ReportedExpectedSet != null)

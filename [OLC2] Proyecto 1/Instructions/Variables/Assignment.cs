@@ -27,6 +27,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             {
                 throw new Error_(this.line, this.column, "Semantico", "No existe la variable:"+this.id);
             }
+            if (b.type_name == "type")
+            {
+                throw new Error_(this.line, this.column, "Semantico", "Se esperaba una variable y se obtuvo type: " + this.id);
+            }
             Return newVal = this.expression.execute(environment);
             if (newVal.type != b.type )
             {
@@ -45,6 +49,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         public override void setLineColumn(int line, int column)
         {
             this.line = line; this.column = column;
+        }
+        public override object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

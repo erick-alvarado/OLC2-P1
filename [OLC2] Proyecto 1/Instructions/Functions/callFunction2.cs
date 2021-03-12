@@ -21,6 +21,10 @@ namespace _OLC2__Proyecto_1.Instructions
             this.parameterList = parameterList;
             setLineColumn(line, column);
         }
+        public override object Clone()
+        {
+            return this.MemberwiseClone();
+        }
         public override object execute(Environment_ environment)
         {
             if (this.line == -1010)
@@ -42,7 +46,8 @@ namespace _OLC2__Proyecto_1.Instructions
             Function f = null;
             try
             {
-                f = (Function)b.value;
+                Function temp = (Function)b.value;
+                f = (Function)temp.Clone();
             }
             catch (Exception e)
             {

@@ -10,16 +10,18 @@ using System.Threading.Tasks;
 
 namespace _OLC2__Proyecto_1.Instructions.Functions
 {
+    [Serializable()]
     class Function : Instruction
     {
-        private String id;
+        public String id;
         public LinkedList<Expression> parameterList = new LinkedList<Expression>();//Lo que trae de la llamada
         public LinkedList<Instruction> argumentList = new LinkedList<Instruction>();//Lo que tiene originalmente
-        private LinkedList<Instruction> declarationList = new LinkedList<Instruction>();
-        private Statement statements;
+        public LinkedList<Instruction> declarationList = new LinkedList<Instruction>();
+        public Statement statements;
         public Type_ return_;
-        private bool exec = true;
+        public bool exec = true;
         public Environment_ environmentAux;
+        public Symbol initial;
         public Function(int line, int column,string id, LinkedList<Instruction> argumentList, LinkedList<Instruction> declarationList, Statement statements, Type_ return_)
         {
             this.id = id;
@@ -29,7 +31,11 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
             this.return_ = return_;
             setLineColumn(line, column);
         }
-        public override object execute(Environment_ environment)
+        public override object Clone()
+        {
+            return new Function(line,column,id,argumentList,declarationList,statements,return_);
+        }
+    public override object execute(Environment_ environment)
         {
             if (this.exec)
             {
@@ -60,6 +66,7 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                 if(this.return_!= Type_.VOID)
                 {
                     this.environmentAux.saveVar(this.id, val, this.return_, "var");
+                    this.initial = this.environmentAux.getVar(this.id);
                 }
                 this.environmentAux.prev= environment;
             }
@@ -71,7 +78,8 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     i.execute(this.environmentAux);
                 }
                 object obj = this.statements.execute(this.environmentAux);
-                if(this.return_!=Type_.VOID && obj == null)
+                Symbol tempX = this.environmentAux.getVar(this.id);
+                if(this.return_!=Type_.VOID && obj == null && tempX==this.initial)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "La funcion debe retornar un valor de tipo:"+ Enum.GetName(typeof(Type_), this.return_));
                 }
@@ -84,8 +92,7 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     }
                     catch(Exception e)
                     {
-                        Symbol b = (Symbol)obj;
-                        Literal n = new Literal(b.value, b.type, 0, 0);
+                        Literal n = new Literal(tempX.value, tempX.type, 0, 0);
                         a = new Break(0,0,"F",n);
                     }
                     if (a.type.Equals("BREAK")|| a.type.Equals("CONTINUE"))

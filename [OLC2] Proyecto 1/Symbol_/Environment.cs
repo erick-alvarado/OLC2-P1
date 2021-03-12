@@ -25,17 +25,10 @@ namespace _OLC2__Proyecto_1.Symbol_
             {
                 foreach (Symbol vari in env.variables)
                 {
-                    if (vari.id == id)
+                    if (vari.id.ToLower() == id.ToLower())
                     {
                         vari.value = value;
-                        if (vari.id == this.name)
-                        {
-                            return getVar(id);
-                        }
-                        else
-                        {
-                            return null;
-                        }
+                        return null;
                     }
                 }
                 env = env.prev;
@@ -49,17 +42,10 @@ namespace _OLC2__Proyecto_1.Symbol_
             Environment_ env = this;
             foreach (Symbol vari in env.variables)
             {
-                if (vari.id == id)
+                if (vari.id.ToLower() == id.ToLower())
                 {
                     vari.value = value;
-                    if (vari.id == this.name)
-                    {
-                        return getVar(id);
-                    }
-                    else
-                    {
-                        return null;
-                    }
+                    return null;
                 }
             }
             this.variables.AddLast(new Symbol(value, id, type, type_name));
@@ -73,12 +59,24 @@ namespace _OLC2__Proyecto_1.Symbol_
             {
                 foreach (Symbol vari in env.variables)
                 {
-                    if (vari.id == id)
+                    if (vari.id.ToLower() == id.ToLower())
                     {
                         return vari;
                     }
                 }
                 env = env.prev;
+            }
+            return null;
+        }
+        public Symbol getVarActual(String id)
+        {
+            Environment_ env = this;
+            foreach (Symbol vari in env.variables)
+            {
+                if (vari.id.ToLower() == id.ToLower())
+                {
+                    return vari;
+                }
             }
             return null;
         }
@@ -89,7 +87,7 @@ namespace _OLC2__Proyecto_1.Symbol_
             {
                 foreach (Symbol vari in env.variables)
                 {
-                    if (vari.id == id && vari.type_name=="function")
+                    if (vari.id.ToLower() == id.ToLower() && vari.type_name=="function")
                     {
                         return vari;
                     }

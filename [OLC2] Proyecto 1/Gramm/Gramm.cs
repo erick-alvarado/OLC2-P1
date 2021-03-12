@@ -151,6 +151,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
             NonTerminal declarationListVar = new NonTerminal("declarationListVar");
             NonTerminal declarationListType = new NonTerminal("declarationListType");
+            NonTerminal declarationListCons = new NonTerminal("declarationListCons");
 
 
 
@@ -203,12 +204,12 @@ namespace _OLC2__Proyecto_1.Gramm
 
             declara.Rule = RTYPE + declarationListType
                 | RVAR + declarationListVar
-                | RCONST + declaration
+                | RCONST + declarationListCons
                 | functionST
                 | procedureST
                 | Empty
             ;
-            declaration.Rule = ID + EQUAL + expression + SEMICOLON
+            declaration.Rule = ID + POINTS + type + EQUAL + expression + SEMICOLON
                 ;
             declarationListVar.Rule = declarationListVar + declarationVar + SEMICOLON
                 | declarationVar + SEMICOLON
@@ -216,7 +217,9 @@ namespace _OLC2__Proyecto_1.Gramm
             declarationListType.Rule = declarationListType + declarationType 
                 | declarationType 
                 ;
-
+            declarationListCons.Rule = declarationListCons + declaration
+                | declaration
+                ;
 
             declarationVar.Rule = idList+ POINTS+ type + EQUAL + expression  //TODO validar en semantico que idList solo tenga 1 ID
                 |  idList + POINTS + type 
@@ -237,7 +240,7 @@ namespace _OLC2__Proyecto_1.Gramm
             assignmentST.Rule = ID + P_EQUAL + expression 
                 ;
             statements.Rule = RBEGIN + instructionList + REND + SEMICOLON
-                
+                | RBEGIN + instructionList + REND 
                 ;
 
             //MAIN
@@ -319,7 +322,8 @@ namespace _OLC2__Proyecto_1.Gramm
 
             subrange.Rule = expression + POINT + POINT + expression
                 ;
-            access.Rule = ID
+            access.Rule = ID + POINT + ID 
+                | ID
                 ;
             // Functions
             functionST.Rule = RFUNCTION + ID + LEFTPAR + argumentList + RIGHTPAR+ POINTS + type + SEMICOLON+ declarationList + statements
