@@ -1,4 +1,4 @@
-program basico;
+﻿program basico;
 
     const
         V : boolean = true;
@@ -142,9 +142,11 @@ begin
     writeln('Repeat');
     i := 6;
     repeat
+	begin
         write('El valor de i: ');
         writeln(i);
         i := i - 2;
+	end;
     until (i = 0);
 
     writeln('-----------------------');
