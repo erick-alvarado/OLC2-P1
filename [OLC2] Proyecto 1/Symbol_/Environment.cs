@@ -28,6 +28,10 @@ namespace _OLC2__Proyecto_1.Symbol_
                     if (vari.id.ToLower() == id.ToLower())
                     {
                         vari.value = value;
+                        if (this.name == vari.id)
+                        {
+                            return vari;
+                        }
                         return null;
                     }
                 }
@@ -45,6 +49,10 @@ namespace _OLC2__Proyecto_1.Symbol_
                 if (vari.id.ToLower() == id.ToLower())
                 {
                     vari.value = value;
+                    if (this.name == vari.id)
+                    {
+                        return vari;
+                    }
                     return null;
                 }
             }
@@ -59,7 +67,7 @@ namespace _OLC2__Proyecto_1.Symbol_
             {
                 foreach (Symbol vari in env.variables)
                 {
-                    if (vari.id.ToLower() == id.ToLower())
+                    if (vari.id.ToLower() == id.ToLower() && vari.type_name!="function")
                     {
                         return vari;
                     }

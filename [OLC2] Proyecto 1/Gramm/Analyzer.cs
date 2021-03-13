@@ -87,10 +87,52 @@ namespace _OLC2__Proyecto_1.Gramm
         }
         private Assignment assignmentST(ParseTreeNode root)
         {
-            int line = root.ChildNodes.ElementAt(1).Token.Location.Line;
-            int column = root.ChildNodes.ElementAt(1).Token.Location.Column;
+            int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+            int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
             String id = root.ChildNodes.ElementAt(0).Token.Text;
-            return new Assignment(line, column, id, expression(root.ChildNodes.ElementAt(2)));
+            LinkedList<Expression> exp = expList(root.ChildNodes.ElementAt(1));
+            return new Assignment(line,column,id,exp,expression(root.ChildNodes.ElementAt(3)));
+        }
+
+        private LinkedList<Expression> expList(ParseTreeNode root)
+        {
+            if (root.ChildNodes.Count == 4)
+            {
+                LinkedList<Expression> list = expList(root.ChildNodes.ElementAt(0));
+                Expression e = expression(root.ChildNodes.ElementAt(2));
+                list.AddLast(e);
+                return list;
+            }
+            else if (root.ChildNodes.Count == 3)
+            {
+                String tag = root.ChildNodes.ElementAt(0).Term.Name;
+                if(tag != "[")
+                {
+                    LinkedList<Expression> list = expList(root.ChildNodes.ElementAt(0));
+                    Access a = access(root.ChildNodes.ElementAt(2));
+                    list.AddLast(a);
+                    return list;
+                }
+                else
+                {
+                    LinkedList<Expression> list = new LinkedList<Expression>();
+                    Expression e = expression(root.ChildNodes.ElementAt(1));
+                    list.AddLast(e);
+                    return list;
+                }
+            }
+            else if (root.ChildNodes.Count == 0)
+            {
+                LinkedList<Expression> list = new LinkedList<Expression>();
+                return list;
+            }
+            else
+            {
+                LinkedList<Expression> list = new LinkedList<Expression>();
+                Access e = access(root.ChildNodes.ElementAt(1));
+                list.AddLast(e);
+                return list;
+            }
         }
         //DECLARATION
         private LinkedList<Instruction> declarationList(ParseTreeNode root)
@@ -266,11 +308,11 @@ namespace _OLC2__Proyecto_1.Gramm
                 }
                 if (t1 == Type_.ID)
                 {
-                    id1 = root.ChildNodes.ElementAt(4).Token.Text;
+                    id1 = root.ChildNodes.ElementAt(4).ChildNodes.ElementAt(0).Token.Text;
                 }
                 if (t2 == Type_.ID)
                 {
-                    id2 = root.ChildNodes.ElementAt(7).Token.Text;
+                    id2 = root.ChildNodes.ElementAt(7).ChildNodes.ElementAt(0).Token.Text;
                 }
                 return new DeclarationType(line,column,ids,t1,t2,id1,id2,exp1,exp2,null);
             }
@@ -367,11 +409,22 @@ namespace _OLC2__Proyecto_1.Gramm
                     Break cc = new Break(line1, column1, "CONTINUE");
                     return cc;
                 case "exit":
-                    int line2 = root.ChildNodes.ElementAt(0).Token.Location.Line;
-                    int column2 = root.ChildNodes.ElementAt(0).Token.Location.Column;
-                    Expression e = expression(root.ChildNodes.ElementAt(2));
-                    Break cc2 = new Break(line2, column2, "EXIT",e);
-                    return cc2;
+                    if (root.ChildNodes.Count == 5)
+                    {
+                        int line2 = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                        int column2 = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                        Expression e = expression(root.ChildNodes.ElementAt(2));
+                        Break cc2 = new Break(line2, column2, "EXIT", e);
+                        return cc2;
+
+                    }
+                    else
+                    {
+                        int line2 = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                        int column2 = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                        Break cc2 = new Break(line2, column2, "EXIT", null);
+                        return cc2;
+                    }
                 default:
                     return new Empty();
             }
@@ -784,28 +837,14 @@ namespace _OLC2__Proyecto_1.Gramm
                 String id = root.Token.ValueString;
                 return new Access(line, column, id);
             }
-            if (root.ChildNodes.Count == 1)
-            {
-                int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
-                int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
-                String id = root.ChildNodes.ElementAt(0).Token.ValueString;
-                return new Access(line, column,id);
-            }
-            else if (root.ChildNodes.Count == 3)
-            {
-                int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
-                int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
-                String id = root.ChildNodes.ElementAt(0).Token.ValueString;
-                String id2 = root.ChildNodes.ElementAt(2).Token.ValueString;
-
-                return new Access(line, column, id,id2);
-
-            }
             else
             {
-                return null;
+                int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                String id = root.ChildNodes.ElementAt(0).Token.ValueString;
+                LinkedList<Expression> exp = expList(root.ChildNodes.ElementAt(1));
+                return new Access(line, column,id,exp);
             }
-
 
         }
 

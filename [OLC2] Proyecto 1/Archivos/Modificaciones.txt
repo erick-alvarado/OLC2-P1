@@ -1,2 +1,12 @@
 Basico
 -Begin y end dentro de repeat until
+
+Intermedio
+-Begin y end dentro de repeat until
+
+Recursivas
+-Begin y end en un monton de lados
+-No se por que Hanoi con valores altos me truena
+
+Types
+-Cons falta el tipo 

@@ -35,7 +35,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 }
                 if (this.type != val.type&& this.type!=Type_.ID)
                 {
-                    throw new Error_(this.line, this.column, "Semantico", "Declaracion con asignacion de tipo incorrecto");
+                    if(this.type!=Type_.REAL && val.type != Type_.INTEGER)
+                    {
+                        throw new Error_(this.line, this.column, "Semantico", "Declaracion con asignacion de tipo incorrecto");
+                    }
                 }
             }
             if (type == Type_.ID)

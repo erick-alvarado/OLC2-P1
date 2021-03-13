@@ -26,8 +26,6 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
         public bool exec = true;
         public Environment_ environmentAux;
 
-
-        public Symbol initial;
         public Function(int line, int column,string id, LinkedList<Instruction> argumentList, LinkedList<Instruction> declarationList, Statement statements, Type_ return_)
         {
             this.id = id;
@@ -58,12 +56,7 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     i.execute(this.environmentAux);
                 }
                 object obj = this.statements.execute(this.environmentAux);
-                Symbol tempX = this.environmentAux.getVar(this.id);
-                if(this.return_!=Type_.VOID && obj == null && tempX==this.initial)
-                {
-                    throw new Error_(this.line, this.column, "Semantico", "La funcion debe retornar un valor de tipo:"+ Enum.GetName(typeof(Type_), this.return_));
-                }
-                if (obj != null && this.return_!=Type_.VOID)
+                if (this.return_!=Type_.VOID)
                 {
                     Break a = null;
                     try
@@ -72,8 +65,8 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     }
                     catch(Exception e)
                     {
-                        Literal n = new Literal(tempX.value, tempX.type, 0, 0);
-                        a = new Break(0,0,"F",n);
+                        Symbol au = (Symbol)obj;
+                        a = new Break(0, 0, "F", new Literal(au.value, au.type, 0, 0));
                     }
                     if (a.type.Equals("BREAK")|| a.type.Equals("CONTINUE"))
                     {

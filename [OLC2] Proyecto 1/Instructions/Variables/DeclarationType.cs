@@ -7,7 +7,7 @@ using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Symbol_;
-using Array = _OLC2__Proyecto_1.Symbol_.Array;
+using Array_ = _OLC2__Proyecto_1.Symbol_.Array_;
 
 namespace _OLC2__Proyecto_1.Instructions.Variables
 {
@@ -46,7 +46,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                     throw new Error_(this.line, this.column, "Semantico", "Declaracion de una variable ya existente:"+id);
                 }
 
-                Environment_ temp = new Environment_(null, id);
+                Environment_ temp = new Environment_(environment, id);
                 foreach (Instruction i in this.declarationList)
                 {
                     object check = i.execute(temp);
@@ -56,7 +56,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                         throw new Error_(a.line, a.column, "Semantico", "Sentencia fuera de contexto:" + a.type);
                     }
                 }
-                environment.saveVarActual(id, temp, type,"object");
+                environment.saveVarActual(id, temp, Type_.ID,"object");
 
             }
             else if(this.type!=Type_.DEFAULT && this.type2 == Type_.DEFAULT && this.expression2 == null && this.expression == null)
@@ -112,25 +112,25 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                             switch (this.type2)
                             {
                                 case Type_.BOOLEAN:
-                                    Array l = new Array(s, e, this.idList.First().id, false, Type_.BOOLEAN);
-                                    environment.saveVarActual(this.idList.First().id, l, Type_.BOOLEAN, "array");
+                                    Array_ l = new Array_(s, e, this.idList.First().id, false, Type_.BOOLEAN,"var");
+                                    environment.saveVarActual(this.idList.First().id, l.environment, Type_.ID, "array");
                                     break;
                                 case Type_.STRING:
-                                    Array l1 = new Array(s, e, this.idList.First().id, "", Type_.STRING);
-                                    environment.saveVarActual(this.idList.First().id, l1, Type_.STRING, "array");
+                                    Array_ l1 = new Array_(s, e, this.idList.First().id, "", Type_.STRING,"var");
+                                    environment.saveVarActual(this.idList.First().id, l1.environment, Type_.ID, "array");
                                     break;
                                 case Type_.INTEGER:
-                                    Array l2 = new Array(s, e, this.idList.First().id, 0, Type_.INTEGER);
-                                    environment.saveVarActual(this.idList.First().id, l2, Type_.INTEGER, "array");
+                                    Array_ l2 = new Array_(s, e, this.idList.First().id, 0, Type_.INTEGER,"var");
+                                    environment.saveVarActual(this.idList.First().id, l2.environment, Type_.ID, "array");
                                     break;
                                 case Type_.REAL:
-                                    Array l3 = new Array(s, e, this.idList.First().id, 0, Type_.REAL);
-                                    environment.saveVarActual(this.idList.First().id, l3, Type_.REAL, "array");
+                                    Array_ l3 = new Array_(s, e, this.idList.First().id, 0, Type_.REAL,"var");
+                                    environment.saveVarActual(this.idList.First().id, l3.environment, Type_.ID, "array");
                                     break;
                                 case Type_.ID:
                                     Symbol b = environment.getVar(this.idName2);
-                                    Array l4 = new Array(s, e, this.idList.First().id, b.value, Type_.ID);
-                                    environment.saveVarActual(this.idList.First().id, l4, Type_.ID, "array");
+                                    Array_ l4 = new Array_(s, e, this.idList.First().id, b.value, Type_.ID,b.type_name);
+                                    environment.saveVarActual(this.idList.First().id, l4.environment, Type_.ID, "array");
                                     break;
                                 default:
                                     throw new Error_(this.line, this.column, "Semantico", "No se puede hacer arrays de tipo:" + id);
@@ -147,10 +147,6 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                         throw new Error_(this.line, this.column, "Semantico", "Inicio y fin de array no validos");
                     }
                 }
-                
-                
-
-                
             }
             
             return null;

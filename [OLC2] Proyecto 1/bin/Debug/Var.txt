@@ -11,67 +11,32 @@ arset [label=<
 <TD>Value </TD>
  </TR
 ><TR>
-<TD>a </TD>
+<TD>ackermann </TD>
 <TD>INTEGER</TD>
-<TD>var </TD>
-<TD>Global$</TD>
-<TD>0 </TD>
- </TR
-><TR>
-<TD>b </TD>
-<TD>INTEGER</TD>
-<TD>var </TD>
-<TD>Global$</TD>
-<TD>1 </TD>
- </TR
-><TR>
-<TD>c </TD>
-<TD>INTEGER</TD>
-<TD>var </TD>
-<TD>Global$</TD>
-<TD>2 </TD>
- </TR
-><TR>
-<TD>min </TD>
-<TD>INTEGER</TD>
-<TD>var </TD>
-<TD>Global$</TD>
-<TD>100000 </TD>
- </TR
-><TR>
-<TD>findMin </TD>
-<TD>VOID</TD>
 <TD>function </TD>
 <TD>Global$</TD>
 <TD>_OLC2__Proyecto_1.Instructions.Functions.Function </TD>
  </TR
 ><TR>
-<TD>x </TD>
+<TD>ackermann </TD>
 <TD>INTEGER</TD>
 <TD>var </TD>
-<TD>findMin</TD>
+<TD>ackermann</TD>
 <TD>0 </TD>
- </TR
-><TR>
-<TD>y </TD>
-<TD>INTEGER</TD>
-<TD>var </TD>
-<TD>findMin</TD>
-<TD>1 </TD>
- </TR
-><TR>
-<TD>z </TD>
-<TD>INTEGER</TD>
-<TD>var </TD>
-<TD>findMin</TD>
-<TD>2 </TD>
  </TR
 ><TR>
 <TD>m </TD>
 <TD>INTEGER</TD>
 <TD>var </TD>
-<TD>findMin</TD>
-<TD>100000 </TD>
+<TD>ackermann</TD>
+<TD>0 </TD>
+ </TR
+><TR>
+<TD>n </TD>
+<TD>INTEGER</TD>
+<TD>var </TD>
+<TD>ackermann</TD>
+<TD>7 </TD>
  </TR
 ></TABLE>
 >, ]; }

@@ -188,6 +188,8 @@ namespace _OLC2__Proyecto_1.Gramm
             NonTerminal access = new NonTerminal("access");
             //Extra
             NonTerminal idList = new NonTerminal("idList");
+            NonTerminal expListArray = new NonTerminal("expListArray");
+
 
             #endregion
 
@@ -237,12 +239,24 @@ namespace _OLC2__Proyecto_1.Gramm
             idList.Rule = idList + COMMA + ID
                 | ID
                 ;
-            assignmentST.Rule = ID + P_EQUAL + expression 
+
+
+            assignmentST.Rule = ID+ expListArray+ P_EQUAL + expression
                 ;
+
+;
+            expListArray.Rule = expListArray + LEFTCOR + expression + RIGHTCOR
+                | expListArray + POINT + ID
+                | LEFTCOR + expression + RIGHTCOR
+                | POINT + ID
+                | Empty
+                ;
+
+
             statements.Rule = RBEGIN + instructionList + REND + SEMICOLON
                 | RBEGIN + instructionList + REND 
                 ;
-
+            
             //MAIN
             main.Rule = RBEGIN + instructionList + REND + POINT
                 ;
@@ -266,6 +280,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 | RBREAK + SEMICOLON
                 | RCONTINUE + SEMICOLON
                 | REXIT + LEFTPAR + expression + RIGHTPAR + SEMICOLON
+                | REXIT + LEFTPAR + RIGHTPAR + SEMICOLON
                 | Empty
                 ;
 
@@ -322,8 +337,7 @@ namespace _OLC2__Proyecto_1.Gramm
 
             subrange.Rule = expression + POINT + POINT + expression
                 ;
-            access.Rule = ID + POINT + ID 
-                | ID
+            access.Rule = ID + expListArray
                 ;
             // Functions
             functionST.Rule = RFUNCTION + ID + LEFTPAR + argumentList + RIGHTPAR+ POINTS + type + SEMICOLON+ declarationList + statements

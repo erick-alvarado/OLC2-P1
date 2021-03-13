@@ -1,4 +1,5 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
+using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Symbol_;
 using System;
 using System.Collections.Generic;
@@ -11,36 +12,114 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
     class Assignment: Instruction
     {
         private String id;
-        private Expression expression;
+        private LinkedList<Expression> expList = new LinkedList<Expression>();
+        private Expression value;
 
-        public Assignment(int line, int column, string id, Expression expression)
+        public Assignment(int line, int column, string id, LinkedList<Expression> expList, Expression value)
         {
             this.id = id;
-            this.expression = expression;
+            this.expList = expList;
+            this.value = value;
             setLineColumn(line, column);
-
         }
         public override object execute(Environment_ environment)
         {
+            Return val = this.value != null ? this.value.execute(environment) : new Return(null, Type_.DEFAULT);
             Symbol b = environment.getVar(this.id);
             if (b == null)
             {
-                throw new Error_(this.line, this.column, "Semantico", "No existe la variable:"+this.id);
+                throw new Error_(this.line, this.column, "Semantico", "No existe la variable:" + this.id);
             }
-            if (b.type_name == "type")
+            if (b.type_name == "type"|| b.type_name == "function")
             {
                 throw new Error_(this.line, this.column, "Semantico", "Se esperaba una variable y se obtuvo type: " + this.id);
             }
-            Return newVal = this.expression.execute(environment);
-            if (newVal.type != b.type )
+
+            //Asignment normal
+            if (expList.Count == 0)
             {
-                if(!(b.type == Type_.REAL && newVal.type == Type_.INTEGER))
+                if (val.type != b.type)
                 {
-                    throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);
+                    if (!(b.type == Type_.REAL && val.type == Type_.INTEGER))
+                    {
+                        throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);
+                    }
+                }
+                return environment.saveVarActual(b.id, val.value, b.type, b.type_name);
+            }
+            else
+            {
+                Environment_ auxEnv = environment;
+                Return auxRet = null;
+                //Asignacion objecto
+                int final = 0;
+                String ident = "";
+                Symbol symp = null;
+                foreach (Expression e in this.expList)
+                {
+                    auxRet = e.execute(auxEnv);
+                    final++;
+                    if (auxRet.type == Type_.ID)
+                    {
+                        try
+                        {
+                            Environment_ gg = (Environment_)auxRet.value;
+                            auxEnv = gg;
+                        }
+                        catch (Exception _)
+                        {
+                            throw new Error_(this.line, this.column, "Semantico", "No se que pedo:" + this.id);
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            Access temp = (Access)e;
+                            ident = temp.id;
+                            
+                        }catch(Exception _)
+                        {
+                            symp = auxEnv.getVar(auxRet.value.ToString());
+                            if (symp == null)
+                            {
+                                throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:" + auxRet.value.ToString());
+                            }
+                            try
+                            {
+                                Environment_ gg = (Environment_)symp.value;
+                                auxEnv = gg;
+                            }
+                            catch (Exception )
+                            {
+                            }
+                        }
+                        break;
+                    }
+                }
+                if (ident != "")
+                {
+                    symp = auxEnv.getVar(ident);
+                    if (symp == null)
+                    {
+                        throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:" + auxRet.value.ToString());
+                    }
+                    if (val.type != symp.type)
+                    {
+                        if (!(symp.type == Type_.REAL && val.type == Type_.INTEGER))
+                        {
+                            throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);
+                        }
+                    }
+                    return auxEnv.saveVarActual(symp.id, val.value, symp.type, symp.type_name);
+                }
+                else if(symp!=null)
+                {
+                    symp.value = val.value;
+                    return null;
                 }
             }
-            b.value = newVal.value;
-            return environment.saveVar(b.id, b.value, b.type, b.type_name);
+            return null;
         }
         public String getId()
         {

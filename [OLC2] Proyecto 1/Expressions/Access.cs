@@ -13,48 +13,93 @@ namespace _OLC2__Proyecto_1.Expressions
     class Access: Expression
     {
         public String id;
-        public String id2;
-        public Access(int line, int column, String id,String id2="" )
+        private LinkedList<Expression> expList;
+
+        public Access(int line, int column, String id, LinkedList<Expression> expList=null)
         {
             this.id = id;
-            this.id2 = id2;
+            this.expList = expList;
             this.setLineColumn(line, column);
         }
         public override Return execute(Environment_ environment)
         {
-            Symbol vari = environment.getVar(this.id);
-            if (vari == null)
+            if (expList == null)
             {
-                throw new Error_(this.line, this.column, "Semantico", "La variable no existe: " + this.id);
+                Symbol vari = environment.getVar(this.id);
+                if (vari == null)
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "La variable no existe: " + this.id);
 
-            }
-            if (id2 == "")
-            {
+                }
                 return new Return(vari.value, vari.type);
             }
             else
             {
-                try
+                Environment_ auxEnv = environment;
+                Return auxRet = null;
+                //Asignacion objecto
+                int final = 0;
+                String ident = "";
+                Symbol symp = null;
+                foreach (Expression e in this.expList)
                 {
-                    Environment_ e = (Environment_)vari.value;
-                    Symbol aux = e.getVar(id2);
-                    if (aux == null)
+                    auxRet = e.execute(auxEnv);
+                    final++;
+                    if (auxRet.type == Type_.ID)
                     {
-                        throw new Error_(this.line, this.column, "Semantico", "La variable no existe: " + this.id2);
+                        try
+                        {
+                            Environment_ gg = (Environment_)auxRet.value;
+                            auxEnv = gg;
+                        }
+                        catch (Exception _)
+                        {
+                            throw new Error_(this.line, this.column, "Semantico", "No se que pedo:" + this.id);
+                        }
                     }
-                    if (aux.type_name == "type")
+                    else
                     {
-                        throw new Error_(this.line, this.column, "Semantico", "Se esperaba una variable y se obtuvo type: " + this.id2);
-                    }
-                    return new Return(aux.value, aux.type);
+                        try
+                        {
+                            Access temp = (Access)e;
+                            ident = temp.id;
 
+                        }
+                        catch (Exception _)
+                        {
+                            symp = auxEnv.getVar(auxRet.value.ToString());
+                            if (symp == null)
+                            {
+                                throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:" + auxRet.value.ToString());
+                            }
+                            try
+                            {
+                                Environment_ gg = (Environment_)symp.value;
+                                auxEnv = gg;
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+                        break;
+                    }
                 }
-                catch (Exception t)
+                if (ident != "")
                 {
-                    throw new Error_(this.line, this.column, "Semantico", "La variable no existe no posee atributos: " + this.id);
+                    symp = auxEnv.getVar(ident);
+                    if (symp == null)
+                    {
+                        throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:" + auxRet.value.ToString());
+                    }
+                    return new Return(symp.value, symp.type);
+                }
+                else if (symp != null)
+                {
+                    return new Return(symp.value, symp.type);
                 }
             }
-            
+            return null;
+
         }
         public String getId()
         {

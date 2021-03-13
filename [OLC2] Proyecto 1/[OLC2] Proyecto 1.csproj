@@ -109,6 +109,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="Archivos\Calificación\Arreglos\matrices.pas" />
+    <None Include="Archivos\Calificación\Arreglos\ordenamientoRapido.pas" />
+    <None Include="Archivos\Calificación\Arreglos\ordenar.pas" />
+    <None Include="Archivos\Calificación\Avanzadas\anidadas.pas" />
+    <None Include="Archivos\Calificación\Avanzadas\listaDoble.pas" />
+    <None Include="Archivos\Calificación\Avanzadas\types.pas" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -124,8 +130,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Archivos\pruebas.txt" />
+    <Content Include="Archivos\Basico.txt" />
+    <Content Include="Archivos\desanidados.txt" />
+    <Content Include="Archivos\recursivas.txt" />
+    <Content Include="Archivos\Intermedio.txt" />
+    <Content Include="Archivos\Modificaciones.txt" />
+    <Content Include="Archivos\types.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

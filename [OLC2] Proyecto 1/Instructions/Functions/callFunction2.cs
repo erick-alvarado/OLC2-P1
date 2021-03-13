@@ -68,8 +68,6 @@ namespace _OLC2__Proyecto_1.Instructions
                             break;
                     }
                     f.environmentAux.saveVar(f.id, val, f.return_, "var");
-                    f.initial = f.environmentAux.getVar(f.id);
-
                 }
                 f.environmentAux.prev = aux;
 
@@ -99,7 +97,7 @@ namespace _OLC2__Proyecto_1.Instructions
                 throw new Error_(this.line, this.column, "Semantico", "Numero incorrecto de arguments");
             }
             f.parameterList = this.parameterList;
-            object ret = f.execute(environment);
+            object ret = f.execute(f.environmentAux);
             index = 0;
             //Este metodo solo diosito y yo sabemos lo que hicimos a las 3:57am con desesperacion
             foreach (Argument i in this.argumentList)
