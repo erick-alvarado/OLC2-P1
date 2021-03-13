@@ -31,6 +31,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             else
             {
                 Return val = this.value != null ? this.value.execute(environment) : new Return(null, Type_.INTEGER);
+
                 if (this.type != val.type)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);

@@ -35,6 +35,17 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
             this.return_ = return_;
             setLineColumn(line, column);
         }
+        public Function(Function other)
+        {
+            this.id = other.id;
+            this.parameterList = other.parameterList;
+            this.argumentList = other.argumentList;
+            this.declarationList = other.declarationList;
+            this.statements = other.statements;
+            this.return_ = other.return_;
+            this.exec = other.exec;
+            this.environmentAux = other.environmentAux;
+        }
 
         public override object execute(Environment_ environment)
         {

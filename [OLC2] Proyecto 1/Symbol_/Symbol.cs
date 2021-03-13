@@ -20,5 +20,12 @@ namespace _OLC2__Proyecto_1.Symbol_
             this.type = type;
             this.type_name = type_name;
         }
+        public Symbol(Symbol fake)
+        {
+            this.value = fake.value;
+            this.id = fake.id;
+            this.type = fake.type;
+            this.type_name = fake.type_name;
+        }
     }
 }

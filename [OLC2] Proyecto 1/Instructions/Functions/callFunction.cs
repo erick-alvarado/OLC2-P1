@@ -36,7 +36,8 @@ namespace _OLC2__Proyecto_1.Instructions
             Function f = null;
             try
             {
-                f = (Function)b.value;
+                Function newFunc = new Function((Function)b.value);
+                f = newFunc;
                 Environment_ aux = f.environmentAux.prev;
 
                 f.environmentAux = new Environment_(null, this.id);

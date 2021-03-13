@@ -30,7 +30,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                         vari.value = value;
                         if (this.name == vari.id)
                         {
-                            return vari;
+                            return new Symbol(vari);
                         }
                         return null;
                     }
@@ -51,7 +51,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                     vari.value = value;
                     if (this.name == vari.id)
                     {
-                        return vari;
+                        return new Symbol(vari);
                     }
                     return null;
                 }
@@ -69,7 +69,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                 {
                     if (vari.id.ToLower() == id.ToLower() && vari.type_name!="function")
                     {
-                        return vari;
+                        return new Symbol(vari);
                     }
                 }
                 env = env.prev;
@@ -83,7 +83,7 @@ namespace _OLC2__Proyecto_1.Symbol_
             {
                 if (vari.id.ToLower() == id.ToLower())
                 {
-                    return vari;
+                    return new Symbol(vari);
                 }
             }
             return null;
@@ -97,7 +97,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                 {
                     if (vari.id.ToLower() == id.ToLower() && vari.type_name=="function")
                     {
-                        return vari;
+                        return new Symbol(vari);
                     }
                 }
                 env = env.prev;
