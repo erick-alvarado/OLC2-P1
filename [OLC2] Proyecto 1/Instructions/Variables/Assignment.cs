@@ -45,7 +45,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                         throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);
                     }
                 }
-                return environment.saveVarActual(b.id, val.value, b.type, b.type_name);
+                return environment.saveVar(b.id, val.value, b.type, b.type_name);
             }
             else
             {
@@ -131,6 +131,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 if (symp != null)
                 {
                     symp.value = val.value;
+                    auxEnv.saveVar(symp.id, symp.value, symp.type, symp.type_name);
                     return null;
                 }
                 else if (ident != "")
@@ -147,7 +148,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                             throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);
                         }
                     }
-                    return auxEnv.saveVarActual(symp.id, val.value, symp.type, symp.type_name);
+                    return auxEnv.saveVar(symp.id, val.value, symp.type, symp.type_name);
                 }
             }
             return null;

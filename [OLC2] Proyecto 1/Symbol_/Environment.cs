@@ -30,7 +30,8 @@ namespace _OLC2__Proyecto_1.Symbol_
                         vari.value = value;
                         if (this.name == vari.id)
                         {
-                            return new Symbol(vari);
+                            Symbol uid = new Symbol(vari);
+                            return uid;
                         }
                         return null;
                     }
@@ -51,7 +52,8 @@ namespace _OLC2__Proyecto_1.Symbol_
                     vari.value = value;
                     if (this.name == vari.id)
                     {
-                        return new Symbol(vari);
+                        Symbol uid = new Symbol(vari);
+                        return uid;
                     }
                     return null;
                 }
@@ -69,7 +71,8 @@ namespace _OLC2__Proyecto_1.Symbol_
                 {
                     if (vari.id.ToLower() == id.ToLower() && vari.type_name!="function")
                     {
-                        return new Symbol(vari);
+                        Symbol uid = new Symbol(vari);
+                        return uid;
                     }
                 }
                 env = env.prev;
@@ -83,7 +86,8 @@ namespace _OLC2__Proyecto_1.Symbol_
             {
                 if (vari.id.ToLower() == id.ToLower())
                 {
-                    return new Symbol(vari);
+                    Symbol uid = new Symbol(vari);
+                    return uid;
                 }
             }
             return null;
@@ -97,7 +101,8 @@ namespace _OLC2__Proyecto_1.Symbol_
                 {
                     if (vari.id.ToLower() == id.ToLower() && vari.type_name=="function")
                     {
-                        return new Symbol(vari);
+                        Symbol uid = new Symbol(vari);
+                        return uid;
                     }
                 }
                 env = env.prev;
