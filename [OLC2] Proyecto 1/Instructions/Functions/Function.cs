@@ -68,37 +68,30 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                         Symbol au = (Symbol)obj;
                         a = new Break(0, 0, "F", new Literal(au.value, au.type, 0, 0));
                     }
+                    if (a== null)
+                    {
+                        throw new Error_(this.line, this.column, "Semantico", "La funcion debe retornar un type");
+                    }
                     if (a.type.Equals("BREAK")|| a.type.Equals("CONTINUE"))
                     {
                         throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
                     }
                     else
                     {
-                        if (this.return_.Equals(Type_.VOID))
+                        try
                         {
-                            if (a.e != null)
-                            {
-                                throw new Error_(a.line, a.column, "Semantico", "Los procedimientos no retornan valores" + a.type);
-                            }
-                        }
-                        else
-                        {
-                            try
-                            {
-                                Return r = a.e.execute(this.environmentAux);
-                                if (r.type != this.return_)
-                                {
-                                    throw new Error_(a.line, a.column, "Semantico", "Tipo de retorno incorrecto" + a.type);
-                                }
-                                return r;
-                            }
-                            catch (Exception e)
+                            Return r = a.e.execute(this.environmentAux);
+                            if (r.type != this.return_)
                             {
                                 throw new Error_(a.line, a.column, "Semantico", "Tipo de retorno incorrecto" + a.type);
                             }
-
+                            return r;
                         }
-                        
+                        catch (Exception e)
+                        {
+                            throw new Error_(a.line, a.column, "Semantico", "Tipo de retorno incorrecto" + a.type);
+                        }
+
                     }
                 }
                 else

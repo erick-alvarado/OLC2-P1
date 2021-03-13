@@ -23,7 +23,7 @@ namespace _OLC2__Proyecto_1.Expressions
         }
         public override Return execute(Environment_ environment)
         {
-            if (expList == null)
+            if (expList==null || expList.Count == 0)
             {
                 Symbol vari = environment.getVar(this.id);
                 if (vari == null)
@@ -41,9 +41,41 @@ namespace _OLC2__Proyecto_1.Expressions
                 int final = 0;
                 String ident = "";
                 Symbol symp = null;
+                try
+                {
+                    Symbol b = environment.getVar(this.id);
+                    Environment_ gg = (Environment_)b.value;
+                    auxEnv = gg;
+                }
+                catch (Exception _)
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "No se encuentra el object:" + this.id);
+                }
                 foreach (Expression e in this.expList)
                 {
-                    auxRet = e.execute(auxEnv);
+                    auxEnv.prev = environment;
+                    try
+                    {
+                        auxRet = e.execute(auxEnv);
+                        if(auxRet.type!= Type_.ID)
+                        {
+                            Access tls = (Access)e;
+                            Symbol lahostia = auxEnv.getVar(auxRet.value.ToString());
+                            if (lahostia != null)
+                            {
+                                symp = lahostia;
+                            }
+                        }
+                        
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    if (auxRet == null)
+                    {
+                        Access po = (Access)e;
+                        throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:" + po.id);
+                    }
                     final++;
                     if (auxRet.type == Type_.ID)
                     {
@@ -84,17 +116,18 @@ namespace _OLC2__Proyecto_1.Expressions
                         break;
                     }
                 }
-                if (ident != "")
+                if (symp != null)
+                {
+                    return new Return(symp.value, symp.type);
+                }
+                
+                else if (ident != "")
                 {
                     symp = auxEnv.getVar(ident);
                     if (symp == null)
                     {
                         throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:" + auxRet.value.ToString());
                     }
-                    return new Return(symp.value, symp.type);
-                }
-                else if (symp != null)
-                {
                     return new Return(symp.value, symp.type);
                 }
             }

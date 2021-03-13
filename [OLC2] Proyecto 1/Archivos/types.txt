@@ -172,5 +172,14 @@ var listado_general: estudiantes;
 
 
 begin
+contador:=1;
 
+    // ******* Uso del repeat
+    repeat
+        begin
+        listado_general[contador]:= get_estudiante(contador);
+        contador := contador +1;
+        end
+    until (contador = 5);
+    
 end.

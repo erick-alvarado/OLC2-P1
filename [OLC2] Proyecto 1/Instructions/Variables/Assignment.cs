@@ -55,9 +55,40 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 int final = 0;
                 String ident = "";
                 Symbol symp = null;
+                try
+                {
+                    Environment_ gg = (Environment_)b.value;
+                    auxEnv = gg;
+                }
+                catch (Exception _)
+                {
+                    throw new Error_(this.line, this.column, "Semantico", "No se encuentra el object:" + this.id);
+                }
                 foreach (Expression e in this.expList)
                 {
-                    auxRet = e.execute(auxEnv);
+                    auxEnv.prev = environment;
+                    try
+                    {
+                        auxRet = e.execute(auxEnv);
+                        if (auxRet.type != Type_.ID)
+                        {
+                            Access tls = (Access)e;
+                            Symbol lahostia = auxEnv.getVar(auxRet.value.ToString());
+                            if (lahostia != null)
+                            {
+                                symp = lahostia;
+                            }
+                        }
+
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    if (auxRet == null)
+                    {
+                        Access po = (Access)e;
+                        throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:"+po.id);
+                    }
                     final++;
                     if (auxRet.type == Type_.ID)
                     {
@@ -97,7 +128,12 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                         break;
                     }
                 }
-                if (ident != "")
+                if (symp != null)
+                {
+                    symp.value = val.value;
+                    return null;
+                }
+                else if (ident != "")
                 {
                     symp = auxEnv.getVar(ident);
                     if (symp == null)
@@ -112,11 +148,6 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                         }
                     }
                     return auxEnv.saveVarActual(symp.id, val.value, symp.type, symp.type_name);
-                }
-                else if(symp!=null)
-                {
-                    symp.value = val.value;
-                    return null;
                 }
             }
             return null;

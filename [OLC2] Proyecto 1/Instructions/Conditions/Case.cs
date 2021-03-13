@@ -44,11 +44,19 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
                 }
                 catch (Exception e)
                 {
-                    exec = (bool) check;
-                    if (exec == true)
+                    try
                     {
-                        return null;
+                        exec = (bool)check;
+                        if (exec == true)
+                        {
+                            return null;
+                        }
                     }
+                    catch (Exception)
+                    {
+                        return check;
+                    }
+                    
                 }
                 
             }

@@ -837,6 +837,13 @@ namespace _OLC2__Proyecto_1.Gramm
                 String id = root.Token.ValueString;
                 return new Access(line, column, id);
             }
+            if (root.ChildNodes.Count == 1)
+            {
+                int line = root.ChildNodes.ElementAt(0).Token.Location.Line;
+                int column = root.ChildNodes.ElementAt(0).Token.Location.Column;
+                String id = root.ChildNodes.ElementAt(0).Token.ValueString;
+                return new Access(line, column, id);
+            }
             else
             {
                 int line = root.ChildNodes.ElementAt(0).Token.Location.Line;

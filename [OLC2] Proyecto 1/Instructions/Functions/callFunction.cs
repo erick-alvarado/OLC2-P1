@@ -122,9 +122,17 @@ namespace _OLC2__Proyecto_1.Instructions
                 Return temp = (Return)ret;
                 if (temp.type.Equals(Type_.ID))
                 {
-                    Symbol aux = f.environmentAux.getVar((String)temp.value);
-                    Return n = new Return(aux.value, aux.type);
-                    return n;
+                    try
+                    {
+                        Symbol aux = f.environmentAux.getVar((String)temp.value);
+                        Return n = new Return(aux.value, aux.type);
+                        return n;
+                    }
+                    catch (Exception)
+                    {
+                        return temp;
+                    }
+                    
                 }
                 return temp;
             }

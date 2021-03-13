@@ -31,7 +31,7 @@ namespace _OLC2__Proyecto_1.Expressions
                 case Type_.BOOLEAN:
                     return new Return(Boolean.Parse(this.value.ToString()), this.type);
                 default:
-                    throw new Error_(this.line, this.column, "Semantico", "Tipo no existente");
+                    return new Return(value,this.type);
             }
         }
         public override void setLineColumn(int line, int column)
