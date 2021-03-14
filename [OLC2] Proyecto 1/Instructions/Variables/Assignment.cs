@@ -65,26 +65,33 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 {
                     throw new Error_(this.line, this.column, "Semantico", "No se encuentra el object:" + this.id);
                 }
-
+                bool enciclado = false;
                 //Se ejecutan las expresiones y se verifica si esta en un ambito environment o si ya finalizo
                 foreach (Expression e in this.expList)
                 {
+                    if (b.type == Type_.ID)
+                    {
+                        auxEnvironment = (Environment_)b.value;
+                    }
                     auxEnvironment.prev = environment;
                     try
                     {
-
                         Access va = (Access)e;
-                        try
+                        if (va.id == "$")
                         {
-                            retorno = e.execute(auxEnvironment);
+                            enciclado = true;
+                            continue;
                         }
-                        catch (Exception)
+                        retorno = new Return(va.id, Type_.DEFAULT);
+                        if (enciclado)
                         {
-                            retorno = new Return(va.id, Type_.DEFAULT);
+                            enciclado = false;
+                            retorno = e.execute(auxEnvironment);
                         }
                     }
                     catch (Exception)
                     {
+                        enciclado = false;
                         retorno = e.execute(auxEnvironment);//valor de retorno de ejecutar una expresion sin saber que sea
                     }
                     b = auxEnvironment.getVar(retorno.value.ToString());
@@ -93,10 +100,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                     {
                         throw new Error_(this.line, this.column, "Semantico", "No se encuentra el atributo:" + retorno.value);
                     }
-                    if (b.type == Type_.ID)
-                    {
-                        auxEnvironment = (Environment_)b.value;
-                    }
+                    
                 }
                 return auxEnvironment.saveVar(b.id, val.value, b.type, b.type_name);
             }

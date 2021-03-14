@@ -99,6 +99,7 @@ namespace _OLC2__Proyecto_1.Gramm
             if (root.ChildNodes.Count == 4)
             {
                 LinkedList<Expression> list = expList(root.ChildNodes.ElementAt(0));
+                list.AddLast(new Access(0, 0, "$"));
                 Expression e = expression(root.ChildNodes.ElementAt(2));
                 list.AddLast(e);
                 return list;
@@ -116,6 +117,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 else
                 {
                     LinkedList<Expression> list = new LinkedList<Expression>();
+                    list.AddLast(new Access(0, 0, "$"));
                     Expression e = expression(root.ChildNodes.ElementAt(1));
                     list.AddLast(e);
                     return list;
