@@ -49,109 +49,57 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             }
             else
             {
-                Environment_ auxEnv = environment;
-                Return auxRet = null;
                 //Asignacion objecto
-                int final = 0;
-                String ident = "";
-                Symbol symp = null;
+                Environment_ auxEnvironment = environment;
+                Return retorno = null;
+                b = null;
+                String identificador = "";
                 try
                 {
+                    //Buscamos el primer object y se obtiene el environment del mismo 
+                    b = environment.getVar(this.id);
                     Environment_ gg = (Environment_)b.value;
-                    auxEnv = gg;
+                    auxEnvironment = gg;
                 }
-                catch (Exception _)
+                catch (Exception)
                 {
                     throw new Error_(this.line, this.column, "Semantico", "No se encuentra el object:" + this.id);
                 }
+
+                //Se ejecutan las expresiones y se verifica si esta en un ambito environment o si ya finalizo
                 foreach (Expression e in this.expList)
                 {
-                    auxEnv.prev = environment;
+                    auxEnvironment.prev = environment;
                     try
                     {
-                        auxRet = e.execute(auxEnv);
-                        if (auxRet.type != Type_.ID)
-                        {
-                            Access tls = (Access)e;
-                            Symbol lahostia = auxEnv.getVar(auxRet.value.ToString());
-                            if (lahostia != null)
-                            {
-                                symp = lahostia;
-                            }
-                        }
 
+                        Access va = (Access)e;
+                        try
+                        {
+                            retorno = e.execute(auxEnvironment);
+                        }
+                        catch (Exception)
+                        {
+                            retorno = new Return(va.id, Type_.DEFAULT);
+                        }
                     }
                     catch (Exception)
                     {
+                        retorno = e.execute(auxEnvironment);//valor de retorno de ejecutar una expresion sin saber que sea
                     }
-                    if (auxRet == null)
+                    b = auxEnvironment.getVar(retorno.value.ToString());
+
+                    if (b == null)
                     {
-                        Access po = (Access)e;
-                        throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:"+po.id);
+                        throw new Error_(this.line, this.column, "Semantico", "No se encuentra el atributo:" + retorno.value);
                     }
-                    final++;
-                    if (auxRet.type == Type_.ID)
+                    if (b.type == Type_.ID)
                     {
-                        try
-                        {
-                            Environment_ gg = (Environment_)auxRet.value;
-                            auxEnv = gg;
-                        }
-                        catch (Exception _)
-                        {
-                            throw new Error_(this.line, this.column, "Semantico", "No se que pedo:" + this.id);
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            Access temp = (Access)e;
-                            ident = temp.id;
-                            
-                        }catch(Exception _)
-                        {
-                            symp = auxEnv.getVar(auxRet.value.ToString());
-                            if (symp == null)
-                            {
-                                throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:" + auxRet.value.ToString());
-                            }
-                            try
-                            {
-                                Environment_ gg = (Environment_)symp.value;
-                                auxEnv = gg;
-                            }
-                            catch (Exception )
-                            {
-                            }
-                        }
-                        break;
+                        auxEnvironment = (Environment_)b.value;
                     }
                 }
-                if (symp != null)
-                {
-                    symp.value = val.value;
-                    auxEnv.saveVar(symp.id, symp.value, symp.type, symp.type_name);
-                    return null;
-                }
-                else if (ident != "")
-                {
-                    symp = auxEnv.getVar(ident);
-                    if (symp == null)
-                    {
-                        throw new Error_(this.line, this.column, "Semantico", "No se se encuentra el item:" + auxRet.value.ToString());
-                    }
-                    if (val.type != symp.type)
-                    {
-                        if (!(symp.type == Type_.REAL && val.type == Type_.INTEGER))
-                        {
-                            throw new Error_(this.line, this.column, "Semantico", "Asignacion de tipo incorrecto:" + this.id);
-                        }
-                    }
-                    return auxEnv.saveVar(symp.id, val.value, symp.type, symp.type_name);
-                }
+                return auxEnvironment.saveVar(b.id, val.value, b.type, b.type_name);
             }
-            return null;
         }
         public String getId()
         {
