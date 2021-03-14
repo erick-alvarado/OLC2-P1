@@ -1,4 +1,5 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
+using Force.DeepCloner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace _OLC2__Proyecto_1.Symbol_
         {
             for(int i = this.start; i<=end; i++)
             {
-                this.environment.saveVar(i.ToString(), val, this.type, this.type_name);
+                this.environment.saveVar(i.ToString(), val.DeepClone(), this.type, this.type_name);
             }
         }
     }

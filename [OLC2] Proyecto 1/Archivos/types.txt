@@ -3,7 +3,7 @@
 type 
 codigos = array[1..4] of integer;
 
-const TOPE : integer= 4;
+const TOPE: integer = 4;
 
 // crear un objecto curso
 type
@@ -147,11 +147,8 @@ begin
         writeln('Creditos: ',entrada[i].creditos);
     end;
     // tabla de simbolos del procedimiento imprimir_datos_cursos
-
     //graficar_ts();
-
-    Exit();
-
+    exit();
     writeln('Mensaje dentro del procedimiento imprimir datos, si imprime esto no se maneja bien el exit');
 end;
 
@@ -172,7 +169,8 @@ var listado_general: estudiantes;
 
 
 begin
-contador:=1;
+
+    contador:=1;
 
     // ******* Uso del repeat
     repeat
@@ -182,4 +180,14 @@ contador:=1;
         end
     until (contador = 5);
     
+    writeln('***** Imprimiendo datos del estudiante******');
+
+    // ******** Uso del for descendente
+    for contador:=4 downto 1 do 
+    begin
+        imprimir_datos_estudiante(listado_general[contador]);
+    end;
+
+    // tabla de simbolos global
+    //graficar_ts();
 end.

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using _OLC2__Proyecto_1.Abstract;
+using Force.DeepCloner;
+
 namespace _OLC2__Proyecto_1.Symbol_
 {
     public class Environment_
@@ -30,8 +32,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                         vari.value = value;
                         if (this.name == vari.id)
                         {
-                            Symbol uid = new Symbol(vari);
-                            return uid;
+                            return vari;
                         }
                         return null;
                     }
@@ -52,8 +53,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                     vari.value = value;
                     if (this.name == vari.id)
                     {
-                        Symbol uid = new Symbol(vari);
-                        return uid;
+                        return vari;
                     }
                     return null;
                 }
@@ -71,8 +71,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                 {
                     if (vari.id.ToLower() == id.ToLower() && vari.type_name!="function")
                     {
-                        Symbol uid = new Symbol(vari);
-                        return uid;
+                        return vari;
                     }
                 }
                 env = env.prev;
@@ -86,8 +85,7 @@ namespace _OLC2__Proyecto_1.Symbol_
             {
                 if (vari.id.ToLower() == id.ToLower())
                 {
-                    Symbol uid = new Symbol(vari);
-                    return uid;
+                    return vari;
                 }
             }
             return null;
@@ -101,8 +99,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                 {
                     if (vari.id.ToLower() == id.ToLower() && vari.type_name=="function")
                     {
-                        Symbol uid = new Symbol(vari);
-                        return uid;
+                        return vari;
                     }
                 }
                 env = env.prev;

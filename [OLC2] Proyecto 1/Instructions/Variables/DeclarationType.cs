@@ -113,23 +113,28 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                             {
                                 case Type_.BOOLEAN:
                                     Array_ l = new Array_(s, e, this.idList.First().id, false, Type_.BOOLEAN,"var");
+                                    l.environment.prev = environment;
                                     environment.saveVarActual(this.idList.First().id, l.environment, Type_.ID, "array");
                                     break;
                                 case Type_.STRING:
                                     Array_ l1 = new Array_(s, e, this.idList.First().id, "", Type_.STRING,"var");
+                                    l1.environment.prev = environment;
                                     environment.saveVarActual(this.idList.First().id, l1.environment, Type_.ID, "array");
                                     break;
                                 case Type_.INTEGER:
                                     Array_ l2 = new Array_(s, e, this.idList.First().id, 0, Type_.INTEGER,"var");
+                                    l2.environment.prev = environment;
                                     environment.saveVarActual(this.idList.First().id, l2.environment, Type_.ID, "array");
                                     break;
                                 case Type_.REAL:
                                     Array_ l3 = new Array_(s, e, this.idList.First().id, 0, Type_.REAL,"var");
+                                    l3.environment.prev = environment;
                                     environment.saveVarActual(this.idList.First().id, l3.environment, Type_.ID, "array");
                                     break;
                                 case Type_.ID:
                                     Symbol b = environment.getVar(this.idName2);
                                     Array_ l4 = new Array_(s, e, this.idList.First().id, b.value, Type_.ID,b.type_name);
+                                    l4.environment.prev = environment;
                                     environment.saveVarActual(this.idList.First().id, l4.environment, Type_.ID, "array");
                                     break;
                                 default:
