@@ -1,11 +1,13 @@
-program Ordenar;
+﻿program Ordenar;
 
 const 
-	maximo = 100; 
-	maxVal = 30000;
+	maximo:integer = 100; 
+	maxVal:integer = 30000;
 
+type 
+    arrayraro = array[1..maximo] of integer;
 var 
-	datos: array[1..maximo] of integer;      
+	datos: arrayraro;      
    i: integer;                            
  
 procedure swap(var a,b: integer); 
@@ -22,7 +24,9 @@ begin
 	writeln; 
    	writeln('Generando números...'); 
    	for i := 1 to maximo do 
+    begin
     	datos[i] := maximo - i * i ; 
+    end
 end;
  
 procedure muestraNumeros();              { Muestra los núms almacenados } 
@@ -30,7 +34,9 @@ begin
 	writeln; 
    	writeln('Los números son...'); 
    	for i := 1 to maximo do 
+    begin
     	write(datos[i], ' '); 
+        end
    	writeln(''); 
 end; 
  
@@ -41,13 +47,17 @@ begin
 	writeln(''); 
    	writeln('Ordenando mediante burbuja...'); 
    	repeat 
+    begin
      	cambiado := false;                 	{ No cambia nada aún } 
      	for i := maximo downto 2 do        	{ De final a principio } 
+        begin
        		if datos[i] < datos[i-1] then   { Si está colocado al revés } 
          	begin 
          		swap(datos[i], datos[i-1]);    { Le da la vuelta } 
          		cambiado := true;              { Y habrá que seguir mirando } 
          	end; 
+        end
+    end
 	until not cambiado;                  { Hasta q nada se haya cambiado } 
  end;
  
@@ -56,22 +66,36 @@ procedure Sort(l, r: Integer);         { Esta es la parte recursiva }
 var 
 	i, j, x, y: integer; 
 begin 
-	i := l; j := r;                      { Límites por los lados } 
-   	x := datos[(l+r) DIV 2];             { Centro de la comparaciones } 
+	i := l; 
+    j := r;                      { Límites por los lados } 
+   	x := datos[(l+r) / 2];             { Centro de la comparaciones } 
    	repeat 
-     	while datos[i] < x do i := i + 1;  { Salta los ya colocados } 
-     	while x < datos[j] do j := j - 1;  {   en ambos lados } 
-     
+    begin
+     	while datos[i] < x do
+        begin
+        i := i + 1;  { Salta los ya colocados } 
+        end
+     	while x < datos[j] do 
+        begin
+        j := j - 1;  {   en ambos lados } 
+        end
 	 	if i <= j then                     { Si queda alguno sin colocar } 
        	begin 
        		swap(datos[i], datos[j]);  	{ Los cambia de lado } 
        		i := i + 1; 
 			j := j - 1;          		{ Y sigue acercándose al centro } 
        	end; 
+        end
    until i > j;                         { Hasta que lo pasemos } 
    
-   if l < j then Sort(l, j);            { Llamadas recursivas por cada } 
-   if i < r then Sort(i, r);            {   lado } 
+   if l < j then 
+   begin
+   Sort(l, j);            { Llamadas recursivas por cada } 
+   end;
+   if i < r then 
+   begin
+   Sort(i, r);            {   lado } 
+   end;
  end; 
  
 procedure QuickSort();                   { Ordena según Quicksort } 

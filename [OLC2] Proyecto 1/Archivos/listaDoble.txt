@@ -14,7 +14,7 @@ var point : Points;
 end;
 
 type
-DoubleList = array[1..20] of Node;
+DoubleList = array[0..19] of Node;
 
 var actualDL : DoubleList;
 var count : integer = 0;

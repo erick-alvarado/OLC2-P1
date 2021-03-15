@@ -1,8 +1,8 @@
-program OrdenamientoRapido;
+﻿program OrdenamientoRapido;
 type
     v_ = array [0..6] of integer;
 var
-	v : array[0 .. 6] of integer;
+	v : v_;
 
 
 (* paso el arreglo por referencia *)
@@ -20,9 +20,14 @@ begin
 	while i < d do
 	begin
 		(* Whiles de una sentencia. no necesita begind/end *)
-		while (a[i] <= pivote) AND (i < d) do i := i+1;
-		WHILE a[D] > pivote DO d := d-1;
-
+		while (a[i] <= pivote) AND (i < d) do 
+		begin
+		i := i+1;
+		end;
+		WHILE a[D] > pivote DO 
+		begin
+		d := d-1;
+		end;
 		(* parentesis innecesarions *)
 		if ((((i < d)))) then		(* sino se han cruzado *)
 		begin
@@ -37,8 +42,16 @@ begin
 	A[D] := pivote;				(* los menores a la izquierda y los mayores a su derecha *)
 
 	(* IFs sin begin/end *)
-	if izq < d-1 then quick_sort(A, izq, d-1);
-	if d+1 < der then quick_sort(A, d+1, der);
+	
+	if izq < d-1 then
+	begin
+	quick_sort(A, izq, d-1);
+	end;
+
+	if d+1 < der then 
+	begin
+	quick_sort(A, d+1, der);
+	end;
 end;
 
 
@@ -50,9 +63,13 @@ begin
 	for indiceArregloLocal := 0 to 5 do
 	begin
 		if indiceArregloLocal < 5 then
-			wRite(arrayValor[indiceArregloLocal], ', ')
+		begin
+			wRite(arrayValor[indiceArregloLocal], ', ');
+			end
 		else
+			begin
 			wRiteLn(arrayValor[indiceArregloLocal]);
+			end
 	end;
 end;
 

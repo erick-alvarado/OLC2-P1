@@ -14,3 +14,15 @@ Types
 
 Lista doble
 -Begin end repeat until
+-Parametro de array fuera de contexto tiene que ser de 0..19
+
+Ordenamiento rapido
+-Begin y end
+-el type lo declara todo raro
+
+Ordenar
+-Falta :type 
+-Otra vez type todo raro asi que declare el type 
+-Falta begin y end
+-DIV no esta especificado y no se como hacerlo pero si lo jala
+
