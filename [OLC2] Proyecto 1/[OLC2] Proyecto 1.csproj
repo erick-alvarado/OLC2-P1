@@ -117,7 +117,6 @@
     <None Include="Archivos\Calificación\Arreglos\ordenar.pas" />
     <None Include="Archivos\Calificación\Avanzadas\anidadas.pas" />
     <None Include="Archivos\Calificación\Avanzadas\listaDoble.pas" />
-    <None Include="Archivos\Calificación\Avanzadas\types.pas" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -135,6 +134,7 @@
   <ItemGroup>
     <Content Include="Archivos\Basico.txt" />
     <Content Include="Archivos\desanidados.txt" />
+    <Content Include="Archivos\listaDoble.txt" />
     <Content Include="Archivos\recursivas.txt" />
     <Content Include="Archivos\Intermedio.txt" />
     <Content Include="Archivos\Modificaciones.txt" />

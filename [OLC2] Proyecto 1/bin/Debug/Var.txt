@@ -11,32 +11,46 @@ arset [label=<
 <TD>Value </TD>
  </TR
 ><TR>
-<TD>ackermann </TD>
+<TD>compare </TD>
 <TD>INTEGER</TD>
-<TD>function </TD>
+<TD>var </TD>
 <TD>Global$</TD>
-<TD>_OLC2__Proyecto_1.Instructions.Functions.Function </TD>
+<TD>56 </TD>
  </TR
 ><TR>
-<TD>ackermann </TD>
+<TD>last </TD>
 <TD>INTEGER</TD>
 <TD>var </TD>
-<TD>ackermann</TD>
+<TD>Global$</TD>
+<TD>2 </TD>
+ </TR
+><TR>
+<TD>index </TD>
+<TD>REAL</TD>
+<TD>var </TD>
+<TD>Global$</TD>
 <TD>0 </TD>
  </TR
 ><TR>
-<TD>m </TD>
+<TD>i </TD>
 <TD>INTEGER</TD>
 <TD>var </TD>
-<TD>ackermann</TD>
+<TD>Global$</TD>
 <TD>0 </TD>
  </TR
 ><TR>
-<TD>n </TD>
+<TD>tabla </TD>
 <TD>INTEGER</TD>
 <TD>var </TD>
-<TD>ackermann</TD>
-<TD>7 </TD>
+<TD>Global$</TD>
+<TD>0 </TD>
+ </TR
+><TR>
+<TD>numero </TD>
+<TD>INTEGER</TD>
+<TD>var </TD>
+<TD>Global$</TD>
+<TD>0 </TD>
  </TR
 ></TABLE>
 >, ]; }

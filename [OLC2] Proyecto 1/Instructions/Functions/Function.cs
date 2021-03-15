@@ -110,7 +110,24 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                 {
                     if (obj != null)
                     {
-                        throw new Error_(this.line, this.column, "Semantico", "El procedimiento no debe de retornar ningun valor" + Enum.GetName(typeof(Type_), this.return_));
+                        Break a = null;
+                        try
+                        {
+                            a = (Break)obj;
+                            if (a.type.Equals("BREAK") || a.type.Equals("CONTINUE")|| a.e!=null)
+                            {
+                                throw new Error_(a.line, a.column, "Semantico", "Sentencia de transferencia fuera de contexto:" + a.type);
+                            }
+                            else
+                            {
+                                return a;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            throw new Error_(this.line, this.column, "Semantico", "El procedimiento no debe de retornar ningun valor" + Enum.GetName(typeof(Type_), this.return_));
+                        }
+
                     }
                 }
 

@@ -10,3 +10,7 @@ Recursivas
 
 Types
 -Cons falta el tipo 
+-Begin y end en repeat until creo
+
+Lista doble
+-Begin end repeat until
