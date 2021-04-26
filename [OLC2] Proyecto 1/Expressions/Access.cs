@@ -38,7 +38,6 @@ namespace _OLC2__Proyecto_1.Expressions
                 Environment_ auxEnvironment = environment;
                 Return retorno = null;
                 Symbol b = null;
-                String identificador = "";
                 try
                 {
                     //Buscamos el primer object y se obtiene el environment del mismo 

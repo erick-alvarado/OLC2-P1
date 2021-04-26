@@ -44,7 +44,7 @@ namespace _OLC2__Proyecto_1.Expressions
                         return new Return(Boolean.Parse(leftValue.value.ToString()) || Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
                 }
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 throw new Error_(this.line, this.column, "Semantico", "Operacion logica sobre un tipo de dato incorrecto");
 

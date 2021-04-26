@@ -14,3 +14,19 @@ C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\Newtonsoft.Json.d
 C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\Newtonsoft.Json.xml
 C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\DeepCloner.dll
 C:\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\DeepCloner.xml
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\[OLC2] Proyecto 1.exe.config
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\[OLC2] Proyecto 1.exe
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\[OLC2] Proyecto 1.pdb
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\DeepCloner.dll
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\Irony.dll
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\Newtonsoft.Json.dll
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\DeepCloner.xml
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\bin\Debug\Newtonsoft.Json.xml
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\_OLC2__Proyecto_1.Form1.resources
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\_OLC2__Proyecto_1.Properties.Resources.resources
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.csproj.GenerateResource.cache
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.csproj.CoreCompileInputs.cache
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.csproj.CopyComplete
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.exe
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.pdb
+C:\Users\alexa\OneDrive\Desktop\Personal\Universidad\Semestres\Semestre 6\Compiladores 2\Laboratorio\Proyecto\compiladores2\[OLC2] Proyecto 1\[OLC2] Proyecto 1\obj\Debug\[OLC2] Proyecto 1.csprojAssemblyReference.cache

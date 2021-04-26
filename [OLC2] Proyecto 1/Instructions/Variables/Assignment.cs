@@ -53,7 +53,6 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 Environment_ auxEnvironment = environment;
                 Return retorno = null;
                 b = null;
-                String identificador = "";
                 try
                 {
                     //Buscamos el primer object y se obtiene el environment del mismo 

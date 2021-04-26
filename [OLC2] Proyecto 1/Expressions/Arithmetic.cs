@@ -107,7 +107,7 @@ namespace _OLC2__Proyecto_1.Expressions
                 }
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Error_(this.line, this.column, "Semantico", "Operacion aritmetica sobre un tipo de dato incorrecto");
             }

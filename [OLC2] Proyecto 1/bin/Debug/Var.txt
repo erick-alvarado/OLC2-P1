@@ -11,46 +11,242 @@ arset [label=<
 <TD>Value </TD>
  </TR
 ><TR>
-<TD>compare </TD>
-<TD>INTEGER</TD>
-<TD>var </TD>
+<TD>codigos </TD>
+<TD>ID</TD>
+<TD>array </TD>
 <TD>Global$</TD>
-<TD>56 </TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
  </TR
 ><TR>
-<TD>last </TD>
+<TD>TOPE </TD>
 <TD>INTEGER</TD>
-<TD>var </TD>
+<TD>cons </TD>
 <TD>Global$</TD>
-<TD>2 </TD>
+<TD>4 </TD>
  </TR
 ><TR>
-<TD>index </TD>
-<TD>REAL</TD>
-<TD>var </TD>
+<TD>curso </TD>
+<TD>ID</TD>
+<TD>object </TD>
 <TD>Global$</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>codigo </TD>
+<TD>INTEGER</TD>
+<TD>var </TD>
+<TD>curso</TD>
 <TD>0 </TD>
+ </TR
+><TR>
+<TD>nombre </TD>
+<TD>STRING</TD>
+<TD>var </TD>
+<TD>curso</TD>
+<TD> </TD>
+ </TR
+><TR>
+<TD>nota </TD>
+<TD>INTEGER</TD>
+<TD>var </TD>
+<TD>curso</TD>
+<TD>0 </TD>
+ </TR
+><TR>
+<TD>creditos </TD>
+<TD>INTEGER</TD>
+<TD>var </TD>
+<TD>curso</TD>
+<TD>0 </TD>
+ </TR
+><TR>
+<TD>cursos </TD>
+<TD>ID</TD>
+<TD>array </TD>
+<TD>Global$</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>estudiante </TD>
+<TD>ID</TD>
+<TD>object </TD>
+<TD>Global$</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>nombre </TD>
+<TD>STRING</TD>
+<TD>var </TD>
+<TD>estudiante</TD>
+<TD> </TD>
+ </TR
+><TR>
+<TD>carnet </TD>
+<TD>STRING</TD>
+<TD>var </TD>
+<TD>estudiante</TD>
+<TD> </TD>
+ </TR
+><TR>
+<TD>lista_cursos </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>estudiante</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>estudiantes </TD>
+<TD>ID</TD>
+<TD>array </TD>
+<TD>Global$</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>get_curso </TD>
+<TD>ID</TD>
+<TD>function </TD>
+<TD>Global$</TD>
+<TD>_OLC2__Proyecto_1.Instructions.Functions.Function </TD>
+ </TR
+><TR>
+<TD>get_curso </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>get_curso</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>codigo_curso </TD>
+<TD>INTEGER</TD>
+<TD>var </TD>
+<TD>get_curso</TD>
+<TD>773 </TD>
+ </TR
+><TR>
+<TD>retorno </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>get_curso</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>get_cursos </TD>
+<TD>ID</TD>
+<TD>function </TD>
+<TD>Global$</TD>
+<TD>_OLC2__Proyecto_1.Instructions.Functions.Function </TD>
+ </TR
+><TR>
+<TD>get_cursos </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>get_cursos</TD>
+<TD> </TD>
+ </TR
+><TR>
+<TD>lista_cursos </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>get_cursos</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>lista_codigos </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>get_cursos</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
  </TR
 ><TR>
 <TD>i </TD>
 <TD>INTEGER</TD>
 <TD>var </TD>
-<TD>Global$</TD>
-<TD>0 </TD>
+<TD>get_cursos</TD>
+<TD>5 </TD>
  </TR
 ><TR>
-<TD>tabla </TD>
+<TD>get_estudiante </TD>
+<TD>ID</TD>
+<TD>function </TD>
+<TD>Global$</TD>
+<TD>_OLC2__Proyecto_1.Instructions.Functions.Function </TD>
+ </TR
+><TR>
+<TD>get_estudiante </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>get_estudiante</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>posicion </TD>
+<TD>INTEGER</TD>
+<TD>var </TD>
+<TD>get_estudiante</TD>
+<TD>4 </TD>
+ </TR
+><TR>
+<TD>retorno </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>get_estudiante</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>imprimir_datos_cursos </TD>
+<TD>VOID</TD>
+<TD>function </TD>
+<TD>Global$</TD>
+<TD>_OLC2__Proyecto_1.Instructions.Functions.Function </TD>
+ </TR
+><TR>
+<TD>entrada </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>imprimir_datos_cursos</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>i </TD>
+<TD>INTEGER</TD>
+<TD>var </TD>
+<TD>imprimir_datos_cursos</TD>
+<TD>5 </TD>
+ </TR
+><TR>
+<TD>imprimir_datos_estudiante </TD>
+<TD>VOID</TD>
+<TD>function </TD>
+<TD>Global$</TD>
+<TD>_OLC2__Proyecto_1.Instructions.Functions.Function </TD>
+ </TR
+><TR>
+<TD>entrada </TD>
+<TD>ID</TD>
+<TD>var </TD>
+<TD>imprimir_datos_estudiante</TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
+ </TR
+><TR>
+<TD>mensaje </TD>
+<TD>STRING</TD>
+<TD>var </TD>
+<TD>imprimir_datos_estudiante</TD>
+<TD>Estudiante reconocido </TD>
+ </TR
+><TR>
+<TD>contador </TD>
 <TD>INTEGER</TD>
 <TD>var </TD>
 <TD>Global$</TD>
 <TD>0 </TD>
  </TR
 ><TR>
-<TD>numero </TD>
-<TD>INTEGER</TD>
+<TD>listado_general </TD>
+<TD>ID</TD>
 <TD>var </TD>
 <TD>Global$</TD>
-<TD>0 </TD>
+<TD>_OLC2__Proyecto_1.Symbol_.Environment_ </TD>
  </TR
 ></TABLE>
 >, ]; }

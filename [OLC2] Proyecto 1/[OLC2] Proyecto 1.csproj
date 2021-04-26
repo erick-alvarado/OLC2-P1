@@ -69,7 +69,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Generator\Generator.cs" />
     <Compile Include="Gramm\Analyzer.cs" />
+    <Compile Include="Gramm\Gramm_.cs" />
     <Compile Include="Instructions\Argument.cs" />
     <Compile Include="Instructions\Functions\callFunction2.cs" />
     <Compile Include="Instructions\Functions\callFunction.cs" />

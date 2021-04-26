@@ -160,7 +160,7 @@ namespace _OLC2__Proyecto_1
             {
                 Graph.generateAst(this.n.root);
             }
-            catch (Exception eaaaa)
+            catch (Exception)
             {
 
             }
@@ -172,7 +172,7 @@ namespace _OLC2__Proyecto_1
             {
                 Graph.generateVar(this.n.environment);
             }
-            catch (Exception eaaaa)
+            catch (Exception)
             {
 
             }

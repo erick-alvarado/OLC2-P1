@@ -809,7 +809,7 @@ namespace _OLC2__Proyecto_1.Gramm
                         {
                             return new Literal(int.Parse(value), Type_.INTEGER, line, column);
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             return new Literal(Double.Parse(value), Type_.REAL, line, column);
                         }

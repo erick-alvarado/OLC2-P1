@@ -141,7 +141,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                                     throw new Error_(this.line, this.column, "Semantico", "No se puede hacer arrays de tipo:" + id);
                             }
                         }
-                        catch (Exception se)
+                        catch (Exception)
                         {
                             throw new Error_(this.line, this.column, "Semantico", "Inicio y fin de array no validos");
                         }

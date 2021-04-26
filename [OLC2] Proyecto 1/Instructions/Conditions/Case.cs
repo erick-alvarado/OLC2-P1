@@ -42,7 +42,7 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
                     }
                     
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     try
                     {

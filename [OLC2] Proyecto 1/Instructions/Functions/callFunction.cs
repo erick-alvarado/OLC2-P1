@@ -63,7 +63,7 @@ namespace _OLC2__Proyecto_1.Instructions
                 }
                 f.environmentAux.prev = aux;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new Error_(this.line, this.column, "Semantico", "No existe la funcion:" + this.id);
             }
@@ -107,7 +107,7 @@ namespace _OLC2__Proyecto_1.Instructions
                                     environment.saveVar(atemp.getId(), value.value, value.type, value.type_name);
                                 }
                             }
-                            catch (Exception e)
+                            catch (Exception)
                             {
 
                             }

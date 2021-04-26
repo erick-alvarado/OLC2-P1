@@ -75,7 +75,7 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     {
                         a = (Break)obj;
                     }
-                    catch(Exception e)
+                    catch(Exception)
                     {
                         Symbol au = (Symbol)obj;
                         a = new Break(0, 0, "F", new Literal(au.value, au.type, 0, 0));
@@ -99,7 +99,7 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                             }
                             return r;
                         }
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             throw new Error_(a.line, a.column, "Semantico", "Tipo de retorno incorrecto" + a.type);
                         }

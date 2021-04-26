@@ -42,7 +42,7 @@ namespace _OLC2__Proyecto_1.Expressions
                         return new Return(Double.Parse(leftValue.value.ToString()) != Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
                 }
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 throw new Error_(this.line, this.column, "Semantico", "Comparacion de tipos no validos");
             }
