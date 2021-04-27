@@ -19,7 +19,8 @@ namespace _OLC2__Proyecto_1
     public partial class Form1 : Form
     {
         private Analyzer n;
-    public Form1()
+        private Analyzer_ n2;
+        public Form1()
         {
             InitializeComponent();
         }
@@ -78,15 +79,15 @@ namespace _OLC2__Proyecto_1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            n = new Analyzer();
-          
-            textBox2.Text= n.analyze(textBox1.Text);
+            n2 = new Analyzer_();
+            textBox2.Text= n2.analyze(textBox1.Text);
 
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            n = new Analyzer();
+            textBox2.Text = n.analyze(textBox1.Text);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

@@ -71,6 +71,7 @@
     </Compile>
     <Compile Include="Generator\Generator.cs" />
     <Compile Include="Gramm\Analyzer.cs" />
+    <Compile Include="Gramm\Analyzer_.cs" />
     <Compile Include="Gramm\Gramm_.cs" />
     <Compile Include="Instructions\Argument.cs" />
     <Compile Include="Instructions\Functions\callFunction2.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Symbol_\Environment.cs" />
     <Compile Include="Symbol_\Error_.cs" />
     <Compile Include="Symbol_\Main.cs" />
+    <Compile Include="Symbol_\Optimization.cs" />
     <Compile Include="Symbol_\Symbol.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

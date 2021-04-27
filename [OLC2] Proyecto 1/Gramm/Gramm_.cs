@@ -23,6 +23,11 @@ namespace _OLC2__Proyecto_1.Gramm
             #region Terminals
             var RTYPE = ToTerm("type");
             var RMAIN = ToTerm("main");
+            var RINCLUDE = ToTerm("include");
+            var RSTUDIO = ToTerm("stdio");
+            var RH = ToTerm("h");
+
+            var HASH = ToTerm("#");
 
             var TIMES = ToTerm("*");
             var DIVISION = ToTerm("/");
@@ -53,7 +58,8 @@ namespace _OLC2__Proyecto_1.Gramm
             var POINTS = ToTerm(":");
 
             var RSTRING = ToTerm("string");
-            var RINTEGER = ToTerm("integer");
+            var RINT = ToTerm("int");
+            var RFLOAT = ToTerm("float");
             var RVOID = ToTerm("void");
             var RGOTO = ToTerm("goto");
 
@@ -78,7 +84,7 @@ namespace _OLC2__Proyecto_1.Gramm
             #region NonTerminals
             NonTerminal start = new NonTerminal("start");
             NonTerminal main = new NonTerminal("main");
-            NonTerminal globalVariables = new NonTerminal("globalVariables");
+            NonTerminal import = new NonTerminal("import");
 
             NonTerminal instructionList = new NonTerminal("instructionList");
             NonTerminal instruction = new NonTerminal("instruction");
@@ -133,14 +139,16 @@ namespace _OLC2__Proyecto_1.Gramm
             #endregion
 
             #region Grammar
-            start.Rule = instructionList +  main
-                | instructionList + main + instructionList
-                | main + instructionList
+            start.Rule = import + instructionList +  main
+                | import + instructionList + main + instructionList
+                | import + main + instructionList
                 ;
-
+            import.Rule = HASH + RINCLUDE + LESS + RSTUDIO + POINT + RH + GREAT + SEMICOLON
+                | HASH + RINCLUDE + LESS + RSTUDIO + POINT + RH + GREAT
+                ;
             //DECLARATION
 
-            declaration.Rule = type + idList + EQUAL + expression + SEMICOLON
+            declaration.Rule = type + ID + EQUAL + expression + SEMICOLON
                 | type + idList + LEFTCOR + expression + RIGHTCOR + SEMICOLON
                 | type + idList + SEMICOLON
                 ;
@@ -180,6 +188,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 | callFuncST
                 | RRETURN + LEFTPAR + expression + RIGHTPAR + SEMICOLON
                 | RRETURN + LEFTPAR + RIGHTPAR + SEMICOLON
+                | RRETURN + SEMICOLON
                 | Empty
                 ;
 
@@ -216,7 +225,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 | access
                 | INTEGER
                 ;
-            type.Rule = RINTEGER | RVOID
+            type.Rule = RINT | RVOID | RFLOAT
                 ;
 
             access.Rule = ID + expListArray
