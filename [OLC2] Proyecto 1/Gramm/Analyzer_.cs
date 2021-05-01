@@ -14,15 +14,17 @@ namespace _OLC2__Proyecto_1.Gramm
         public ParseTreeNode root;
         private bool jump = false;
         private String label = "";
+        private String code;
 
         public Analyzer_()
         {
             output = "";
+            code = "";
         }
         public String analyze(String input)
         {
             opList.Clear();
-
+            code = "";
             Gramm_ grammar = new Gramm_();
             LanguageData language = new LanguageData(grammar);
             Parser parser = new Parser(language);
@@ -51,6 +53,12 @@ namespace _OLC2__Proyecto_1.Gramm
                         {
                             jump = false;
                             i--;
+                            opList.Add(new Optimization("Bloque", "Rule 1", code, "", child.Token.Location.Line - 1));
+                            code = "";
+                        }
+                        else
+                        {
+                            code += child.Token.Text;
                         }
                     }
                     else
@@ -70,7 +78,6 @@ namespace _OLC2__Proyecto_1.Gramm
                                 i += 2;
                                 break;
                             case "if":
-                                //Rule 2
                                 if (childs.ChildNodes.Count == 10)
                                 {
                                     ParseTreeNode exp = childs.ChildNodes[i + 1].ChildNodes[0];//exp -> final exp
@@ -150,6 +157,8 @@ namespace _OLC2__Proyecto_1.Gramm
                                         }
                                         if (result)
                                         {
+                                            //Rule 3
+                                            opList.Add(new Optimization("Bloque", "Rule 3","if("+val1+operation+val2+") goto "+ childs.ChildNodes[i + 3].Token.Text+"; goto "+childs.ChildNodes[i + 6].Token.Text+";","goto "+childs.ChildNodes[i + 3].Token.Text +";",child.Token.Location.Line));
                                             optimization += childs.ChildNodes[i + 2].Token.Text + " ";
                                             optimization += childs.ChildNodes[i + 3].Token.Text;
                                             optimization += childs.ChildNodes[i + 4].Token.Text;
@@ -157,6 +166,8 @@ namespace _OLC2__Proyecto_1.Gramm
                                         }
                                         else
                                         {
+                                            //Rule 4
+                                            opList.Add(new Optimization("Bloque", "Rule 4", "if(" + val1 + operation + val2 + ") goto " + childs.ChildNodes[i + 3].Token.Text + "; goto " + childs.ChildNodes[i + 6].Token.Text + ";", "goto " + childs.ChildNodes[i + 6].Token.Text + ";", child.Token.Location.Line));
                                             optimization += childs.ChildNodes[i + 5].Token.Text + " ";
                                             optimization += childs.ChildNodes[i + 6].Token.Text;
                                             optimization += childs.ChildNodes[i + 7].Token.Text;
@@ -166,6 +177,7 @@ namespace _OLC2__Proyecto_1.Gramm
                                     }
                                     catch (Exception)
                                     {
+                                        //Rule 2
                                         String val1,val2;
                                         if (exp.ChildNodes[0].ChildNodes[0].ChildNodes[0].Token == null)
                                         {
@@ -186,27 +198,30 @@ namespace _OLC2__Proyecto_1.Gramm
 
                                         optimization += child.Token.Text;
                                         optimization += "(";
+                                        String neg="";
                                         switch (operation)
                                         {
                                             case ">":
-                                                optimization+= val1 + "<" +val2;
+                                                neg= val1 + "<" +val2;
                                                 break;
                                             case "<":
-                                                optimization += val1 + ">" + val2;
+                                                neg = val1 + ">" + val2;
                                                 break;
                                             case ">=":
-                                                optimization += val1 + "<" + val2;
+                                                neg = val1 + "<" + val2;
                                                 break;
                                             case "<=":
-                                                optimization += val1 + ">" + val2;
+                                                neg = val1 + ">" + val2;
                                                 break;
                                             case "==":
-                                                optimization += val1 + "!=" + val2;
+                                                neg = val1 + "!=" + val2;
                                                 break;
                                             case "!=":
-                                                optimization += val1 + "==" + val2;
+                                                neg = val1 + "==" + val2;
                                                 break;
                                         }
+                                        opList.Add(new Optimization("Bloque", "Rule 2","("+val1+operation+val2+")"+ childs.ChildNodes[i + 2].Token.Text + " "+ childs.ChildNodes[i + 3].Token.Text ,"("+neg+")"+ childs.ChildNodes[i + 5].Token.Text + " " + childs.ChildNodes[i + 6].Token.Text, child.Token.Location.Line));
+                                        optimization += neg;
                                         optimization += ") ";
                                         optimization += childs.ChildNodes[i + 5].Token.Text + " ";
                                         optimization += childs.ChildNodes[i + 6].Token.Text;
@@ -264,6 +279,7 @@ namespace _OLC2__Proyecto_1.Gramm
                                                     {
                                                         if (val2 == "0")
                                                         {
+                                                            opList.Add(new Optimization("Mirilla", "Rule 6", id + "=" + id + "+0;", "", child.Token.Location.Line));
                                                             return optimization;
                                                         }
                                                         else
@@ -282,6 +298,7 @@ namespace _OLC2__Proyecto_1.Gramm
                                                     {
                                                         if (val2 == "0")
                                                         {
+                                                            opList.Add(new Optimization("Mirilla", "Rule 7", id + "=" + id +"-0;", "", child.Token.Location.Line));
                                                             return optimization;
                                                         }
                                                         else
@@ -300,11 +317,13 @@ namespace _OLC2__Proyecto_1.Gramm
                                                         if (id == val1)
                                                         {
                                                             //regla 8
+                                                            opList.Add(new Optimization("Mirilla", "Rule 8", id + "=" + id + "*1;", "", child.Token.Location.Line));
                                                             return optimization;
                                                         }
                                                         else
                                                         {
                                                             //regla 12
+                                                            opList.Add(new Optimization("Mirilla", "Rule 12", id + "=" + val1 + "*1;", id+"="+val1+";", child.Token.Location.Line));
                                                             optimization += child.Token.Text + "=" + val1;
                                                             i += 3;
                                                         }
@@ -312,21 +331,16 @@ namespace _OLC2__Proyecto_1.Gramm
                                                     else if (val2 == "0")
                                                     {
                                                         //regla 15
+                                                        opList.Add(new Optimization("Mirilla", "Rule 15", id + "=" + val1 + "*0;", id+"=0;", child.Token.Location.Line));
                                                         optimization += child.Token.Text + "= 0";
                                                         i += 3;
                                                     }
                                                     else if (val2 == "2")
                                                     {
-                                                        try
-                                                        {
-                                                            int a = Int32.Parse(val1);
-                                                            optimization += child.Token.Text;
-                                                        }
-                                                        catch (Exception)
-                                                        {
-                                                            optimization += child.Token.Text + "=" + val1 + "+" + val1;
-                                                            i += 3;
-                                                        }
+                                                        //Rule 14
+                                                        opList.Add(new Optimization("Mirilla", "Rule 14", id + "=" + val1 + "*2;", id + "="+val1+"+"+val1+";", child.Token.Location.Line));
+                                                        optimization += child.Token.Text + "=" + val1 + "+" + val1;
+                                                        i += 3;
                                                     }
                                                     else
                                                     {
@@ -339,11 +353,13 @@ namespace _OLC2__Proyecto_1.Gramm
                                                         if (id == val1)
                                                         {
                                                             //regla 9
+                                                            opList.Add(new Optimization("Mirilla", "Rule 9", id + "=" + id + "/1;", "", child.Token.Location.Line));
                                                             return optimization;
                                                         }
                                                         else
                                                         {
                                                             //regla 13
+                                                            opList.Add(new Optimization("Mirilla", "Rule 13", id + "=" + val1 + "/1;", id + "=" + val1 +";", child.Token.Location.Line));
                                                             optimization += child.Token.Text + "=" + val1;
                                                             i += 3;
                                                         }
@@ -352,6 +368,8 @@ namespace _OLC2__Proyecto_1.Gramm
                                                     {
                                                         if (val1 == "0")
                                                         {
+                                                            //regla 16
+                                                            opList.Add(new Optimization("Mirilla", "Rule 16", id + "="+ "0/"+val2+";", id + "=" + "0;", child.Token.Location.Line));
                                                             optimization += child.Token.Text + "= 0";
                                                             i += 3;
                                                         }

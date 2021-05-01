@@ -59,12 +59,20 @@ namespace _OLC2__Proyecto_1
             this.Type_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Environment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label5 = new System.Windows.Forms.Label();
+            this.data3 = new System.Windows.Forms.DataGridView();
+            this.Type__ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rule = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CodeD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CodeA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Line__ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.data1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data3)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -97,7 +105,7 @@ namespace _OLC2__Proyecto_1
             this.toolStripDropDownButton1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(2083, 27);
+            this.toolStrip1.Size = new System.Drawing.Size(1924, 27);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -120,7 +128,7 @@ namespace _OLC2__Proyecto_1
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(68, 28);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(68, 24);
             this.toolStripDropDownButton1.Text = "Report";
             this.toolStripDropDownButton1.Click += new System.EventHandler(this.toolStripDropDownButton1_Click);
             // 
@@ -213,6 +221,8 @@ namespace _OLC2__Proyecto_1
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.data3);
+            this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.data2);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.button3);
@@ -222,7 +232,7 @@ namespace _OLC2__Proyecto_1
             this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(1956, 852);
+            this.tabPage2.Size = new System.Drawing.Size(2063, 920);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Tablas";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -236,12 +246,12 @@ namespace _OLC2__Proyecto_1
             this.Environment_,
             this.Line,
             this.Column});
-            this.data2.Location = new System.Drawing.Point(197, 458);
+            this.data2.Location = new System.Drawing.Point(19, 527);
             this.data2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.data2.Name = "data2";
             this.data2.RowHeadersWidth = 51;
             this.data2.RowTemplate.Height = 24;
-            this.data2.Size = new System.Drawing.Size(923, 150);
+            this.data2.Size = new System.Drawing.Size(923, 336);
             this.data2.TabIndex = 10;
             // 
             // Type_
@@ -283,7 +293,7 @@ namespace _OLC2__Proyecto_1
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(596, 370);
+            this.label4.Location = new System.Drawing.Point(437, 466);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(82, 36);
             this.label4.TabIndex = 9;
@@ -292,7 +302,7 @@ namespace _OLC2__Proyecto_1
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1164, 25);
+            this.button3.Location = new System.Drawing.Point(1378, 501);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(109, 34);
@@ -305,7 +315,7 @@ namespace _OLC2__Proyecto_1
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(605, 22);
+            this.label3.Location = new System.Drawing.Point(416, 56);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(140, 36);
             this.label3.TabIndex = 7;
@@ -320,12 +330,12 @@ namespace _OLC2__Proyecto_1
             this.Type_name,
             this.Environment,
             this.Value});
-            this.data1.Location = new System.Drawing.Point(197, 75);
+            this.data1.Location = new System.Drawing.Point(19, 115);
             this.data1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.data1.Name = "data1";
             this.data1.RowHeadersWidth = 51;
             this.data1.RowTemplate.Height = 24;
-            this.data1.Size = new System.Drawing.Size(923, 271);
+            this.data1.Size = new System.Drawing.Size(923, 312);
             this.data1.TabIndex = 0;
             this.data1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -364,12 +374,74 @@ namespace _OLC2__Proyecto_1
             this.Value.Name = "Value";
             this.Value.Width = 125;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(1372, 56);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(179, 36);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Optimization";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
+            // data3
+            // 
+            this.data3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.data3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Type__,
+            this.Rule,
+            this.CodeD,
+            this.CodeA,
+            this.Line__});
+            this.data3.Location = new System.Drawing.Point(1034, 115);
+            this.data3.Name = "data3";
+            this.data3.RowHeadersWidth = 51;
+            this.data3.RowTemplate.Height = 24;
+            this.data3.Size = new System.Drawing.Size(874, 312);
+            this.data3.TabIndex = 12;
+            // 
+            // Type__
+            // 
+            this.Type__.HeaderText = "Type";
+            this.Type__.MinimumWidth = 6;
+            this.Type__.Name = "Type__";
+            this.Type__.Width = 125;
+            // 
+            // Rule
+            // 
+            this.Rule.HeaderText = "Rule";
+            this.Rule.MinimumWidth = 6;
+            this.Rule.Name = "Rule";
+            this.Rule.Width = 125;
+            // 
+            // CodeD
+            // 
+            this.CodeD.HeaderText = "Deleted";
+            this.CodeD.MinimumWidth = 6;
+            this.CodeD.Name = "CodeD";
+            this.CodeD.Width = 125;
+            // 
+            // CodeA
+            // 
+            this.CodeA.HeaderText = "Added";
+            this.CodeA.MinimumWidth = 6;
+            this.CodeA.Name = "CodeA";
+            this.CodeA.Width = 125;
+            // 
+            // Line__
+            // 
+            this.Line__.HeaderText = "Line";
+            this.Line__.MinimumWidth = 6;
+            this.Line__.Name = "Line__";
+            this.Line__.Width = 125;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(2083, 977);
+            this.ClientSize = new System.Drawing.Size(1924, 977);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.toolStrip1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -386,6 +458,7 @@ namespace _OLC2__Proyecto_1
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.data2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.data1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.data3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -422,6 +495,13 @@ namespace _OLC2__Proyecto_1
         private System.Windows.Forms.DataGridViewTextBoxColumn Column;
         private System.Windows.Forms.ToolStripMenuItem aSTToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vARToolStripMenuItem;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.DataGridView data3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type__;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Rule;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CodeD;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CodeA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Line__;
     }
 }
 

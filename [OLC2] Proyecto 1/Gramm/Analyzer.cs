@@ -21,7 +21,7 @@ namespace _OLC2__Proyecto_1.Gramm
         public static String output;
         public static List<Error_> errors= new List<Error_>();
         public ParseTreeNode root;
-        public Environment_ environment;
+        public Environment_ environment= new Environment_(null,"nel shavo");
         public Analyzer()
         {
             output = "";

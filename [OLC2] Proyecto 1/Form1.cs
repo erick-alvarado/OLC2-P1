@@ -18,8 +18,8 @@ namespace _OLC2__Proyecto_1
 {
     public partial class Form1 : Form
     {
-        private Analyzer n;
-        private Analyzer_ n2;
+        private Analyzer n= new Analyzer();
+        private Analyzer_ n2= new Analyzer_();
         public Form1()
         {
             InitializeComponent();
@@ -132,6 +132,14 @@ namespace _OLC2__Proyecto_1
                 data2.Rows.Add(e.type, e.msg, e.scope, e.line, e.column);
             }
         }
+
+        public void setOptimizations(List<Optimization> list)
+        {
+            foreach (Optimization e in list)
+            {
+                data3.Rows.Add(e.type, e.rule, e.code_deleted, e.code_add, e.row);
+            }
+        }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -147,7 +155,11 @@ namespace _OLC2__Proyecto_1
             data2.Rows.Clear();
             data2.Refresh();
             setErrors(Analyzer.errors);
-            data1.Sort(this.data1.Columns["Environment"], ListSortDirection.Descending);
+
+            data3.Rows.Clear();
+            data3.Refresh();
+            setOptimizations(Analyzer_.opList);
+
         }
 
         private void label4_Click(object sender, EventArgs e)
@@ -180,6 +192,11 @@ namespace _OLC2__Proyecto_1
         }
 
         private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
         {
 
         }

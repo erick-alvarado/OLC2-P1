@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace _OLC2__Proyecto_1.Symbol_
 {
-    class Optimization
+    public class Optimization
     {
-        private String type, rule, code_deleted, code_add;
-        private int row;
+        public String type, rule, code_deleted, code_add;
+        public int row;
 
         public Optimization(string type, string rule, string code_deleted, string code_add, int row)
         {
