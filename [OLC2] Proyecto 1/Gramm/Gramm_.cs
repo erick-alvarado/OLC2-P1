@@ -46,6 +46,7 @@ namespace _OLC2__Proyecto_1.Gramm
             var NOT = ToTerm("!");
 
             var EQUAL = ToTerm("=");
+            var EQ_EQ = ToTerm("==");
             var SEMICOLON = ToTerm(";");
             var LEFTKEY = ToTerm("{");
             var RIGHTKEY = ToTerm("}");
@@ -98,6 +99,8 @@ namespace _OLC2__Proyecto_1.Gramm
 
             // TYPES
             NonTerminal type = new NonTerminal("type");
+            NonTerminal label = new NonTerminal("label");
+
 
 
             // FUNCTIONS
@@ -159,7 +162,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 ;
 
 
-            assignmentST.Rule = ID+ expListArray+ EQUAL + expression
+            assignmentST.Rule = ID+ expListArray+ EQUAL + expression + SEMICOLON
                 ;
 
 ;
@@ -180,20 +183,21 @@ namespace _OLC2__Proyecto_1.Gramm
 
             instruction.Rule = assignmentST
                 | RGOTO + ID + SEMICOLON
-                | ID + POINTS
+                | label
                 | declaration
                 | ifST
                 | printST
-                | assignmentST + SEMICOLON
                 | callFuncST
                 | RRETURN + LEFTPAR + expression + RIGHTPAR + SEMICOLON
                 | RRETURN + LEFTPAR + RIGHTPAR + SEMICOLON
                 | RRETURN + SEMICOLON
                 | Empty
                 ;
-
+            label.Rule = ID + POINTS + instructionList
+                ;
             //CONDITIONS
-            ifST.Rule = RIF + expression
+            ifST.Rule = RIF + expression + RGOTO + ID + SEMICOLON + RGOTO + ID + SEMICOLON + ID + POINTS
+                | RIF + expression + RGOTO + ID + SEMICOLON 
                 ;
 
 
@@ -214,6 +218,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 | expression + LESS_EQ + expression
                 | expression + GREAT_EQ + expression
                 | expression + EQUAL + expression
+                | expression + EQ_EQ + expression
                 | expression + DISTINCT + expression
                 | expression + OR + expression
                 | expression + AND + expression
