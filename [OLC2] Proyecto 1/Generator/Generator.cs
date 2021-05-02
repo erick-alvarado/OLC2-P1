@@ -64,7 +64,7 @@ namespace Compilador.Generator
 
         public String getHeader()
         {
-            return "#include <stdio.h>\ndouble heap[30101999];\ndouble stack[30101999];\ndouble P;\ndouble H;\n" + this.getTempsString() + "\n";
+            return "#include <stdio.h>\nfloat heap[100000];\nfloat stack[100000];\nfloat P;\nfloat H;\n" + this.getTempsString() + "\n";
         }
 
         public String getTempsString()
@@ -72,25 +72,30 @@ namespace Compilador.Generator
             String ret = "";
 
             if (this.temps.Count > 0)
-                ret += "double ";
-            else
-                return "";
-            for(int i=0; i < this.temps.Count; i++)
             {
-                String temp = this.temps.ElementAt(i);
-                ret += temp;
-                if(i < this.temps.Count)
+                ret += "float ";
+                for (int i = 0; i < this.temps.Count; i++)
                 {
-                    ret += ",";
+                    String temp = this.temps.ElementAt(i);
+                    ret += temp;
+                    if (i < this.temps.Count)
+                    {
+                        ret += ",";
+                    }
                 }
+                ret += ";";
+                return ret;
             }
-            ret += ";";
-            return ret;
+            else
+            {
+                return "";
+            }
+            
         }
 
         public String getCode()
         {
-            String ret = this.getHeader() + "\nvoid main(){\n\tP=0;H=0;\n\n";
+            String ret = this.getHeader() + "\nvoid main(){\n\tP=0; \n\t H=0;\n\n";
 
             foreach (String line in this.code)
             {

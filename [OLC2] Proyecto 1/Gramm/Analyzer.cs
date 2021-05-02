@@ -13,6 +13,7 @@ using _OLC2__Proyecto_1.Instructions;
 using _OLC2__Proyecto_1.Instructions.Loops;
 using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Instructions.Functions;
+using Compilador.Generator;
 
 namespace _OLC2__Proyecto_1.Gramm
 {
@@ -32,7 +33,6 @@ namespace _OLC2__Proyecto_1.Gramm
             Gramm grammar = new Gramm();
             LanguageData language = new LanguageData(grammar);
             Parser parser = new Parser(language);
-
             ParseTree tree = parser.Parse(input);
             root = tree.Root;
             environment = new Environment_(null,"Global$");
@@ -58,9 +58,17 @@ namespace _OLC2__Proyecto_1.Gramm
                     {
                         Analyzer.errors.Add((Error_)e);
                     }
-
                 }
-                
+                if (Analyzer.errors.Count == 0)
+                {
+                    Generator generator = new Generator();
+                    environment = new Environment_(null, "Global$");
+                    foreach (Instruction ins in AST)
+                    {
+                        //ins.compile(environment);
+                    }
+                }
+
             }
             return output;
         }

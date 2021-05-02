@@ -200,5 +200,11 @@ namespace _OLC2__Proyecto_1
         {
 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            n = new Analyzer();
+            textBox2.Text = n.analyze(textBox1.Text);
+        }
     }
 }

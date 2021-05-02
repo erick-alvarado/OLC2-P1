@@ -49,17 +49,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 {
                     if (jump)
                     {
-                        if (child.Token.Text == label)
-                        {
-                            jump = false;
-                            i--;
-                            opList.Add(new Optimization("Bloque", "Rule 1", code, "", child.Token.Location.Line - 1));
-                            code = "";
-                        }
-                        else
-                        {
-                            code += child.Token.Text;
-                        }
+                        code += child.Token.Text;
                     }
                     else
                     {
@@ -401,9 +391,17 @@ namespace _OLC2__Proyecto_1.Gramm
                         {
                             optimization += "\r\n";
                         }
+                        optimization += " ";
                     }
-                    optimization += " "; 
                 }
+                
+                else if (child.Term.Name == "label"|| child.Term.Name == "ret")
+                {
+                    jump = false;
+                    opList.Add(new Optimization("Bloque", "Rule 1", code, "", child.ChildNodes[0].Token.Location.Line - 1));
+                    code = "";
+                }
+
                 optimization = AST(optimization,child);
             }
             return optimization;

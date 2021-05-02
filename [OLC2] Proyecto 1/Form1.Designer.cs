@@ -44,6 +44,13 @@ namespace _OLC2__Proyecto_1
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.data3 = new System.Windows.Forms.DataGridView();
+            this.Type__ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rule = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CodeD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CodeA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Line__ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label5 = new System.Windows.Forms.Label();
             this.data2 = new System.Windows.Forms.DataGridView();
             this.Type_ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Description = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,25 +66,18 @@ namespace _OLC2__Proyecto_1
             this.Type_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Environment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.data3 = new System.Windows.Forms.DataGridView();
-            this.Type__ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Rule = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CodeD = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CodeA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Line__ = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.data3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.data2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.data1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.data3)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1701, 759);
+            this.button1.Location = new System.Drawing.Point(1430, 775);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(185, 39);
@@ -88,12 +88,12 @@ namespace _OLC2__Proyecto_1
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1386, 759);
+            this.button2.Location = new System.Drawing.Point(1675, 775);
             this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(169, 39);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Traducir";
+            this.button2.Text = "Optimizar";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -237,6 +237,68 @@ namespace _OLC2__Proyecto_1
             this.tabPage2.Text = "Tablas";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // data3
+            // 
+            this.data3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.data3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Type__,
+            this.Rule,
+            this.CodeD,
+            this.CodeA,
+            this.Line__});
+            this.data3.Location = new System.Drawing.Point(1034, 115);
+            this.data3.Name = "data3";
+            this.data3.RowHeadersWidth = 51;
+            this.data3.RowTemplate.Height = 24;
+            this.data3.Size = new System.Drawing.Size(874, 312);
+            this.data3.TabIndex = 12;
+            // 
+            // Type__
+            // 
+            this.Type__.HeaderText = "Type";
+            this.Type__.MinimumWidth = 6;
+            this.Type__.Name = "Type__";
+            this.Type__.Width = 125;
+            // 
+            // Rule
+            // 
+            this.Rule.HeaderText = "Rule";
+            this.Rule.MinimumWidth = 6;
+            this.Rule.Name = "Rule";
+            this.Rule.Width = 125;
+            // 
+            // CodeD
+            // 
+            this.CodeD.HeaderText = "Deleted";
+            this.CodeD.MinimumWidth = 6;
+            this.CodeD.Name = "CodeD";
+            this.CodeD.Width = 125;
+            // 
+            // CodeA
+            // 
+            this.CodeA.HeaderText = "Added";
+            this.CodeA.MinimumWidth = 6;
+            this.CodeA.Name = "CodeA";
+            this.CodeA.Width = 125;
+            // 
+            // Line__
+            // 
+            this.Line__.HeaderText = "Line";
+            this.Line__.MinimumWidth = 6;
+            this.Line__.Name = "Line__";
+            this.Line__.Width = 125;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(1372, 56);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(179, 36);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Optimization";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
+            // 
             // data2
             // 
             this.data2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -374,68 +436,6 @@ namespace _OLC2__Proyecto_1
             this.Value.Name = "Value";
             this.Value.Width = 125;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(1372, 56);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(179, 36);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Optimization";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
-            // data3
-            // 
-            this.data3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.data3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Type__,
-            this.Rule,
-            this.CodeD,
-            this.CodeA,
-            this.Line__});
-            this.data3.Location = new System.Drawing.Point(1034, 115);
-            this.data3.Name = "data3";
-            this.data3.RowHeadersWidth = 51;
-            this.data3.RowTemplate.Height = 24;
-            this.data3.Size = new System.Drawing.Size(874, 312);
-            this.data3.TabIndex = 12;
-            // 
-            // Type__
-            // 
-            this.Type__.HeaderText = "Type";
-            this.Type__.MinimumWidth = 6;
-            this.Type__.Name = "Type__";
-            this.Type__.Width = 125;
-            // 
-            // Rule
-            // 
-            this.Rule.HeaderText = "Rule";
-            this.Rule.MinimumWidth = 6;
-            this.Rule.Name = "Rule";
-            this.Rule.Width = 125;
-            // 
-            // CodeD
-            // 
-            this.CodeD.HeaderText = "Deleted";
-            this.CodeD.MinimumWidth = 6;
-            this.CodeD.Name = "CodeD";
-            this.CodeD.Width = 125;
-            // 
-            // CodeA
-            // 
-            this.CodeA.HeaderText = "Added";
-            this.CodeA.MinimumWidth = 6;
-            this.CodeA.Name = "CodeA";
-            this.CodeA.Width = 125;
-            // 
-            // Line__
-            // 
-            this.Line__.HeaderText = "Line";
-            this.Line__.MinimumWidth = 6;
-            this.Line__.Name = "Line__";
-            this.Line__.Width = 125;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -456,9 +456,9 @@ namespace _OLC2__Proyecto_1
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.data3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.data2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.data1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.data3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

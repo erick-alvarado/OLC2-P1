@@ -84,6 +84,8 @@ namespace _OLC2__Proyecto_1.Gramm
 
             #region NonTerminals
             NonTerminal start = new NonTerminal("start");
+            NonTerminal ret = new NonTerminal("ret");
+
             NonTerminal main = new NonTerminal("main");
             NonTerminal import = new NonTerminal("import");
 
@@ -190,8 +192,10 @@ namespace _OLC2__Proyecto_1.Gramm
                 | callFuncST
                 | RRETURN + LEFTPAR + expression + RIGHTPAR + SEMICOLON
                 | RRETURN + LEFTPAR + RIGHTPAR + SEMICOLON
-                | RRETURN + SEMICOLON
+                | ret
                 | Empty
+                ;
+            ret.Rule = RRETURN + SEMICOLON
                 ;
             label.Rule = ID + POINTS + instructionList
                 ;
