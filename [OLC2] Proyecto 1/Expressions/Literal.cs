@@ -1,5 +1,6 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,18 +20,38 @@ namespace _OLC2__Proyecto_1.Expressions
         }
         public override Return compile(Environment_ environment)
         {
+            Generator gen = Generator.getInstance();
+            String temp = "";
             switch (this.type)
             {
                 case Type_.STRING:
-                    return new Return(this.value.ToString(), this.type);
+                    foreach (byte b in System.Text.Encoding.UTF8.GetBytes(this.value.ToString().ToCharArray()))
+                    {
+                        gen.AddHeap(b);
+                    }
+                    gen.AddHeap(-1);
+                    temp = gen.newTemp();
+                    gen.AddExp(temp, (gen.getHP() - 1 - this.value.ToString().Length).ToString());
+                    return new Return(temp, Type_.HEAP);
                 case Type_.INTEGER:
-                    return new Return(int.Parse(this.value.ToString()), this.type);
+                    return new Return(int.Parse(this.value.ToString()), Type_.STACK);
                 case Type_.REAL:
-                    return new Return(Double.Parse(this.value.ToString()), this.type);
+                    return new Return(Double.Parse(this.value.ToString()), Type_.STACK);
                 case Type_.BOOLEAN:
-                    return new Return(Boolean.Parse(this.value.ToString()), this.type);
+                    if ((Boolean) this.value)
+                    {
+                        gen.AddHeap(-2);
+                    }
+                    else
+                    {
+                        gen.AddHeap(-3);
+                    }
+                    temp = gen.newTemp();
+                    gen.AddExp(temp, gen.getHP().ToString());
+
+                    return new Return(temp, Type_.HEAP);
                 default:
-                    return new Return(value, this.type);
+                    return new Return(value, Type_.HEAP);
             }
         }
         public override Return execute(Environment_ environment)

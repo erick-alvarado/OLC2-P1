@@ -24,10 +24,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         }
         public override object compile(Environment_ environment)
         {
-            Generator gen = new Generator();
-            Return ret =  value.compile(environment);
-            environment.saveVarActual(this.id, null, ret.type, "cons",(String) ret.value, gen.addSP());
-            gen.addSpace();
+            Generator gen = Generator.getInstance();
+            Return ret =  value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
+            gen.AddStack(ret.value);
+            environment.saveVarActual(this.id, gen.getSP(), ret.type, "cons", ret.value.ToString());
             return null;
         }
         public override object execute(Environment_ environment)

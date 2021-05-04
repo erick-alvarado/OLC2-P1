@@ -49,7 +49,7 @@ namespace Compilador.Generator
         }
         public String getHeader()
         {
-            return "#include <stdio.h>\nfloat heap[100000];\nfloat stack[100000];\nfloat SP;\nfloat HP;\n" + this.getTempsString() + "\n";
+            return "#include <stdio.h>\r\nfloat heap[100000];\r\nfloat stack[100000];\r\nfloat SP;\r\nfloat HP;\r\n" + this.getTempsString() + "\r\n";
         }
 
         public String getTempsString()
@@ -80,19 +80,19 @@ namespace Compilador.Generator
 
         public String getCode()
         {
-            String ret = this.getHeader() + "\nvoid main(){\n\tS=0; \n\t H=0;\n\n";
+            String ret = this.getHeader() + "\r\nvoid main(){\r\n\tSP=0; \r\n\t HP=0;\r\n\r\n";
 
             foreach (String line in this.code)
             {
-                ret += "\t" + line + "\n";
+                ret += "\t" + line + "\r\n";
             }
-            ret += "\n\treturn;\n}";
+            ret += "\r\n\treturn;\r\n}";
             return ret;
         }
 
         public void addSpace()
         {
-            this.code.AddLast("\n");
+            this.code.AddLast("\r\n");
         }
 
         public String newTemp()
@@ -123,18 +123,33 @@ namespace Compilador.Generator
             this.code.AddLast("HP = HP + 1;");
             return this.HP;
         }
-
+        public int getSP()
+        {
+            return this.SP-1;
+        }
+        public int getHP()
+        {
+            return this.HP-1;
+        }
         public void AddExp(String target, String left, String right = "", String op = "")
         {
             this.code.AddLast(target + " = " + left + op + right + ";");
+            
         }
-        public void AddStack(String value)
+        public void AddStack(object value)
         {
-            this.code.AddLast("stack[SP] = " +value + ";");
+            this.code.AddLast("stack[SP] = " +value.ToString() + ";");
+            
+            addSP();
+            
+
         }
-        public void AddHeap(String value)
+        public void AddHeap(object value)
         {
-            this.code.AddLast("heap[HP] = " + value + ";");
+            this.code.AddLast("heap[HP] = " + value.ToString() + ";");
+            
+            addHP();
+            
         }
 
         public void addGoto(String label)

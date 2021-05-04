@@ -20,7 +20,7 @@ namespace _OLC2__Proyecto_1.Symbol_
             this.name = name;
         }
 
-        public Symbol saveVar(String id, object value, Type_ type, String type_name, String temp ="", int pos_stack = 0)
+        public Symbol saveVar(String id, object value, Type_ type, String type_name, String temp = "")
         {
             Environment_ env = this;
             while (env != null)
@@ -39,11 +39,11 @@ namespace _OLC2__Proyecto_1.Symbol_
                 }
                 env = env.prev;
             }
-            this.variables.AddLast(new Symbol(value, id, type,type_name,temp,pos_stack));
+            this.variables.AddLast(new Symbol(value, id, type,type_name,temp));
             
             return null;
         }
-        public Symbol saveVarActual(String id, object value, Type_ type, String type_name, String temp = "", int pos_stack = 0)
+        public Symbol saveVarActual(String id, object value, Type_ type, String type_name, String temp="")
         {
             Environment_ env = this;
             foreach (Symbol vari in env.variables)
@@ -58,7 +58,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                     return null;
                 }
             }
-            this.variables.AddLast(new Symbol(value, id, type, type_name, temp, pos_stack));
+            this.variables.AddLast(new Symbol(value, id, type, type_name, temp));
             return null;
         }
 

@@ -61,7 +61,7 @@ namespace _OLC2__Proyecto_1.Gramm
                 }
                 if (Analyzer.errors.Count == 0)
                 {
-                    Generator generator = new Generator();
+                    Generator generator = Generator.getInstance();
                     environment = new Environment_(null, "Global$");
                     foreach (Instruction ins in AST)
                     {

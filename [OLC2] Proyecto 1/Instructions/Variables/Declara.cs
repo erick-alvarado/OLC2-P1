@@ -21,7 +21,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         {
             foreach (Instruction i in this.declara)
             {
-                i.execute(environment);
+                i.compile(environment);
             }
             return null;
         }

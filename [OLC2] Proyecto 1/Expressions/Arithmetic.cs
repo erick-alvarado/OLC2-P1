@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 
 namespace _OLC2__Proyecto_1.Expressions
 {
@@ -37,7 +38,34 @@ namespace _OLC2__Proyecto_1.Expressions
         }
         public override Return compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            Generator gen = Generator.getInstance();
+            Return leftValue = this.left != null ? this.left.execute(environment) : new Return(0, Type_.INTEGER);
+            Return rightValue = this.right.execute(environment);
+            String temp = gen.newTemp();
+            
+            switch (this.type)
+            {
+                case ArithmeticOption.PLUS:
+                    gen.AddExp(temp, (String)leftValue.value, (String)rightValue.value, " + ");
+                    break;
+                case ArithmeticOption.MINUS:
+                    gen.AddExp(temp, (String)leftValue.value, (String)rightValue.value, " - ");
+                    break;
+                case ArithmeticOption.TIMES:
+                    gen.AddExp(temp, (String)leftValue.value, (String)rightValue.value, " * ");
+                    break;
+                default:
+                    gen.AddExp(temp, (String)leftValue.value, (String)rightValue.value, " / ");
+                    break;
+            }
+            if (leftValue.type == Type_.HEAP)
+            {
+                return new Return(leftValue.value, Type_.HEAP);
+            }
+            else
+            {
+                return new Return(temp, Type_.STACK);
+            }
         }
         public override Return execute(Environment_ environment)
         {

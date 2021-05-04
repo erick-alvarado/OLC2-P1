@@ -137,6 +137,7 @@
     <Content Include="Archivos\listaDoble.txt" />
     <Content Include="Archivos\ordenamientoRapido.txt" />
     <Content Include="Archivos\ordenar.txt" />
+    <Content Include="Archivos\pruebas.txt" />
     <Content Include="Archivos\recursivas.txt" />
     <Content Include="Archivos\Intermedio.txt" />
     <Content Include="Archivos\Modificaciones.txt" />
