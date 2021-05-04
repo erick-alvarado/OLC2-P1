@@ -1,5 +1,6 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,14 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             this.type = type;
             setLineColumn(line, column);
         }
-
+        public override object compile(Environment_ environment)
+        {
+            Generator gen = new Generator();
+            Return ret =  value.compile(environment);
+            environment.saveVarActual(this.id, null, ret.type, "cons",(String) ret.value, gen.addSP());
+            gen.addSpace();
+            return null;
+        }
         public override object execute(Environment_ environment)
         {
             if (environment.getVarActual(this.id) != null)

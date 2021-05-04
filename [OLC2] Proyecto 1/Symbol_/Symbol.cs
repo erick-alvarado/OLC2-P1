@@ -15,8 +15,10 @@ namespace _OLC2__Proyecto_1.Symbol_
         public String id;
         public Type_ type;
         public String type_name;
+        public String temp;
+        public int pos_stack;
 
-        public Symbol(object value, string id, Type_ type,String type_name)
+        public Symbol(object value, string id, Type_ type,String type_name, String temp ="", int pos_stack = 0)
         {
             try
             {
@@ -31,6 +33,8 @@ namespace _OLC2__Proyecto_1.Symbol_
             this.id = id;
             this.type = type;
             this.type_name = type_name;
+            this.temp = temp;
+            this.pos_stack = pos_stack;
         }
     }
 }

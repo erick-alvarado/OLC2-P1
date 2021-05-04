@@ -24,6 +24,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
 
             setLineColumn(line, column);
         }
+        public override object compile(Environment_ environment)
+        {
+            throw new NotImplementedException();
+        }
         public override object execute(Environment_ environment)
         {
             Return val = this.value != null ? this.value.execute(environment) : new Return(null, type);

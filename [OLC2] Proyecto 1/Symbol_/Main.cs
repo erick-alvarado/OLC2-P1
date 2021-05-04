@@ -16,6 +16,14 @@ namespace _OLC2__Proyecto_1.Symbol_
         {
             this.declara = declara;
         }
+        public override object compile(Environment_ environment)
+        {
+            foreach (Instruction i in this.declara)
+            {
+                i.compile(environment);
+            }
+            return null;
+        }
         public override object execute(Environment_ environment)
         {
             foreach (Instruction i in this.declara)

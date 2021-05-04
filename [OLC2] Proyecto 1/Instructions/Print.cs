@@ -17,7 +17,10 @@ namespace _OLC2__Proyecto_1.Instructions
             this.write = write;
             this.value = value;
         }
-
+        public override object compile(Environment_ environment)
+        {
+            throw new NotImplementedException();
+        }
         public override object execute(Environment_ environment)
         {
             String texto = "";

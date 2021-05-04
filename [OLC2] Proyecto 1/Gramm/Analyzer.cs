@@ -65,8 +65,9 @@ namespace _OLC2__Proyecto_1.Gramm
                     environment = new Environment_(null, "Global$");
                     foreach (Instruction ins in AST)
                     {
-                        //ins.compile(environment);
+                        ins.compile(environment);
                     }
+                    return generator.getCode();
                 }
 
             }

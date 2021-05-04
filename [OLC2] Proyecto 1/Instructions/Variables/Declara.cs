@@ -17,6 +17,14 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         {
             this.declara = declara;
         }
+        public override object compile(Environment_ environment)
+        {
+            foreach (Instruction i in this.declara)
+            {
+                i.execute(environment);
+            }
+            return null;
+        }
         public override object execute(Environment_ environment)
         {
             foreach(Instruction i in this.declara)

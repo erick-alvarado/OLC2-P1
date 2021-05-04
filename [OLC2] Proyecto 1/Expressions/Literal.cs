@@ -17,7 +17,22 @@ namespace _OLC2__Proyecto_1.Expressions
             this.type = type;
             this.setLineColumn(line, column);
         }
-
+        public override Return compile(Environment_ environment)
+        {
+            switch (this.type)
+            {
+                case Type_.STRING:
+                    return new Return(this.value.ToString(), this.type);
+                case Type_.INTEGER:
+                    return new Return(int.Parse(this.value.ToString()), this.type);
+                case Type_.REAL:
+                    return new Return(Double.Parse(this.value.ToString()), this.type);
+                case Type_.BOOLEAN:
+                    return new Return(Boolean.Parse(this.value.ToString()), this.type);
+                default:
+                    return new Return(value, this.type);
+            }
+        }
         public override Return execute(Environment_ environment)
         {
             switch (this.type)

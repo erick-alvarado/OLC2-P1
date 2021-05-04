@@ -10,11 +10,9 @@ namespace Compilador.Generator
         private static Generator generator;
         private LinkedList<String> code;
         private LinkedList<String> temps;
-        private LinkedList<String> tempStorage;
-        public String isFunc;
 
-        private int temporal;
-        private int label;
+        private int temporal=0, label = 0, SP = 0, HP = 0;
+
 
 
         public Generator()
@@ -22,7 +20,6 @@ namespace Compilador.Generator
             this.temporal = this.label = 0;
             this.temps = new LinkedList<String>();
             this.code = new LinkedList<String>();
-            this.tempStorage = new LinkedList<String>();
         }
 
         public static Generator getInstance()
@@ -34,37 +31,25 @@ namespace Compilador.Generator
             return generator;
         }
 
-        public LinkedList<String> getTempStorage()
-        {
-            return this.tempStorage;
-        }
-
-        public void clearTempStorage()
-        {
-            this.tempStorage = new LinkedList<String>();
-        }
-
-        public void setTempStorage(LinkedList<String> temp)
-        {
-            this.tempStorage = temp;
-        }
-
+       
         public void clearCode()
         {
             this.temporal = this.label = 0;
             this.code = new LinkedList<String>();
             this.temps = new LinkedList<String>();
-            this.tempStorage = new LinkedList<String>();
         }
 
         public void addCode(String code)
         {
-            this.code.AddLast(this.isFunc + code);
+            this.code.AddLast(code);
         }
-
+        public int getTempNumber()
+        {
+            return this.temporal++;
+        }
         public String getHeader()
         {
-            return "#include <stdio.h>\nfloat heap[100000];\nfloat stack[100000];\nfloat P;\nfloat H;\n" + this.getTempsString() + "\n";
+            return "#include <stdio.h>\nfloat heap[100000];\nfloat stack[100000];\nfloat SP;\nfloat HP;\n" + this.getTempsString() + "\n";
         }
 
         public String getTempsString()
@@ -95,7 +80,7 @@ namespace Compilador.Generator
 
         public String getCode()
         {
-            String ret = this.getHeader() + "\nvoid main(){\n\tP=0; \n\t H=0;\n\n";
+            String ret = this.getHeader() + "\nvoid main(){\n\tS=0; \n\t H=0;\n\n";
 
             foreach (String line in this.code)
             {
@@ -112,8 +97,7 @@ namespace Compilador.Generator
 
         public String newTemp()
         {
-            String temp = "t" + this.temporal++;
-            this.tempStorage.AddLast(temp);
+            String temp = "T" + this.temporal++;
             this.temps.AddLast(temp);
             return temp;
         }
@@ -125,28 +109,48 @@ namespace Compilador.Generator
 
         public void addLabel(String label)
         {
-            this.code.AddLast(this.isFunc + label + ":");
+            this.code.AddLast(label + ":");
+        }
+        public int addSP()
+        {
+            this.SP++;
+            this.code.AddLast("SP = SP + 1;");
+            return this.SP;
+        }
+        public int addHP()
+        {
+            this.HP++;
+            this.code.AddLast("HP = HP + 1;");
+            return this.HP;
         }
 
         public void AddExp(String target, String left, String right = "", String op = "")
         {
-            this.code.AddLast(this.isFunc + target + " = " + left + op + right + ";");
+            this.code.AddLast(target + " = " + left + op + right + ";");
+        }
+        public void AddStack(String value)
+        {
+            this.code.AddLast("stack[SP] = " +value + ";");
+        }
+        public void AddHeap(String value)
+        {
+            this.code.AddLast("heap[HP] = " + value + ";");
         }
 
         public void addGoto(String label)
         {
-            this.code.AddLast(this.isFunc + "goto " + label + ";");
+            this.code.AddLast("goto " + label + ";");
         }
 
         public void addIf(String left, String right, String op, String label)
         {
-            this.code.AddLast(this.isFunc + "if " + left + op + right + " goto " + label + ";");
+            this.code.AddLast("if " + left + op + right + " goto " + label + ";");
         }
 
         // TODO:
         public void addPrint(String format, String value)
         {
-            this.code.AddLast(this.isFunc + "print(\"%" + format + "\", " + value + ");");
+            this.code.AddLast("print(\"%" + format + "\", " + value + ");");
         }
 
         public void printTrue()

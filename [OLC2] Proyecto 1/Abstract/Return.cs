@@ -29,6 +29,8 @@ namespace _OLC2__Proyecto_1.Abstract
         ID = 7,
         SUBRANGE = 8,
         DEFAULT =9,
-        VOID = 10
+        VOID = 10,
+        STACK = 11,
+        HEAP = 12
     }
 }

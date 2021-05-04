@@ -94,6 +94,11 @@ namespace _OLC2__Proyecto_1.Expressions
             return this.id;
         }
 
+        public override Return compile(Environment_ environment)
+        {
+            throw new NotImplementedException();
+        }
+
         public override void setLineColumn(int line, int column)
         {
             this.line = line; this.column = column;

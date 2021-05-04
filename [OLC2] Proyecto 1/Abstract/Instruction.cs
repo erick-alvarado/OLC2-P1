@@ -11,7 +11,7 @@ namespace _OLC2__Proyecto_1.Abstract
     {
         public int line, column;
 
-        //public abstract object compile(Environment_ environment);
+        public abstract object compile(Environment_ environment);
         public abstract object execute(Environment_ environment);
         public abstract void setLineColumn(int line, int column);
         

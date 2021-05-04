@@ -47,7 +47,10 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
             this.environmentAux = other.environmentAux;
             this.environmentAux.prev = other.environmentAux.prev;
         }
-
+        public override object compile(Environment_ environment)
+        {
+            throw new NotImplementedException();
+        }
         public override object execute(Environment_ environment)
         {
             if (this.exec)

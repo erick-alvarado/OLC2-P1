@@ -13,6 +13,10 @@ namespace _OLC2__Proyecto_1.Symbol_
         {
 
         }
+        public override object compile(Environment_ environment)
+        {
+            return null;
+        }
         public override object execute(Environment_ environment)
         {
             return null;

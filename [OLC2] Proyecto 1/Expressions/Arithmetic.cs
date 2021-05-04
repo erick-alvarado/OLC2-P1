@@ -35,7 +35,10 @@ namespace _OLC2__Proyecto_1.Expressions
 
             this.setLineColumn(line, column);
         }
-
+        public override Return compile(Environment_ environment)
+        {
+            throw new NotImplementedException();
+        }
         public override Return execute(Environment_ environment)
         {
             Return leftValue = this.left != null ? this.left.execute(environment) : new Return(0, Type_.INTEGER);

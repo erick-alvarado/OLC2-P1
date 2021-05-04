@@ -22,6 +22,10 @@ namespace _OLC2__Proyecto_1.Instructions
             this.parameterList = parameterList;
             setLineColumn(line, column);
         }
+        public override Return compile(Environment_ environment)
+        {
+            throw new NotImplementedException();
+        }
         public override Return execute(Environment_ environment)
         {
             if(this.line== -1010)

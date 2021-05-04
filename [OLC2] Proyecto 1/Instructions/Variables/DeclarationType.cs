@@ -34,7 +34,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             this.declarationList = declarationList;
             setLineColumn(line, column);
         }
-
+        public override object compile(Environment_ environment)
+        {
+            throw new NotImplementedException();
+        }
         public override object execute(Environment_ environment)
         {
             if (this.declarationList!=null)
