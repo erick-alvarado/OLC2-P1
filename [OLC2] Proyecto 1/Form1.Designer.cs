@@ -250,7 +250,7 @@ namespace _OLC2__Proyecto_1
             this.data3.Name = "data3";
             this.data3.RowHeadersWidth = 51;
             this.data3.RowTemplate.Height = 24;
-            this.data3.Size = new System.Drawing.Size(874, 312);
+            this.data3.Size = new System.Drawing.Size(874, 336);
             this.data3.TabIndex = 12;
             // 
             // Type__
@@ -308,7 +308,7 @@ namespace _OLC2__Proyecto_1
             this.Environment_,
             this.Line,
             this.Column});
-            this.data2.Location = new System.Drawing.Point(19, 527);
+            this.data2.Location = new System.Drawing.Point(512, 550);
             this.data2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.data2.Name = "data2";
             this.data2.RowHeadersWidth = 51;
@@ -355,7 +355,7 @@ namespace _OLC2__Proyecto_1
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(437, 466);
+            this.label4.Location = new System.Drawing.Point(881, 497);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(82, 36);
             this.label4.TabIndex = 9;
@@ -364,7 +364,7 @@ namespace _OLC2__Proyecto_1
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(1378, 501);
+            this.button3.Location = new System.Drawing.Point(1640, 701);
             this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(109, 34);
@@ -377,7 +377,7 @@ namespace _OLC2__Proyecto_1
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(416, 56);
+            this.label3.Location = new System.Drawing.Point(385, 56);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(140, 36);
             this.label3.TabIndex = 7;
@@ -392,12 +392,12 @@ namespace _OLC2__Proyecto_1
             this.Type_name,
             this.Environment,
             this.Value});
-            this.data1.Location = new System.Drawing.Point(19, 115);
+            this.data1.Location = new System.Drawing.Point(54, 115);
             this.data1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.data1.Name = "data1";
             this.data1.RowHeadersWidth = 51;
             this.data1.RowTemplate.Height = 24;
-            this.data1.Size = new System.Drawing.Size(923, 312);
+            this.data1.Size = new System.Drawing.Size(882, 336);
             this.data1.TabIndex = 0;
             this.data1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -481,11 +481,6 @@ namespace _OLC2__Proyecto_1
         private System.Windows.Forms.DataGridView data1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nam;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Type_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Environment;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridView data2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Type_;
@@ -502,6 +497,11 @@ namespace _OLC2__Proyecto_1
         private System.Windows.Forms.DataGridViewTextBoxColumn CodeD;
         private System.Windows.Forms.DataGridViewTextBoxColumn CodeA;
         private System.Windows.Forms.DataGridViewTextBoxColumn Line__;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nam;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Type_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Environment;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
     }
 }
 

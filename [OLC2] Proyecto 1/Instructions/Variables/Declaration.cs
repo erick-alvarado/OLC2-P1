@@ -25,9 +25,11 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         public override object compile(Environment_ environment)
         {
             Generator gen = Generator.getInstance();
+            gen.AddCom("Declaration: Cons");
             Return ret =  value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
             gen.AddStack(ret.value);
-            environment.saveVarActual(this.id, gen.getSP(), ret.type, "cons", ret.value.ToString());
+            environment.saveVarActual(this.id, ret.value.ToString(), ret.type, "cons");
+            
             return null;
         }
         public override object execute(Environment_ environment)

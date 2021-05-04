@@ -34,9 +34,13 @@ namespace _OLC2__Proyecto_1.Expressions
                     gen.AddExp(temp, (gen.getHP() - 1 - this.value.ToString().Length).ToString());
                     return new Return(temp, Type_.HEAP);
                 case Type_.INTEGER:
-                    return new Return(int.Parse(this.value.ToString()), Type_.STACK);
+                    temp = gen.newTemp();
+                    gen.AddExp(temp,this.value.ToString());
+                    return new Return(temp, Type_.STACK);
                 case Type_.REAL:
-                    return new Return(Double.Parse(this.value.ToString()), Type_.STACK);
+                    temp = gen.newTemp();
+                    gen.AddExp(temp, this.value.ToString());
+                    return new Return(temp, Type_.STACK);
                 case Type_.BOOLEAN:
                     if ((Boolean) this.value)
                     {

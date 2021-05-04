@@ -152,6 +152,11 @@ namespace Compilador.Generator
             
         }
 
+        public void AddCom(String com)
+        {
+            this.code.AddLast("/*********" + com + "*********/");
+        }
+
         public void addGoto(String label)
         {
             this.code.AddLast("goto " + label + ";");
