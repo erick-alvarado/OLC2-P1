@@ -139,19 +139,22 @@ namespace Compilador.Generator
         public void AddStack(object value)
         {
             this.code.AddLast("stack[SP] = " +value.ToString() + ";");
-            
             addSP();
-            
-
         }
         public void AddHeap(object value)
         {
             this.code.AddLast("heap[HP] = " + value.ToString() + ";");
-            
             addHP();
-            
         }
 
+        public void SetStack(String temp_pos,object value)
+        {
+            this.code.AddLast("stack["+temp_pos+"] = " + value.ToString() + ";");
+        }
+        public void SetHeap(String temp_pos, object value)
+        {
+            this.code.AddLast("heap[" + temp_pos + "] = " + value.ToString() + ";");
+        }
         public void AddCom(String com)
         {
             this.code.AddLast("/*********" + com + "*********/");

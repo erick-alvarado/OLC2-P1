@@ -11,9 +11,9 @@ namespace _OLC2__Proyecto_1.Symbol_
 {
     public class Symbol
     {
-        public object value;
+        public object value;//Temporal
         public String id;
-        public Type_ type;
+        public Type_ type;//Stack / heap
         public String type_name;
 
         public Symbol(object value, string id, Type_ type,String type_name)

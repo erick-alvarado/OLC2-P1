@@ -1,6 +1,7 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,18 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         }
         public override object compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            Generator gen = Generator.getInstance();
+            Symbol b = environment.getVar(this.id);
+            gen.AddCom("Asignation");
+            Return ret = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
+            gen.AddExp(b.value.ToString(), ret.value.ToString());
+
+            String pos = b.value.ToString().Split('T')[1];
+            String temp = gen.newTemp();
+            gen.AddExp(temp, pos);
+            
+            gen.SetStack(temp,ret.value.ToString());
+            return null;
         }
         public override object execute(Environment_ environment)
         {
