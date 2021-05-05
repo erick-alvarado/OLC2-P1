@@ -31,7 +31,7 @@ namespace _OLC2__Proyecto_1.Expressions
                     }
                     gen.AddHeap(-1);
                     temp = gen.newTemp();
-                    gen.AddExp(temp, (gen.getHP() - 1 - this.value.ToString().Length).ToString());
+                    gen.AddExp(temp, (gen.getHP() - this.value.ToString().Length).ToString());
                     return new Return(temp, Type_.HEAP);
                 case Type_.INTEGER:
                     temp = gen.newTemp();

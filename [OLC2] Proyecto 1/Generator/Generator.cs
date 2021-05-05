@@ -34,7 +34,7 @@ namespace Compilador.Generator
        
         public void clearCode()
         {
-            this.temporal = this.label = 0;
+            this.temporal = this.label = SP = HP = 0;
             this.code = new LinkedList<String>();
             this.temps = new LinkedList<String>();
         }

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
+
 namespace _OLC2__Proyecto_1.Instructions.Variables
 {
     class DeclarationVar : Instruction
@@ -26,7 +28,42 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         }
         public override object compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            Generator gen = Generator.getInstance();
+
+            if (idList.Count == 1 && value!= null)
+            {
+                gen.AddCom("Declaration: Var");
+                Return ret = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
+                gen.AddStack(ret.value);
+                environment.saveVarActual(this.idList.First.Value.id, ret.value.ToString(), ret.type, "var");
+            }
+            else
+            {
+                Literal value= new Literal(false, Type_.HEAP, 0, 0);
+                switch (type)
+                {
+                    case Type_.BOOLEAN:
+                        value= new Literal(false,type,0,0);
+                        break;
+                    case Type_.STRING:
+                        value = new Literal(" ", type, 0, 0);
+                        break;
+                    case Type_.INTEGER:
+                        value = new Literal(0, type, 0, 0);
+                        break;
+                    case Type_.REAL:
+                        value = new Literal(0, type, 0, 0);
+                        break;
+                }
+                foreach (Access e in idList)
+                {
+                    gen.AddCom("Declaration: Var");
+                    Return ret = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
+                    gen.AddStack(ret.value);
+                    environment.saveVarActual(e.id, ret.value.ToString(), ret.type, "var");
+                }
+            }
+            return null;
         }
         public override object execute(Environment_ environment)
         {

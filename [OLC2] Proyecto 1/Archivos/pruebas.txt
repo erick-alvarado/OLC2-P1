@@ -1,9 +1,12 @@
 ﻿program basico;
 
-    const
-        V : boolean = true;
-        F : boolean = false;
-        datos : integer = 3;
+    var
+        val1 : integer = 0;
+        val2 : integer = 1;
+        val3 : integer = 2;
+        resp : integer = 3;
+        a : integer = 4;
+        b : integer = 5;
 
 
 
