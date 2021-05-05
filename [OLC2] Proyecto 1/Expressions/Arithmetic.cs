@@ -39,33 +39,34 @@ namespace _OLC2__Proyecto_1.Expressions
         public override Return compile(Environment_ environment)
         {
             Generator gen = Generator.getInstance();
-            Return leftValue = this.left != null ? this.left.execute(environment) : new Return(0, Type_.INTEGER);
-            Return rightValue = this.right.execute(environment);
+            Return leftValue = this.left != null ? this.left.compile(environment) : new Return(0, Type_.INTEGER);
+            Return rightValue = this.right.compile(environment);
             String temp = gen.newTemp();
-            
+
+            if (leftValue.type == Type_.HEAP || rightValue.type == Type_.HEAP)
+            {
+                Literal aux = new Literal(leftValue.aux_value.ToString() + rightValue.aux_value.ToString(), Type_.STRING, 0, 0);
+                Return ret = aux.compile(environment);
+                return new Return(ret.value, Type_.HEAP,ret.aux_value);
+            }
+
             switch (this.type)
             {
                 case ArithmeticOption.PLUS:
-                    gen.AddExp(temp, (String)leftValue.value, (String)rightValue.value, " + ");
+                    gen.AddExp(temp, leftValue.value.ToString(), rightValue.value.ToString(), " + ");
                     break;
                 case ArithmeticOption.MINUS:
-                    gen.AddExp(temp, (String)leftValue.value, (String)rightValue.value, " - ");
+                    gen.AddExp(temp, leftValue.value.ToString(), rightValue.value.ToString(), " - ");
                     break;
                 case ArithmeticOption.TIMES:
-                    gen.AddExp(temp, (String)leftValue.value, (String)rightValue.value, " * ");
+                    gen.AddExp(temp, leftValue.value.ToString(), rightValue.value.ToString(), " * ");
                     break;
                 default:
-                    gen.AddExp(temp, (String)leftValue.value, (String)rightValue.value, " / ");
+                    gen.AddExp(temp, leftValue.value.ToString(), rightValue.value.ToString(), " / ");
                     break;
             }
-            if (leftValue.type == Type_.HEAP)
-            {
-                return new Return(leftValue.value, Type_.HEAP);
-            }
-            else
-            {
-                return new Return(temp, Type_.STACK);
-            }
+            return new Return(temp, Type_.STACK);
+
         }
         public override Return execute(Environment_ environment)
         {
@@ -76,7 +77,7 @@ namespace _OLC2__Proyecto_1.Expressions
                 switch (this.type)
                 {
                     case ArithmeticOption.PLUS:
-                        if (leftValue.type == Type_.STRING || rightValue.type == Type_.STRING)
+                        if ((leftValue.type == Type_.STRING || rightValue.type == Type_.STRING ))
                         {
                             return new Return(leftValue.value.ToString() + rightValue.value.ToString(), Type_.STRING);
                         }
@@ -138,9 +139,9 @@ namespace _OLC2__Proyecto_1.Expressions
                 }
 
             }
-            catch (Exception)
+            catch (Exception e )
             {
-                throw new Error_(this.line, this.column, "Semantico", "Operacion aritmetica sobre un tipo de dato incorrecto");
+                throw new Error_(this.line, this.column, "Semantico",e.Message);
             }
         }
 

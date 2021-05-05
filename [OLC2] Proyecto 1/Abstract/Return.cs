@@ -10,11 +10,12 @@ namespace _OLC2__Proyecto_1.Abstract
     {
         public object value;
         public Type_ type;
-
-        public Return(object value, Type_ type)
+        public object aux_value;
+        public Return(object value, Type_ type, object aux_value = null)
         {
             this.value = value;
             this.type = type;
+            this.aux_value = aux_value;
         }
     }
     public enum Type_

@@ -32,15 +32,15 @@ namespace _OLC2__Proyecto_1.Expressions
                     gen.AddHeap(-1);
                     temp = gen.newTemp();
                     gen.AddExp(temp, (gen.getHP() - this.value.ToString().Length).ToString());
-                    return new Return(temp, Type_.HEAP);
+                    return new Return(temp, Type_.HEAP,this.value.ToString());
                 case Type_.INTEGER:
                     temp = gen.newTemp();
                     gen.AddExp(temp,this.value.ToString());
-                    return new Return(temp, Type_.STACK);
+                    return new Return(temp, Type_.STACK, this.value.ToString());
                 case Type_.REAL:
                     temp = gen.newTemp();
                     gen.AddExp(temp, this.value.ToString());
-                    return new Return(temp, Type_.STACK);
+                    return new Return(temp, Type_.STACK, this.value.ToString());
                 case Type_.BOOLEAN:
                     if ((Boolean) this.value)
                     {
@@ -51,7 +51,7 @@ namespace _OLC2__Proyecto_1.Expressions
                         gen.AddHeap(-3);
                     }
                     temp = gen.newTemp();
-                    gen.AddExp(temp, gen.getHP().ToString());
+                    gen.AddExp(temp, gen.getHP().ToString(), this.value.ToString());
 
                     return new Return(temp, Type_.HEAP);
                 default:
