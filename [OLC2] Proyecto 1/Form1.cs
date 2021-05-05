@@ -111,7 +111,7 @@ namespace _OLC2__Proyecto_1
         {
             foreach(Symbol b in environment.variables)
             {
-                data1.Rows.Add(b.id, b.type, b.type_name, environment.name, b.value);
+                data1.Rows.Add(b.id, b.type, b.type_name, environment.name, b.value,b.position,b.aux_value);
                 if (b.type_name == "function")
                 {
                     Function temp = (Function)b.value;

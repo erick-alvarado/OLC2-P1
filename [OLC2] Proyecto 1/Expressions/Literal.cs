@@ -51,7 +51,7 @@ namespace _OLC2__Proyecto_1.Expressions
                         gen.AddHeap(-3);
                     }
                     temp = gen.newTemp();
-                    gen.AddExp(temp, gen.getHP().ToString(), this.value.ToString());
+                    gen.AddExp(temp, gen.getHP().ToString());
 
                     return new Return(temp, Type_.HEAP);
                 default:

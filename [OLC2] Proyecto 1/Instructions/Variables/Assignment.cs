@@ -31,11 +31,11 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             Return ret = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
             gen.AddExp(b.value.ToString(), ret.value.ToString());
 
-            String pos = b.value.ToString().Split('T')[1];
             String temp = gen.newTemp();
-            gen.AddExp(temp, pos);
-            
+            gen.AddExp(temp, b.position.ToString());
             gen.SetStack(temp,ret.value.ToString());
+
+            environment.saveVar(b.id, ret.value, b.type, b.type_name, 0,ret.aux_value);
             return null;
         }
         public override object execute(Environment_ environment)

@@ -6,7 +6,7 @@
 
 
 begin
-
+   val1 := val1 + 14;
 end.
 
 {

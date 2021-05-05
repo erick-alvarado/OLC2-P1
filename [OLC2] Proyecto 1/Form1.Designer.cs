@@ -66,6 +66,8 @@ namespace _OLC2__Proyecto_1
             this.Type_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Environment = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Position = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Aux = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -391,13 +393,15 @@ namespace _OLC2__Proyecto_1
             this.Type,
             this.Type_name,
             this.Environment,
-            this.Value});
+            this.Value,
+            this.Position,
+            this.Aux});
             this.data1.Location = new System.Drawing.Point(54, 115);
             this.data1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.data1.Name = "data1";
             this.data1.RowHeadersWidth = 51;
             this.data1.RowTemplate.Height = 24;
-            this.data1.Size = new System.Drawing.Size(882, 336);
+            this.data1.Size = new System.Drawing.Size(947, 336);
             this.data1.TabIndex = 0;
             this.data1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -435,6 +439,20 @@ namespace _OLC2__Proyecto_1
             this.Value.MinimumWidth = 6;
             this.Value.Name = "Value";
             this.Value.Width = 125;
+            // 
+            // Position
+            // 
+            this.Position.HeaderText = "Position";
+            this.Position.MinimumWidth = 6;
+            this.Position.Name = "Position";
+            this.Position.Width = 125;
+            // 
+            // Aux
+            // 
+            this.Aux.HeaderText = "Aux";
+            this.Aux.MinimumWidth = 6;
+            this.Aux.Name = "Aux";
+            this.Aux.Width = 125;
             // 
             // Form1
             // 
@@ -502,6 +520,8 @@ namespace _OLC2__Proyecto_1
         private System.Windows.Forms.DataGridViewTextBoxColumn Type_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn Environment;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Position;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Aux;
     }
 }
 

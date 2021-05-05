@@ -20,6 +20,11 @@ namespace _OLC2__Proyecto_1.Expressions
             this.expList = expList;
             this.setLineColumn(line, column);
         }
+        public override Return compile(Environment_ environment)
+        {
+            Symbol b = environment.getVar(this.id);
+            return new Return(b.value, b.type, b.aux_value);
+        }
         public override Return execute(Environment_ environment)
         {
             if (expList==null || expList.Count == 0)
@@ -94,10 +99,7 @@ namespace _OLC2__Proyecto_1.Expressions
             return this.id;
         }
 
-        public override Return compile(Environment_ environment)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public override void setLineColumn(int line, int column)
         {

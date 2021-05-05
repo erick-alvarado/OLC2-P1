@@ -20,7 +20,7 @@ namespace _OLC2__Proyecto_1.Symbol_
             this.name = name;
         }
 
-        public Symbol saveVar(String id, object value, Type_ type, String type_name)
+        public Symbol saveVar(String id, object value, Type_ type, String type_name, int position=0, object aux_value = null)
         {
             Environment_ env = this;
             while (env != null)
@@ -30,6 +30,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                     if (vari.id.ToLower() == id.ToLower())
                     {
                         vari.value = value;
+                        vari.aux_value = aux_value;
                         if (this.name == vari.id)
                         {
                             return vari;
@@ -39,11 +40,11 @@ namespace _OLC2__Proyecto_1.Symbol_
                 }
                 env = env.prev;
             }
-            this.variables.AddLast(new Symbol(value, id, type,type_name));
+            this.variables.AddLast(new Symbol(value, id, type,type_name,aux_value,position));
             
             return null;
         }
-        public Symbol saveVarActual(String id, object value, Type_ type, String type_name)
+        public Symbol saveVarActual(String id, object value, Type_ type, String type_name, int position=0, object aux_value =null)
         {
             Environment_ env = this;
             foreach (Symbol vari in env.variables)
@@ -51,6 +52,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                 if (vari.id.ToLower() == id.ToLower())
                 {
                     vari.value = value;
+                    vari.aux_value = aux_value;
                     if (this.name == vari.id)
                     {
                         return vari;
@@ -58,7 +60,7 @@ namespace _OLC2__Proyecto_1.Symbol_
                     return null;
                 }
             }
-            this.variables.AddLast(new Symbol(value, id, type, type_name));
+            this.variables.AddLast(new Symbol(value, id, type, type_name,aux_value,position));
             return null;
         }
 

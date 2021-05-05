@@ -35,7 +35,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 gen.AddCom("Declaration: Var");
                 Return ret = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
                 gen.AddStack(ret.value);
-                environment.saveVarActual(this.idList.First.Value.id, ret.value.ToString(), ret.type, "var");
+                environment.saveVarActual(this.idList.First.Value.id, ret.value.ToString(), ret.type, "var",gen.getSP(),ret.aux_value);
             }
             else
             {
@@ -60,7 +60,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                     gen.AddCom("Declaration: Var");
                     Return ret = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
                     gen.AddStack(ret.value);
-                    environment.saveVarActual(e.id, ret.value.ToString(), ret.type, "var");
+                    environment.saveVarActual(e.id, ret.value.ToString(), ret.type, "var",gen.getSP(),ret.aux_value);
                 }
             }
             return null;
