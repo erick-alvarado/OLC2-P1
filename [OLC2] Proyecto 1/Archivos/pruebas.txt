@@ -1,12 +1,13 @@
 ﻿program basico;
 
     var
-        val1 : string = 1 + 'string'+2;
+        val1 : integer= 2;
 
 
 
 begin
    val1 := val1 + 14;
+   writeln(val1);
 end.
 
 {

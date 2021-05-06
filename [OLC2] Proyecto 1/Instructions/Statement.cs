@@ -21,7 +21,11 @@ namespace _OLC2__Proyecto_1.Instructions
 
         public override object compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            foreach(Instruction i in this.code)
+            {
+                i.compile(environment);
+            }
+            return null;
         }
         public override object execute(Environment_ environment)
         {

@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
-
-
+using Compilador.Generator;
 
 namespace _OLC2__Proyecto_1.Expressions
 {
@@ -22,8 +21,20 @@ namespace _OLC2__Proyecto_1.Expressions
         }
         public override Return compile(Environment_ environment)
         {
+            Generator gen = Generator.getInstance();
             Symbol b = environment.getVar(this.id);
-            return new Return(b.value, b.type, b.aux_value);
+            if (b.type == Type_.STACK)
+            {
+                String temp = gen.newTemp();
+                gen.AddExp(temp, b.position.ToString());
+                String temp2 = gen.newTemp();
+                gen.AddExp(temp2, "stack[(int)" + temp + "]");
+                return new Return(temp2, b.type,(Type_)b.value);
+            }
+            else
+            {
+                return new Return(b.value, b.type, b.aux_value,(Type_)b.value);
+            }
         }
         public override Return execute(Environment_ environment)
         {

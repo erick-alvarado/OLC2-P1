@@ -63,7 +63,7 @@ namespace Compilador.Generator
                 {
                     String temp = this.temps.ElementAt(i);
                     ret += temp;
-                    if (i < this.temps.Count)
+                    if (i < this.temps.Count-1)
                     {
                         ret += ",";
                     }
@@ -138,22 +138,22 @@ namespace Compilador.Generator
         }
         public void AddStack(object value)
         {
-            this.code.AddLast("stack[SP] = " +value.ToString() + ";");
+            this.code.AddLast("stack[(int)SP] = " +value.ToString() + ";");
             addSP();
         }
         public void AddHeap(object value)
         {
-            this.code.AddLast("heap[HP] = " + value.ToString() + ";");
+            this.code.AddLast("heap[(int)HP] = " + value.ToString() + ";");
             addHP();
         }
 
         public void SetStack(String temp_pos,object value)
         {
-            this.code.AddLast("stack["+temp_pos+"] = " + value.ToString() + ";");
+            this.code.AddLast("stack[(int)"+temp_pos+"] = " + value.ToString() + ";");
         }
         public void SetHeap(String temp_pos, object value)
         {
-            this.code.AddLast("heap[" + temp_pos + "] = " + value.ToString() + ";");
+            this.code.AddLast("heap[(int)" + temp_pos + "] = " + value.ToString() + ";");
         }
         public void AddCom(String com)
         {
@@ -170,10 +170,22 @@ namespace Compilador.Generator
             this.code.AddLast("if " + left + op + right + " goto " + label + ";");
         }
 
-        // TODO:
+
         public void addPrint(String format, String value)
         {
-            this.code.AddLast("print(\"%" + format + "\", " + value + ");");
+            String type="";
+            if (format == "c")
+            {
+                type = "char";
+            }else if(format == "d")
+            {
+                type = "int";
+            }
+            else
+            {
+                type = "float";
+            }
+            this.code.AddLast("printf(\"%" + format + "\", ("+type+")" + value + ");");
         }
 
         public void printTrue()
@@ -191,6 +203,10 @@ namespace Compilador.Generator
             this.addPrint("c", "l");
             this.addPrint("c", "s");
             this.addPrint("s", "e");
+        }
+        public void printSpace()
+        {
+            this.addPrint("c", "10");
         }
     }
 }

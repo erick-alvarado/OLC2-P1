@@ -4,7 +4,7 @@ using System.Text;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Gramm;
 using _OLC2__Proyecto_1.Symbol_;
-
+using Compilador.Generator;
 
 namespace _OLC2__Proyecto_1.Instructions
 {
@@ -19,7 +19,37 @@ namespace _OLC2__Proyecto_1.Instructions
         }
         public override object compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            Generator gen = Generator.getInstance();
+            gen.AddCom("Print");
+
+            foreach (Expression e in this.value)
+            {
+                Return ret = e.compile(environment);
+                if(ret.type== Type_.STACK)
+                {
+                    if ((Type_)ret.type_aux == Type_.INTEGER)
+                    {
+                        gen.addPrint("d", ret.value.ToString());
+                    }
+                    else
+                    {
+                        gen.addPrint("f", ret.value.ToString());
+
+                    }
+                }
+                else
+                {
+                    if ((Type_)ret.type_aux == Type_.BOOLEAN)
+                    {
+
+                    }
+                }
+            }
+            if (write)
+            {
+                gen.printSpace();
+            }
+            return null;
         }
         public override object execute(Environment_ environment)
         {
