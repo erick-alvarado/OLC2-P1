@@ -27,22 +27,29 @@ namespace _OLC2__Proyecto_1.Instructions
                 Return ret = e.compile(environment);
                 if(ret.type== Type_.STACK)
                 {
-                    if ((Type_)ret.type_aux == Type_.INTEGER)
+                    switch((Type_)ret.type_aux)
                     {
-                        gen.addPrint("d", ret.value.ToString());
-                    }
-                    else
-                    {
-                        gen.addPrint("f", ret.value.ToString());
-
+                        case Type_.INTEGER:
+                            gen.addPrint("d", ret.value.ToString());
+                            break;
+                        case Type_.REAL:
+                            gen.addPrint("f", ret.value.ToString());
+                            break;
+                        case Type_.BOOLEAN:
+                            String lbl = gen.newLabel();
+                            String lbl_salida = gen.newLabel();
+                            gen.addIf(ret.value.ToString(), "==", "0", lbl);
+                            gen.printTrue();
+                            gen.addGoto(lbl_salida);
+                            gen.addLabel(lbl);
+                            gen.printFalse();
+                            gen.addLabel(lbl_salida);
+                            break;
                     }
                 }
                 else
                 {
-                    if ((Type_)ret.type_aux == Type_.BOOLEAN)
-                    {
 
-                    }
                 }
             }
             if (write)

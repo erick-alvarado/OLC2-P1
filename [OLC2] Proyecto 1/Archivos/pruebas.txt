@@ -1,12 +1,12 @@
 ﻿program basico;
 
     var
-        val1 : integer= 2;
+        val1 : boolean= true;
 
 
 
 begin
-   val1 := val1 + 14;
+   //val1 := false;
    writeln(val1);
 end.
 

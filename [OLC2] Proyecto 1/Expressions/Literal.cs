@@ -42,18 +42,18 @@ namespace _OLC2__Proyecto_1.Expressions
                     gen.AddExp(temp, this.value.ToString());
                     return new Return(temp, Type_.STACK, this.value.ToString(),Type_.REAL);
                 case Type_.BOOLEAN:
+                    temp = gen.newTemp();
+
                     if ((Boolean) this.value)
                     {
-                        gen.AddHeap(-2);
+                        gen.AddExp(temp, "1");
                     }
                     else
                     {
-                        gen.AddHeap(-3);
+                        gen.AddExp(temp, "0");
                     }
-                    temp = gen.newTemp();
-                    gen.AddExp(temp, gen.getHP().ToString());
 
-                    return new Return(temp, Type_.HEAP,(Boolean)this.value,Type_.BOOLEAN);
+                    return new Return(temp, Type_.STACK,(Boolean)this.value,Type_.BOOLEAN);
                 default:
                     return new Return(value, Type_.HEAP,null);
             }

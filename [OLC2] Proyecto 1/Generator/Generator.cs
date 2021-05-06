@@ -165,9 +165,9 @@ namespace Compilador.Generator
             this.code.AddLast("goto " + label + ";");
         }
 
-        public void addIf(String left, String right, String op, String label)
+        public void addIf(String left, String op, String right, String label)
         {
-            this.code.AddLast("if " + left + op + right + " goto " + label + ";");
+            this.code.AddLast("if (" + left + op + right + ") goto " + label + ";");
         }
 
 
@@ -190,19 +190,19 @@ namespace Compilador.Generator
 
         public void printTrue()
         {
-            this.addPrint("c", "t");
-            this.addPrint("c", "r");
-            this.addPrint("c", "u");
-            this.addPrint("c", "e");
+            this.addPrint("c", "116");
+            this.addPrint("c", "114");
+            this.addPrint("c", "117");
+            this.addPrint("c", "101");
         }
 
         public void printFalse()
         {
-            this.addPrint("c", "f");
-            this.addPrint("c", "a");
-            this.addPrint("c", "l");
-            this.addPrint("c", "s");
-            this.addPrint("s", "e");
+            this.addPrint("c", "102");
+            this.addPrint("c", "97");
+            this.addPrint("c", "108");
+            this.addPrint("c", "115");
+            this.addPrint("c", "101");
         }
         public void printSpace()
         {
