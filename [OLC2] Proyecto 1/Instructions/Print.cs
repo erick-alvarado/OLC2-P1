@@ -49,7 +49,6 @@ namespace _OLC2__Proyecto_1.Instructions
                 }
                 else
                 {
-
                 }
             }
             if (write)

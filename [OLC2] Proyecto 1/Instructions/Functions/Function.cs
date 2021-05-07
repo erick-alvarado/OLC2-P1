@@ -11,6 +11,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Compilador.Generator;
 
 namespace _OLC2__Proyecto_1.Instructions.Functions
 {
@@ -24,10 +25,14 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
         public Statement statements;
         public Type_ return_;
         public bool exec = true;
+        public bool exec2 = true;
+        public bool compile_once = true;
         public Environment_ environmentAux;
 
         public Function(int line, int column,string id, LinkedList<Instruction> argumentList, LinkedList<Instruction> declarationList, Statement statements, Type_ return_)
         {
+            this.exec = true;
+            this.compile_once = true;
             this.id = id;
             this.argumentList = argumentList;
             this.declarationList = declarationList;
@@ -49,7 +54,31 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
         }
         public override object compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            if (this.exec2)
+            {
+                this.exec2 = false;
+                environment.saveVar(this.id, this, this.return_, "function");
+                environmentAux = new Environment_(null, this.id);
+                environmentAux.prev = environment;
+            }
+            else
+            {
+                Generator gen = Generator.getInstance();
+                if (compile_once)
+                {
+                    compile_once = false;
+                    gen.addCode("void");
+                    gen.addCode(this.id);
+                    foreach (Instruction i in this.declarationList)
+                    {
+                        i.compile(this.environmentAux);
+                    }
+                    object obj = this.statements.compile(this.environmentAux);
+                    gen.addCode("}");
+                }
+            }
+
+            return null;
         }
         public override object execute(Environment_ environment)
         {

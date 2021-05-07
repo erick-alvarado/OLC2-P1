@@ -25,11 +25,21 @@ namespace _OLC2__Proyecto_1.Expressions
             Symbol b = environment.getVar(this.id);
             if (b.type == Type_.STACK)
             {
+                int position = b.position;
                 String temp = gen.newTemp();
-                gen.AddExp(temp, b.position.ToString());
+
+                if (position >= 0)
+                {
+                    gen.AddExp(temp, b.position.ToString());
+                }
+                else
+                {
+                    gen.AddExp(temp,"SP"+ b.position.ToString());
+                }
                 String temp2 = gen.newTemp();
                 gen.AddExp(temp2, "stack[(int)" + temp + "]");
-                return new Return(temp2, b.type,(Type_)b.value);
+                return new Return(temp2, b.type, (Type_)b.value);
+
             }
             else
             {

@@ -1,5 +1,6 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Instructions.Transfer;
+using Compilador.Generator;
 using System;
 using System.Collections.Generic;
 using System.Linq;

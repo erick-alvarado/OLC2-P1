@@ -24,7 +24,7 @@ namespace _OLC2__Proyecto_1.Instructions
         }
         public override object compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            return this.idList.ElementAt(0).id;
         }
         public override object execute(Environment_ environment)
         {

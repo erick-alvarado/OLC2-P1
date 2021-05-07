@@ -10,9 +10,8 @@ namespace Compilador.Generator
         private static Generator generator;
         private LinkedList<String> code;
         private LinkedList<String> temps;
-
         private int temporal=0, label = 0, SP = 0, HP = 0;
-
+        
 
 
         public Generator()
@@ -20,6 +19,7 @@ namespace Compilador.Generator
             this.temporal = this.label = 0;
             this.temps = new LinkedList<String>();
             this.code = new LinkedList<String>();
+
         }
 
         public static Generator getInstance()
@@ -80,12 +80,41 @@ namespace Compilador.Generator
 
         public String getCode()
         {
-            String ret = this.getHeader() + "\r\nvoid main(){\r\n\tSP=0; \r\n\t HP=0;\r\n\r\n";
+            String ret = this.getHeader();
+            String main_code = "";
 
-            foreach (String line in this.code)
+            bool change = false;
+            
+            ret += "/********Natives********/\r\n";
+            for(int i = 0; i < this.code.Count; i++)
             {
-                ret += "\t" + line + "\r\n";
+                String line = this.code.ElementAt(i);
+                if (line == "void")
+                {
+                    ret += "void " + this.code.ElementAt(i + 1) + "(){\r\n";
+                    change = true;
+                    i++;
+                    continue;
+                }
+                else if (line == "}")
+                {
+                    change = false;
+                    ret += "\r\n\treturn;\r\n}";
+                    continue;
+                }
+
+                if (change)
+                {
+                    ret += "\t" + line + "\r\n";
+                }
+                else
+                {
+                    main_code += "\t" + line + "\r\n";
+                }
             }
+
+            ret +="\r\nvoid main(){\r\n\tSP=0; \r\n\t HP=0;\r\n\r\n";
+            ret += main_code;
             ret += "\r\n\treturn;\r\n}";
             return ret;
         }
@@ -207,6 +236,10 @@ namespace Compilador.Generator
         public void printSpace()
         {
             this.addPrint("c", "10");
+        }
+        public void addCall(String name)
+        {   
+            this.code.AddLast(name + "();") ;
         }
     }
 }

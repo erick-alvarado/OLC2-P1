@@ -1,15 +1,17 @@
 ﻿program basico;
 
-    var
-        val1 : boolean= true;
-
-
+var con : integer = 9;
+procedure Inicio(n: integer; m: integer);
+var salsa : integer = 54154;
+begin
+    writeln(n);
+    writeln(m);
+    writeln(salsa);
+end;
 
 begin
-   //val1 := false;
-   writeln(val1);
+    Inicio(con,9);
 end.
-
 {
 ----------------------                                                                                                      
 ----ARCHIVO BASICO----                                                                                                      
