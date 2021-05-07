@@ -20,12 +20,12 @@ namespace _OLC2__Proyecto_1.Instructions
         public override object compile(Environment_ environment)
         {
             Generator gen = Generator.getInstance();
-            gen.AddCom("Print");
 
             foreach (Expression e in this.value)
             {
                 Return ret = e.compile(environment);
-                if(ret.type== Type_.STACK)
+                gen.AddCom("Print");
+                if (ret.type== Type_.STACK)
                 {
                     switch((Type_)ret.type_aux)
                     {

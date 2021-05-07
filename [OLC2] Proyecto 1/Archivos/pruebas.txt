@@ -1,16 +1,17 @@
 ﻿program basico;
 
 var con : integer = 9;
-procedure Inicio(n: integer; m: integer);
-var salsa : integer = 54154;
+function Inicio(n: integer; m: integer):integer;
+var s : integer = 11;
+var a : integer = 22;
+var b : integer = 33;
 begin
-    writeln(n);
-    writeln(m);
-    writeln(salsa);
+    Inicio:= n+m;
 end;
 
 begin
-    Inicio(con,9);
+    con :=Inicio(con,9);
+    Writeln(con);
 end.
 {
 ----------------------                                                                                                      

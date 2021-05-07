@@ -3,6 +3,7 @@ using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Instructions.Functions;
 using _OLC2__Proyecto_1.Reports;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,59 @@ namespace _OLC2__Proyecto_1.Instructions
         }
         public override Return compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            if (this.line == -1010)
+            {
+                return new Return(0, Type_.INTEGER);
+            }
+
+            Generator gen = Generator.getInstance();
+            gen.AddCom("CallFunction");
+            Symbol b = environment.getFunc(this.id);
+            Function f = (Function)b.value;
+            Environment_ aux = f.environmentAux.prev;
+
+            f.environmentAux = new Environment_(null, this.id);
+
+            object aux_value = null;
+            Type_ type = Type_.STACK;
+            if (f.return_ == Type_.STRING)
+            {
+                type = Type_.HEAP;
+                aux_value = "";
+            }
+
+            String temp_stack = gen.newTemp();
+            int pos = this.parameterList.Count();
+
+            gen.AddExp(temp_stack, "SP");
+            gen.addSP();
+
+            f.environmentAux.saveVar(f.id, f.return_, type, "var",-pos-1, aux_value);
+            f.environmentAux.prev = aux;
+
+
+            this.argumentList = f.argumentList;
+            int index = 0;
+
+            foreach (Expression id in this.parameterList)
+            {
+                Return r = this.parameterList.ElementAt(index).compile(environment);
+                f.environmentAux.saveVarActual(this.argumentList.ElementAt(index).compile(environment).ToString(), r.type_aux, r.type, "var", index - pos, r.aux_value);
+                index++;
+                gen.AddStack(r.value);
+            }
+
+            gen.addCall(f.id);
+
+            f.parameterList = this.parameterList;
+            object ret = f.compile(f.environmentAux);
+
+            String return_ = gen.newTemp();
+            gen.AddExp(return_, "stack[(int)" + temp_stack + "]");
+            gen.AddExp("SP", temp_stack);
+
+            b = f.environmentAux.getVar(this.id);
+            return new Return(return_,b.type,b.aux_value,(Type_)b.value);
         }
         public override Return execute(Environment_ environment)
         {

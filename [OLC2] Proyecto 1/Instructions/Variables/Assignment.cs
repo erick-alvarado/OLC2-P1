@@ -25,14 +25,22 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
         }
         public override object compile(Environment_ environment)
         {
+
             Generator gen = Generator.getInstance();
+            gen.AddCom("Asignation");
             Symbol var_asignation = environment.getVar(this.id);
 
-            gen.AddCom("Asignation");
             Return val = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
-
+            
             String temp = gen.newTemp();
-            gen.AddExp(temp, var_asignation.position.ToString());
+            if (var_asignation.position >= 0)
+            {
+                gen.AddExp(temp, var_asignation.position.ToString());
+            }
+            else
+            {
+                gen.AddExp(temp, "SP" + var_asignation.position.ToString());
+            }
             gen.SetStack(temp,val.value.ToString());
 
             environment.saveVar(var_asignation.id, var_asignation.value, var_asignation.type, var_asignation.type_name, 0,val.aux_value);
