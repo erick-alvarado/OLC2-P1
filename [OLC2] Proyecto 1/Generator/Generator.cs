@@ -20,6 +20,7 @@ namespace Compilador.Generator
             this.temps = new LinkedList<String>();
             this.code = new LinkedList<String>();
             this.addNativePrint();
+            this.addNativeCompareStrings();
         }
 
         public static Generator getInstance()
@@ -38,6 +39,8 @@ namespace Compilador.Generator
             this.code = new LinkedList<String>();
             this.temps = new LinkedList<String>();
             this.addNativePrint();
+            this.addNativeCompareStrings();
+
         }
 
         public void addCode(String code)
@@ -264,6 +267,45 @@ namespace Compilador.Generator
             this.code.AddLast("}");
 
         }
+        public void addNativeCompareStrings()
+        {
+            String temp3 = this.newTemp();
+            String temp4 = this.newTemp();
+            String temp5 = this.newTemp();
+            String temp6 = this.newTemp();
+            String temp7 = this.newTemp();
+
+
+            String lbl0 = this.newLabel();
+            String lbl1 = this.newLabel();
+            String lbl2 = this.newLabel();
+            String lbl3 = this.newLabel();
+
+            this.code.AddLast("void");
+            this.code.AddLast("compareString");
+
+            this.code.AddLast(temp3 + " = SP + 1;");
+            this.code.AddLast(temp4 + " = stack[(int)"+temp3+"];");
+            this.code.AddLast(temp3 + " = " + temp3 + " + 1;");
+            this.code.AddLast(temp5 +"= stack[(int)"+temp3+"];");
+            this.code.AddLast(lbl1+":");
+            this.code.AddLast(temp6 +"= heap[(int)"+temp4+"];");
+            this.code.AddLast(temp7 +"= heap[(int)"+temp5+"];");
+            this.code.AddLast("if ("+temp6+" != "+temp7+") goto "+lbl3+";");
+            this.code.AddLast("if ("+temp6+" == -1) goto "+lbl2+";");
+            this.code.AddLast(temp4+" = "+temp4+" + 1;");
+            this.code.AddLast(temp5+" = "+temp5+" + 1;");
+            this.code.AddLast("goto "+lbl1+";");
+            this.code.AddLast(lbl2+":");
+            this.code.AddLast("stack[(int)SP] = 1;");
+            this.code.AddLast("goto "+lbl0+";");
+            this.code.AddLast(lbl3+":");
+            this.code.AddLast("stack[(int)SP] = 0;");
+            this.code.AddLast(lbl0+":");
+            this.code.AddLast("}");
+
+        }
+
         public void setEndLbl(String lbl)
         {
             this.endLabel = lbl;

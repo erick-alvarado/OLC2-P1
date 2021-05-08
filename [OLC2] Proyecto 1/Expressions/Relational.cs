@@ -28,6 +28,23 @@ namespace _OLC2__Proyecto_1.Expressions
             Return rightValue = this.right.compile(environment);
             Generator gen = Generator.getInstance();
             String lbl = gen.newLabel();
+            if(leftValue.type==Type_.HEAP || rightValue.type == Type_.HEAP)
+            {
+                String temp1 = gen.newTemp();
+                String temp2 = gen.newTemp();
+                String result = gen.newTemp();
+
+                gen.AddExp(temp1, "SP+1");
+                gen.AddExp(temp2, "SP+2");
+
+                gen.SetStack(temp1, leftValue.value.ToString());
+                gen.SetStack(temp2, rightValue.value.ToString());
+
+                gen.addCode("compareString();");
+                gen.AddExp(result, "stack[(int)SP]");
+                gen.addIf(result, "==", "1",lbl);
+                return new Return(lbl, Type_.BOOLEAN);
+            }
             switch (this.type)
             {
                 case RelationalOption.LESS:
@@ -58,6 +75,7 @@ namespace _OLC2__Proyecto_1.Expressions
             Return rightValue = this.right.execute(environment);
             try
             {
+                
                 switch (this.type)
                 {
                     case RelationalOption.LESS:
@@ -69,9 +87,37 @@ namespace _OLC2__Proyecto_1.Expressions
                     case RelationalOption.GREAEQ:
                         return new Return(Double.Parse(leftValue.value.ToString()) >= Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
                     case RelationalOption.EQUALSEQUALS:
-                        return new Return(Double.Parse(leftValue.value.ToString()) == Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                        try
+                        {
+                            return new Return(Double.Parse(leftValue.value.ToString()) == Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                        }
+                        catch (Exception)
+                        {
+                            if (leftValue.type==Type_.STRING && Type_.STRING == rightValue.type)
+                            {
+                                return new Return(leftValue.value.ToString() == rightValue.value.ToString(), Type_.BOOLEAN);
+                            }
+                            else
+                            {
+                                throw new Error_(this.line, this.column, "Semantico", "Comparacion de tipos no validos");
+                            }
+                        }
                     case RelationalOption.DISTINT:
-                        return new Return(Double.Parse(leftValue.value.ToString()) != Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                        try
+                        {
+                            return new Return(Double.Parse(leftValue.value.ToString()) != Double.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                        }
+                        catch (Exception)
+                        {
+                            if (leftValue.type == Type_.STRING && Type_.STRING == rightValue.type)
+                            {
+                                return new Return(leftValue.value.ToString() != rightValue.value.ToString(), Type_.BOOLEAN);
+                            }
+                            else
+                            {
+                                throw new Error_(this.line, this.column, "Semantico", "Comparacion de tipos no validos");
+                            }
+                        }
                 }
             }
             catch(Exception)

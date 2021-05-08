@@ -1,23 +1,22 @@
 ﻿program basico;
 
 var 
-    con : integer = 1;
     txt : string = 'txt';
 
 begin
-    if(con=0) then
+    if(txt='pito') then
     begin
         Writeln('opcion if');
     end;
-    else if(con=1) then
+    else if(txt='pito2') then
     begin
         Writeln('opcion if 2');
     end;
-else if(con=2) then
+else if(txt='pito3') then
     begin
         Writeln('opcion if 3');
     end;
-else if(con=3) then
+else if(txt='pito4') then
     begin
         Writeln('opcion if 4' );
     end;
