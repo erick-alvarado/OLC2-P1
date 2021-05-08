@@ -52,7 +52,7 @@ namespace _OLC2__Proyecto_1.Instructions
             gen.AddExp(temp_stack, "SP");
             gen.addSP();
 
-            f.environmentAux.saveVar(f.id, f.return_, type, "var",-pos-1, aux_value);
+            f.environmentAux.saveVar(f.id, f.return_, type, "var",-pos-1);
             f.environmentAux.prev = aux;
 
 
@@ -62,7 +62,7 @@ namespace _OLC2__Proyecto_1.Instructions
             foreach (Expression id in this.parameterList)
             {
                 Return r = this.parameterList.ElementAt(index).compile(environment);
-                f.environmentAux.saveVarActual(this.argumentList.ElementAt(index).compile(environment).ToString(), r.type_aux, r.type, "var", index - pos, r.aux_value);
+                f.environmentAux.saveVarActual(this.argumentList.ElementAt(index).compile(environment).ToString(), r.type_aux, r.type, "var", index - pos);
                 index++;
                 gen.AddStack(r.value);
             }
@@ -77,7 +77,7 @@ namespace _OLC2__Proyecto_1.Instructions
             gen.AddExp("SP", temp_stack);
 
             b = f.environmentAux.getVar(this.id);
-            return new Return(return_,b.type,b.aux_value,(Type_)b.value);
+            return new Return(return_,b.type,(Type_)b.value);
         }
         public override Return execute(Environment_ environment)
         {

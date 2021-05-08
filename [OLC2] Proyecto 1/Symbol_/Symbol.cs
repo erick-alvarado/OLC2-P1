@@ -15,9 +15,8 @@ namespace _OLC2__Proyecto_1.Symbol_
         public String id;
         public Type_ type;//Stack / heap
         public String type_name;
-        public object aux_value;//data
         public int position;
-        public Symbol(object value, string id, Type_ type, String type_name, object aux_value, int position)
+        public Symbol(object value, string id, Type_ type, String type_name, int position)
         {
             try
             {
@@ -32,7 +31,6 @@ namespace _OLC2__Proyecto_1.Symbol_
             this.id = id;
             this.type = type;
             this.type_name = type_name;
-            this.aux_value = aux_value;
             this.position = position;
         }
     }

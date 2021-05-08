@@ -10,8 +10,7 @@ begin
 end;
 
 begin
-    con :=Inicio(con,9);
-    Writeln(con);
+    Writeln('texto');
 end.
 {
 ----------------------                                                                                                      

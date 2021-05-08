@@ -49,6 +49,11 @@ namespace _OLC2__Proyecto_1.Instructions
                 }
                 else
                 {
+                    String temp = gen.newTemp();
+                    gen.AddExp(temp, "SP");
+                    gen.AddExp("SP",  ret.value.ToString() );
+                    gen.addCode("printString();");
+                    gen.AddExp("SP", temp);
                 }
             }
             if (write)

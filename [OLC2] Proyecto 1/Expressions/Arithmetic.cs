@@ -45,9 +45,9 @@ namespace _OLC2__Proyecto_1.Expressions
 
             if (leftValue.type == Type_.HEAP || rightValue.type == Type_.HEAP)
             {
-                Literal aux = new Literal(leftValue.aux_value.ToString() + rightValue.aux_value.ToString(), Type_.STRING, 0, 0);
-                Return ret = aux.compile(environment);
-                return new Return(ret.value, Type_.HEAP,ret.aux_value);
+                //Literal aux = new Literal(leftValue.aux_value.ToString() + rightValue.aux_value.ToString(), Type_.STRING, 0, 0);
+                //Return ret = aux.compile(environment);
+                //return new Return(ret.value, Type_.HEAP,ret.aux_value);
             }
 
             switch (this.type)

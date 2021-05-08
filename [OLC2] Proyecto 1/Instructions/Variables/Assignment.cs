@@ -43,7 +43,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             }
             gen.SetStack(temp,val.value.ToString());
 
-            environment.saveVar(var_asignation.id, var_asignation.value, var_asignation.type, var_asignation.type_name, 0,val.aux_value);
+            environment.saveVar(var_asignation.id, var_asignation.value, var_asignation.type, var_asignation.type_name, 0);
             return null;
         }
         public override object execute(Environment_ environment)

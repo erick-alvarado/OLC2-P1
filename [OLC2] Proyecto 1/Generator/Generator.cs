@@ -19,7 +19,7 @@ namespace Compilador.Generator
             this.temporal = this.label = 0;
             this.temps = new LinkedList<String>();
             this.code = new LinkedList<String>();
-
+            this.addNativePrint();
         }
 
         public static Generator getInstance()
@@ -37,6 +37,7 @@ namespace Compilador.Generator
             this.temporal = this.label = SP = HP = 0;
             this.code = new LinkedList<String>();
             this.temps = new LinkedList<String>();
+            this.addNativePrint();
         }
 
         public void addCode(String code)
@@ -99,7 +100,7 @@ namespace Compilador.Generator
                 else if (line == "}")
                 {
                     change = false;
-                    ret += "\r\n\treturn;\r\n}";
+                    ret += "\r\n\treturn;\r\n}\r\n";
                     continue;
                 }
 
@@ -240,6 +241,28 @@ namespace Compilador.Generator
         public void addCall(String name)
         {   
             this.code.AddLast(name + "();") ;
+        }
+        public void addNativePrint()
+        {
+            String lbl1 = this.newLabel();
+            String lbl0 = this.newLabel();
+
+            String temp2 = this.newTemp();
+            String temp3 = this.newTemp();
+
+
+            this.code.AddLast("void");
+            this.code.AddLast("printString");
+            this.code.AddLast(temp2+"= SP;");
+            this.code.AddLast(lbl1+":");
+            this.code.AddLast(temp3+"= heap[(int)"+temp2+"];");
+            this.code.AddLast("if ("+temp3+" == -1) goto "+lbl0 + ";");
+            this.code.AddLast("printf("+"\"%c\""+", (char)"+temp3+");");
+            this.code.AddLast(temp2+"= "+temp2+" + 1;");
+            this.code.AddLast("goto "+lbl1+";");
+            this.code.AddLast(lbl0+":");
+            this.code.AddLast("}");
+
         }
     }
 }

@@ -28,7 +28,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             gen.AddCom("Declaration: Cons");
             Return ret =  value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
             gen.AddStack(ret.value);
-            environment.saveVarActual(this.id, this.type, ret.type, "cons",gen.getSP(),ret.aux_value);
+            environment.saveVarActual(this.id, this.type, ret.type, "cons",gen.getSP());
 
             return null;
         }

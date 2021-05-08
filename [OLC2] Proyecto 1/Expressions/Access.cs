@@ -43,7 +43,10 @@ namespace _OLC2__Proyecto_1.Expressions
             }
             else
             {
-                return new Return(b.value, b.type, b.aux_value,(Type_)b.value);
+                String temp = gen.newTemp();
+                gen.AddExp(temp, b.position.ToString());
+                return null;
+                //return new Return(temp, Type_.HEAP, b.aux_value.ToString(), Type_.STRING);
             }
         }
         public override Return execute(Environment_ environment)

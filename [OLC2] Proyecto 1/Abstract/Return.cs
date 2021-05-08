@@ -10,15 +10,8 @@ namespace _OLC2__Proyecto_1.Abstract
     {
         public object value;
         public Type_ type;
-        public object aux_value;
         public Type_ type_aux;
-        public Return(object value, Type_ type, object aux_value = null, Type_ type_aux = Type_.DEFAULT)
-        {
-            this.value = value;
-            this.type = type;
-            this.aux_value = aux_value;
-            this.type_aux = type_aux;
-        }
+        
         public Return(object value, Type_ type, Type_ type_aux = Type_.DEFAULT)
         {
             this.value = value;
