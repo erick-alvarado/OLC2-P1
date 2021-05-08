@@ -4,6 +4,7 @@ using System.Text;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 
 namespace _OLC2__Proyecto_1.Instructions.Conditions
 {
@@ -12,6 +13,9 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
         private LinkedList<Expression> expressionList;
         private Statement statements;
         private Return temp;
+
+        private Expression temp_compile;
+
         public CaseList(LinkedList<Expression> expressionList, Statement statements)
         {
             this.expressionList = expressionList;
@@ -20,7 +24,23 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
 
         public override object compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            Generator gen = Generator.getInstance();
+            foreach(Expression e in this.expressionList)
+            {
+                gen.AddCom("Case");
+                Expressions.Relational relation = new Expressions.Relational(this.temp_compile, e, Expressions.RelationalOption.EQUALSEQUALS, 0, 0);
+                Return ret = relation.compile(environment);
+
+                String lbl_end = gen.newLabel();
+                gen.addGoto(lbl_end);
+
+                gen.addLabel(ret.value.ToString());
+                this.statements.compile(environment);
+                gen.addGoto(gen.getEndLbl());
+
+                gen.addLabel(lbl_end);
+            }
+            return null;
         }
         public override object execute(Environment_ environment)
         {
@@ -63,6 +83,11 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
         public void setComparable(Return temp)
         {
             this.temp = temp;
+        }
+
+        public void setComparable(Expression temp)
+        {
+            this.temp_compile = temp;
         }
 
 

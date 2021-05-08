@@ -1,89 +1,22 @@
-﻿program basico;
-
-var 
-    txt : string = 'txt';
-
+﻿program checkCase;
+var
+   grade: integer = 0;
 begin
-    if(txt='pito') then
-    begin
-        Writeln('opcion if');
-    end;
-    else if(txt='pito2') then
-    begin
-        Writeln('opcion if 2');
-    end;
-else if(txt='pito3') then
-    begin
-        Writeln('opcion if 3');
-    end;
-else if(txt='pito4') then
-    begin
-        Writeln('opcion if 4' );
-    end;
-    else
-    begin
-        writeln('opcion else');
-    end;
+
+   case (grade) of
+      0 : 
+      begin
+      writeln(0);
+      end;
+      1, 2: 
+      begin
+      writeln(1);
+      end;
+      else 
+      begin
+      writeln(3);
+      end;
+   end;     
+   
+   writeln('Your grade is  ', grade );
 end.
-{
-----------------------                                                                                                      
-----ARCHIVO BASICO----                                                                                                      
-----------------------                                                                                                      
------------------------                                                                                                     
-El valor de V es: TRUE                                                                                                      
-El valor de F es: FALSE                                                                                                     
-El valor de datos es: 3                                                                                                     
-El valor de val1 es: 0                                                                                                      
-El valor de val2 es: 0                                                                                                      
-El valor de val3 es: 0                                                                                                      
-El valor de resp es: 0                                                                                                      
-El valor de a es: 0                                                                                                         
-El valor de b es: 0                                                                                                         
------------------------                                                                                                     
-----Dentro de Iniciar Valores----                                                                                           
-El resultado de tu suma es: 219                                                                                             
-El resultado de tu suma es: 15515                                                                                           
-El resultado de tu suma es: -17858                                                                                          
------------------------                                                                                                     
-El valor de V es: TRUE                                                                                                      
-El valor de F es: FALSE                                                                                                     
-El valor de datos es: 3                                                                                                     
-El valor de val1 es: 214
-El valor de val2 es: -2781                                                                                                  
-El valor de val3 es: -17858                                                                                                 
-El valor de resp es: -20425                                                                                                 
-El valor de a es: 15510                                                                                                     
-El valor de b es: 15087                                                                                                     
------------------------                                                                                                     
------------------------                                                                                                     
-Dentro de Inicio                                                                                                            
-El resultado de tu suma es: 10                                                                                              
-10                                                                                                                          
-----Dentro de Decisiones----                                                                                                
-En este lugar deberia de entrar :)                                                                                          
-Entro!? Que bueno :D                                                                                                        
------------------------                                                                                                     
-Esto deberia de imprimirse...                                                                                               
-----Dentro de Ciclos y Control----                                                                                          
-While                                                                                                                       
-El valor de i: 0                                                                                                            
-El valor de i: 1                                                                                                            
-El valor de i: 2                                                                                                            
-For Do                                                                                                                      
-El valor de i: 0                                                                                                            
-El valor de i: 1
-El valor de i: 2                                                                                                            
-El valor de i: 3                                                                                                            
-El valor de i: 4                                                                                                            
-El valor de i: 5                                                                                                            
-El valor de i: 6                                                                                                            
-El valor de i: 7                                                                                                            
-Repeat                                                                                                                      
-El valor de i: 6                                                                                                            
-El valor de i: 4                                                                                                            
-El valor de i: 2                                                                                                            
------------------------                                                                                                     
-----------------------------------------                                                                                    
-----ESPEREMOS QUE HAYA FUNCIONADO :D----                                                                                    
-----------------------------------------
-}
