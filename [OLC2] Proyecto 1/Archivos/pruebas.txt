@@ -1,16 +1,12 @@
 ﻿program basico;
 
 var con : integer = 9;
-function Inicio(n: integer; m: integer):integer;
-var s : integer = 11;
-var a : integer = 22;
-var b : integer = 33;
-begin
-    Inicio:= n+m;
-end;
 
 begin
-    Writeln('texto');
+    if(con>10) then
+    begin
+        Writeln('texto');
+    end;
 end.
 {
 ----------------------                                                                                                      

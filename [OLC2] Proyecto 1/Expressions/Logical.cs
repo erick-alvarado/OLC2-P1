@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 
 namespace _OLC2__Proyecto_1.Expressions
 {
@@ -33,7 +34,21 @@ namespace _OLC2__Proyecto_1.Expressions
 
         public override Return compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            Return leftValue = this.left != null ? this.left.execute(environment) : new Return(0, Type_.INTEGER);
+            Return rightValue = this.right.execute(environment);
+            Generator gen = Generator.getInstance();
+
+            switch (this.type)
+            {
+                case LogicalOption.NOT:
+                    return new Return(!Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                case LogicalOption.AND:
+                    return new Return(Boolean.Parse(leftValue.value.ToString()) && Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                case LogicalOption.OR:
+                    return new Return(Boolean.Parse(leftValue.value.ToString()) || Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+            }
+
+            return null;
         }
         public override Return execute(Environment_ environment)
         {

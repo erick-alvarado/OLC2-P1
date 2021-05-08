@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 
 namespace _OLC2__Proyecto_1.Expressions
 {
@@ -23,7 +24,33 @@ namespace _OLC2__Proyecto_1.Expressions
 
         public override Return compile(Environment_ environment)
         {
-            throw new NotImplementedException();
+            Return leftValue = this.left.compile(environment);
+            Return rightValue = this.right.compile(environment);
+            Generator gen = Generator.getInstance();
+            String lbl = gen.newLabel();
+            switch (this.type)
+            {
+                case RelationalOption.LESS:
+                    gen.addIf(leftValue.value.ToString(), "<", rightValue.value.ToString(), lbl);
+                    return new Return(lbl, Type_.BOOLEAN);
+                case RelationalOption.GREATER:
+                    gen.addIf(leftValue.value.ToString(), ">", rightValue.value.ToString(), lbl);
+                    return new Return(lbl, Type_.BOOLEAN);
+                case RelationalOption.LESSEQ:
+                    gen.addIf(leftValue.value.ToString(), "<=", rightValue.value.ToString(), lbl);
+                    return new Return(lbl, Type_.BOOLEAN);
+                case RelationalOption.GREAEQ:
+                    gen.addIf(leftValue.value.ToString(), ">=", rightValue.value.ToString(), lbl);
+                    return new Return(lbl, Type_.BOOLEAN);
+                case RelationalOption.EQUALSEQUALS:
+                    gen.addIf(leftValue.value.ToString(), "==", rightValue.value.ToString(), lbl);
+                    return new Return(lbl, Type_.BOOLEAN);
+                case RelationalOption.DISTINT:
+                    gen.addIf(leftValue.value.ToString(), "!=", rightValue.value.ToString(), lbl);
+                    return new Return(lbl, Type_.BOOLEAN);
+            }
+
+            return null;
         }
         public override Return execute(Environment_ environment)
         {

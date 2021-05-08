@@ -11,7 +11,7 @@ namespace Compilador.Generator
         private LinkedList<String> code;
         private LinkedList<String> temps;
         private int temporal=0, label = 0, SP = 0, HP = 0;
-        
+        private string endLabel = "";
 
 
         public Generator()
@@ -263,6 +263,14 @@ namespace Compilador.Generator
             this.code.AddLast(lbl0+":");
             this.code.AddLast("}");
 
+        }
+        public void setEndLbl(String lbl)
+        {
+            this.endLabel = lbl;
+        }
+        public String getEndLbl(String lbl)
+        {
+            return this.endLabel;
         }
     }
 }
