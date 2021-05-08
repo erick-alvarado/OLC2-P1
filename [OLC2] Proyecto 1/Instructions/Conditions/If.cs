@@ -31,15 +31,17 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             }
 
             gen.AddCom("If");
-            String lbl_end = gen.newLabel();
+
+            String lbl_else = gen.newLabel();
             Return condition = this.condition.compile(environment);
-            gen.addGoto(lbl_end);
+            gen.addGoto(lbl_else);
 
 
             gen.addLabel(condition.value.ToString());
             this.code.compile(environment);
             gen.addGoto(gen.getEndLbl());
-            gen.addLabel(lbl_end);
+            
+            gen.addLabel(lbl_else);
 
             if (elseIfST != null)
             {
@@ -48,7 +50,6 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             if (this.elseST != null)
             {
                 this.elseST.compile(environment);
-                return null;
             }
             if (gen.getEndLbl() != "")
             {

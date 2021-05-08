@@ -26,7 +26,6 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
         {
             Generator gen = Generator.getInstance();
             String lbl_end = gen.newLabel();
-            String lbl_else = gen.newLabel();
 
             gen.setEndLbl(lbl_end);
 
