@@ -26,7 +26,7 @@ namespace _OLC2__Proyecto_1.Expressions
             {
                 case Type_.STRING:
                     temp = gen.newTemp();
-                    gen.AddExp(temp, (gen.getHP()+1).ToString());
+                    gen.AddExp(temp,"HP");
 
                     foreach (byte b in System.Text.Encoding.UTF8.GetBytes(this.value.ToString().ToCharArray()))
                     {

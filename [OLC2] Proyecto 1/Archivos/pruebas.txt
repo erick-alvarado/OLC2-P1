@@ -1,17 +1,29 @@
 ﻿program basico;
 
 var 
-    con : integer = 9;
+    con : integer = 1;
     txt : string = 'txt';
 
 begin
-    if(con>10) then
+    if(con=0) then
     begin
-        Writeln(con);
+        Writeln('opcion if');
+    end;
+    else if(con=1) then
+    begin
+        Writeln('opcion if 2');
+    end;
+else if(con=2) then
+    begin
+        Writeln('opcion if 3');
+    end;
+else if(con=3) then
+    begin
+        Writeln('opcion if 4' );
     end;
     else
     begin
-        writeln(txt);
+        writeln('opcion else');
     end;
 end.
 {

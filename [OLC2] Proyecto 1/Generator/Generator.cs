@@ -268,7 +268,7 @@ namespace Compilador.Generator
         {
             this.endLabel = lbl;
         }
-        public String getEndLbl(String lbl)
+        public String getEndLbl()
         {
             return this.endLabel;
         }

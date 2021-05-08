@@ -25,38 +25,36 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
         public override object compile(Environment_ environment)
         {
             Generator gen = Generator.getInstance();
+            if (gen.getEndLbl() == "")
+            {
+                gen.setEndLbl(gen.newLabel());
+            }
+
             gen.AddCom("If");
             String lbl_end = gen.newLabel();
-            String lbl_else = "";
-            gen.setEndLbl(lbl_end);
-
             Return condition = this.condition.compile(environment);
-            
+            gen.addGoto(lbl_end);
+
+
+            gen.addLabel(condition.value.ToString());
+            this.code.compile(environment);
+            gen.addGoto(gen.getEndLbl());
+            gen.addLabel(lbl_end);
+
             if (elseIfST != null)
             {
                 this.elseIfST.compile(environment);
             }
-            else
-            {
-                if (this.elseST != null)
-                {
-                    lbl_else = gen.newLabel();
-                    gen.addGoto(lbl_else);
-                }
-                else
-                {
-                    gen.addGoto(lbl_end);
-                }
-            }
-            gen.addLabel(condition.value.ToString());
-            this.code.compile(environment);
-            gen.addGoto(lbl_end);
             if (this.elseST != null)
             {
-                gen.addLabel(lbl_else);
                 this.elseST.compile(environment);
+                return null;
             }
-            gen.addLabel(lbl_end);
+            if (gen.getEndLbl() != "")
+            {
+                gen.addLabel(gen.getEndLbl());
+                gen.setEndLbl("");
+            }
             return null;
 
         }
