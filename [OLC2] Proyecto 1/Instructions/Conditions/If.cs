@@ -25,6 +25,7 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
         public override object compile(Environment_ environment)
         {
             Generator gen = Generator.getInstance();
+            gen.AddCom("If");
             String lbl_end = gen.newLabel();
             String lbl_else = "";
             gen.setEndLbl(lbl_end);
@@ -49,7 +50,7 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             }
             gen.addLabel(condition.value.ToString());
             this.code.compile(environment);
-            
+            gen.addGoto(lbl_end);
             if (this.elseST != null)
             {
                 gen.addLabel(lbl_else);

@@ -25,13 +25,14 @@ namespace _OLC2__Proyecto_1.Expressions
             switch (this.type)
             {
                 case Type_.STRING:
+                    temp = gen.newTemp();
+                    gen.AddExp(temp, (gen.getHP()+1).ToString());
+
                     foreach (byte b in System.Text.Encoding.UTF8.GetBytes(this.value.ToString().ToCharArray()))
                     {
                         gen.AddHeap(b);
                     }
                     gen.AddHeap(-1);
-                    temp = gen.newTemp();
-                    gen.AddExp(temp, (gen.getHP() - this.value.ToString().Length).ToString());
                     return new Return(temp, Type_.HEAP,Type_.STRING);
                 case Type_.INTEGER:
                     temp = gen.newTemp();

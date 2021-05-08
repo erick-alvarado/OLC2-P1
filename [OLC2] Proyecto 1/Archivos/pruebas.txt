@@ -1,11 +1,17 @@
 ﻿program basico;
 
-var con : integer = 9;
+var 
+    con : integer = 9;
+    txt : string = 'txt';
 
 begin
     if(con>10) then
     begin
-        Writeln('texto');
+        Writeln(con);
+    end;
+    else
+    begin
+        writeln(txt);
     end;
 end.
 {
