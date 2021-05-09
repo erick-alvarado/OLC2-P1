@@ -10,7 +10,7 @@ namespace _OLC2__Proyecto_1.Abstract
     public abstract class Expression
     {
         public int line, column;
-        public abstract Return compile(Environment_ environment);
+        public abstract Return compile(Environment_ environment, String lbl_end);
         public abstract Return execute(Environment_ environment);
         public abstract void setLineColumn(int line, int column);
     }

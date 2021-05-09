@@ -18,7 +18,7 @@ namespace _OLC2__Proyecto_1.Expressions
             this.type = type;
             this.setLineColumn(line, column);
         }
-        public override Return compile(Environment_ environment)
+        public override Return compile(Environment_ environment,String lbl_end)
         {
             Generator gen = Generator.getInstance();
             String temp = "";

@@ -1,6 +1,7 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,20 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
         }
         public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
+            Generator gen = Generator.getInstance();
+            String lbl1 = gen.newLabel();
+            lbl_end = gen.newLabel();
+            lbl_continue = lbl1;
+            lbl_break = lbl_end;
+
+            gen.addLabel(lbl1);
+            this.statements.compile(environment, "", lbl_break, lbl_continue);
+            Expressions.Logical log = new Expressions.Logical(this.condition,Expressions.LogicalOption.NOT,0,0);
+            Return condition = log.compile(environment,lbl_end);
+            gen.addGoto(lbl_end);
+            gen.addLabel(condition.value.ToString());
+            gen.addGoto(lbl1);
+            gen.addLabel(lbl_end);
             return null;
         }
         public override object execute(Environment_ environment)

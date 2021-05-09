@@ -23,7 +23,7 @@ namespace _OLC2__Proyecto_1.Instructions
 
             foreach (Expression e in this.value)
             {
-                Return ret = e.compile(environment);
+                Return ret = e.compile(environment,"");
                 gen.AddCom("Print");
                 if (ret.type== Type_.STACK)
                 {

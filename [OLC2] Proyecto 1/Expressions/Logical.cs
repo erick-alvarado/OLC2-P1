@@ -32,18 +32,22 @@ namespace _OLC2__Proyecto_1.Expressions
             this.setLineColumn(line, column);
         }
 
-        public override Return compile(Environment_ environment)
+        public override Return compile(Environment_ environment, String lbl_end)
         {
             Generator gen = Generator.getInstance();
-            Return rightValue = this.right.compile(environment);
+            Return rightValue = this.right.compile(environment,lbl_end);
 
             if (this.left == null)
             {
-                
+                String lbl = gen.newLabel();
+                gen.addGoto(lbl);
+                gen.addLabel(rightValue.value.ToString());
+                gen.addGoto(lbl_end);
+                return new Return(lbl, Type_.BOOLEAN);
             }
 
 
-            Return leftValue = this.left != null ? this.left.compile(environment) : new Return(0, Type_.INTEGER);
+            Return leftValue = this.left != null ? this.left.compile(environment,lbl_end) : new Return(0, Type_.INTEGER);
 
             switch (this.type)
             {

@@ -22,7 +22,7 @@ namespace _OLC2__Proyecto_1.Instructions
             this.parameterList = parameterList;
             setLineColumn(line, column);
         }
-        public override Return compile(Environment_ environment)
+        public override Return compile(Environment_ environment, String lbl_end)
         {
             if (this.line == -1010)
             {
@@ -55,7 +55,7 @@ namespace _OLC2__Proyecto_1.Instructions
             {
                 foreach (Access id in i.idList)
                 {
-                    Return r = this.parameterList.ElementAt(index).compile(environment);
+                    Return r = this.parameterList.ElementAt(index).compile(environment,lbl_end);
                     f.environmentAux.saveVarActual(id.id, r.type_aux, r.type, "var", index - pos);
                     index++;
                     gen.AddStack(r.value);

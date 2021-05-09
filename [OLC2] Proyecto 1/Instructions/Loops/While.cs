@@ -32,7 +32,7 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
             lbl_break = lbl_end;
 
             gen.addLabel(lbl1);
-            Return condition = this.condition.compile(environment);
+            Return condition = this.condition.compile(environment,lbl_end);
             gen.addGoto(lbl_end);
 
             gen.addLabel(condition.value.ToString());

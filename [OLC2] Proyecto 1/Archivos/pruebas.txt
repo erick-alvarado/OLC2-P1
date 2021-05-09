@@ -1,22 +1,14 @@
-﻿program nested_ifelseChecking;
+﻿program repeatUntilLoop;
 var
-   { local variable definition }
-   a, b : integer;
+   a: integer;
 
 begin
-   a := 100;
-   b:= 200;
-   
-   (* check the boolean condition *)
-   if (a = 100) then
+   a := 10;
+   (* repeat until loop execution *)
+   repeat
    begin
-      (* if condition is true then check the following *)
-      if ( b = 200 ) then
-      begin
-         (* if nested if condition is true  then print the following *)
-         writeln('Value of a is 100 and value of b is 200' );
-         end;
-   end;
-   writeln('Exact value of a is: ', a );
-   writeln('Exact value of b is: ', b );
+      writeln('value of a: ', a);
+      a := a + 1
+      end;
+   until a = 20;
 end.

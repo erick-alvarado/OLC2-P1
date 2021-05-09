@@ -22,10 +22,10 @@ namespace _OLC2__Proyecto_1.Expressions
             this.setLineColumn(line, column);
         }
 
-        public override Return compile(Environment_ environment)
+        public override Return compile(Environment_ environment,String lbl_end)
         {
-            Return leftValue = this.left.compile(environment);
-            Return rightValue = this.right.compile(environment);
+            Return leftValue = this.left.compile(environment,lbl_end);
+            Return rightValue = this.right.compile(environment,lbl_end);
             Generator gen = Generator.getInstance();
             String lbl = gen.newLabel();
             if(leftValue.type==Type_.HEAP || rightValue.type == Type_.HEAP)

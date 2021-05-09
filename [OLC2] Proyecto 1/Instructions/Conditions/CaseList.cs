@@ -29,7 +29,7 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             {
                 gen.AddCom("Case");
                 Expressions.Relational relation = new Expressions.Relational(this.temp_compile, e, Expressions.RelationalOption.EQUALSEQUALS, 0, 0);
-                Return ret = relation.compile(environment);
+                Return ret = relation.compile(environment,lbl_end);
 
                 lbl_end = gen.newLabel();
                 gen.addGoto(lbl_end);

@@ -33,7 +33,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             if (idList.Count == 1 && value!= null)
             {
                 gen.AddCom("Declaration: Var");
-                Return ret = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
+                Return ret = value.compile(environment,"");//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
                 gen.AddStack(ret.value);
                 environment.saveVarActual(this.idList.First.Value.id, this.type, ret.type, "var",gen.getSP());
                 environment.addSP();
@@ -59,7 +59,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 foreach (Access e in idList)
                 {
                     gen.AddCom("Declaration: Var");
-                    Return ret = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
+                    Return ret = value.compile(environment,"");//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
                     gen.AddStack(ret.value);
                     environment.saveVarActual(e.id, this.type, ret.type, "var",gen.getSP());
                     environment.addSP();

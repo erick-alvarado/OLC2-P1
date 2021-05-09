@@ -30,7 +30,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             gen.AddCom("Asignation");
             Symbol var_asignation = environment.getVar(this.id);
 
-            Return val = value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
+            Return val = value.compile(environment,"");//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
             
             String temp = gen.newTemp();
             if (var_asignation.position >= 0)
