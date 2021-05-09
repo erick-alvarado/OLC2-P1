@@ -74,7 +74,7 @@ namespace _OLC2__Proyecto_1.Instructions
             gen.addCall(f.id);
 
             f.parameterList = this.parameterList;
-            object ret = f.compile(f.environmentAux);
+            object ret = f.compile(f.environmentAux,"","","");
 
             gen.AddExp("SP", "SP", (index + f.declaration_count + 1).ToString(), "-");
 

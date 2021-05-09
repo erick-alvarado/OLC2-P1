@@ -1,5 +1,6 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,18 @@ namespace _OLC2__Proyecto_1.Instructions.Transfer
             this.e = e;
             setLineColumn(line, column);
         }
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
-            throw new NotImplementedException();
+            Generator gen = Generator.getInstance();
+            if (this.type == "BREAK")
+            {
+                gen.addGoto(lbl_break);
+            }
+            else
+            {
+                gen.addGoto(lbl_continue);
+            }
+            return null;
         }
         public override object execute(Environment_ environment)
         {

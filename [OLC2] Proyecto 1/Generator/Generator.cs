@@ -13,9 +13,8 @@ namespace Compilador.Generator
         public LinkedList<String> tempsAux;//Temps no utilizados
 
         private int temporal=0, label = 0, SP = 0, HP = 0;
-        private string endLabel = "";
 
-        
+
         public Generator()
         {
             this.temporal = this.label = 0;
@@ -404,15 +403,6 @@ namespace Compilador.Generator
             this.code.AddLast(lbl0+":");
             this.code.AddLast("}");
 
-        }
-
-        public void setEndLbl(String lbl)
-        {
-            this.endLabel = lbl;
-        }
-        public String getEndLbl()
-        {
-            return this.endLabel;
         }
 
     }

@@ -23,24 +23,24 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
 
         }
 
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
             Generator gen = Generator.getInstance();
             String lbl1 = gen.newLabel();
-            String lbl_end = gen.newLabel();
-            gen.setEndLbl(lbl_end);
+            lbl_end = gen.newLabel();
+            lbl_continue=lbl1;
+            lbl_break = lbl_end;
 
             gen.addLabel(lbl1);
             Return condition = this.condition.compile(environment);
             gen.addGoto(lbl_end);
 
             gen.addLabel(condition.value.ToString());
-            this.statements.compile(environment);
+            this.statements.compile(environment,"",lbl_break,lbl_continue);
             gen.addGoto(lbl1);
-
             gen.addLabel(lbl_end);
-            gen.setEndLbl("");
-            
+
+
             return null;
         }
         public override object execute(Environment_ environment)

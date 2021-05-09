@@ -17,7 +17,7 @@ namespace _OLC2__Proyecto_1.Instructions
             this.write = write;
             this.value = value;
         }
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
             Generator gen = Generator.getInstance();
 

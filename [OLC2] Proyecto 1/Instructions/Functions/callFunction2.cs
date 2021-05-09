@@ -25,7 +25,7 @@ namespace _OLC2__Proyecto_1.Instructions
             this.parameterList = parameterList;
             setLineColumn(line, column);
         }
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
             if (this.line == -1010)
             {
@@ -77,7 +77,7 @@ namespace _OLC2__Proyecto_1.Instructions
             gen.addCall(f.id);
 
             f.parameterList = this.parameterList;
-            object ret = f.compile(f.environmentAux);
+            object ret = f.compile(f.environmentAux,"","","");
 
             gen.AddExp("SP", "SP", (index + f.declaration_count+1).ToString(), "-");
 

@@ -12,7 +12,6 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
         private Expression condition;
         private Instruction code, elseST;
         private If elseIfST;
-        
         public If(Expression condition, Instruction code, Instruction elseST = null, If elseIfST=null)
         {
             this.condition = condition;
@@ -22,12 +21,12 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             setLineColumn(line, column);
         }
 
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
             Generator gen = Generator.getInstance();
-            if (gen.getEndLbl() == "")
+            if (lbl_end == "")
             {
-                gen.setEndLbl(gen.newLabel());
+                lbl_end= gen.newLabel();
             }
 
             gen.AddCom("If");
@@ -38,23 +37,22 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
 
 
             gen.addLabel(condition.value.ToString());
-            this.code.compile(environment);
-            gen.addGoto(gen.getEndLbl());
+            this.code.compile(environment,"",lbl_break,lbl_continue);
+            gen.addGoto(lbl_end);
             
             gen.addLabel(lbl_else);
 
             if (elseIfST != null)
             {
-                this.elseIfST.compile(environment);
+                this.elseIfST.compile(environment,lbl_end,lbl_break,lbl_continue);
             }
             if (this.elseST != null)
             {
-                this.elseST.compile(environment);
+                this.elseST.compile(environment,"",lbl_break,lbl_continue);
             }
-            if (gen.getEndLbl() != "")
+            if (lbl_end != "")
             {
-                gen.addLabel(gen.getEndLbl());
-                gen.setEndLbl("");
+                gen.addLabel(lbl_end);
             }
             return null;
 

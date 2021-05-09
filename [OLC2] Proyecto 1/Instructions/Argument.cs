@@ -22,7 +22,7 @@ namespace _OLC2__Proyecto_1.Instructions
             this.rvar = rvar;
             setLineColumn(line, column);
         }
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
             return this.idList.ElementAt(0).id;
         }

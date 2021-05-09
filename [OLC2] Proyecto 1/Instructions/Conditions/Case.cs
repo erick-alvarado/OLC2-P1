@@ -22,31 +22,28 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             this.statements = statements;
             setLineColumn(line, column);
         }
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
             Generator gen = Generator.getInstance();
-            String lbl_end = gen.newLabel();
-
-            gen.setEndLbl(lbl_end);
+            lbl_end = gen.newLabel();
 
             gen.AddCom("Switch");
             foreach (CaseList c in this.caseList)
             {
                 c.setComparable(this.value);
-                c.compile(environment);
+                c.compile(environment,lbl_end,lbl_break,lbl_continue);
             }
 
 
             if (this.statements != null)
             {
-                this.statements.compile(environment);
+                this.statements.compile(environment,"",lbl_break,lbl_continue);
                 gen.addGoto(lbl_end);
 
             }
-            if (gen.getEndLbl() != "")
+            if (lbl_end != "")
             {
-                gen.addLabel(gen.getEndLbl());
-                gen.setEndLbl("");
+                gen.addLabel(lbl_end);
             }
 
             return null;

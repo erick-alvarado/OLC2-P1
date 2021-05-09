@@ -19,11 +19,11 @@ namespace _OLC2__Proyecto_1.Instructions
             setLineColumn(line, column);
         }
 
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
             foreach(Instruction i in this.code)
             {
-                i.compile(environment);
+                i.compile(environment,lbl_end,lbl_break,lbl_continue);
             }
             return null;
         }

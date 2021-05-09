@@ -22,7 +22,7 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             this.statements = statements;
         }
 
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
             Generator gen = Generator.getInstance();
             foreach(Expression e in this.expressionList)
@@ -31,12 +31,12 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
                 Expressions.Relational relation = new Expressions.Relational(this.temp_compile, e, Expressions.RelationalOption.EQUALSEQUALS, 0, 0);
                 Return ret = relation.compile(environment);
 
-                String lbl_end = gen.newLabel();
+                lbl_end = gen.newLabel();
                 gen.addGoto(lbl_end);
 
                 gen.addLabel(ret.value.ToString());
-                this.statements.compile(environment);
-                gen.addGoto(gen.getEndLbl());
+                this.statements.compile(environment, "", lbl_break,lbl_continue) ;
+                gen.addGoto(lbl_end);
 
                 gen.addLabel(lbl_end);
             }

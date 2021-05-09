@@ -53,7 +53,7 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
             this.environmentAux = other.environmentAux;
             this.environmentAux.prev = other.environmentAux.prev;
         }
-        public override object compile(Environment_ environment)
+        public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
             if (this.exec2)
             {
@@ -73,9 +73,9 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     foreach (Instruction i in this.declarationList)
                     {
                         this.declaration_count++;
-                        i.compile(this.environmentAux);
+                        i.compile(this.environmentAux,"","","");
                     }
-                    object obj = this.statements.compile(this.environmentAux);
+                    object obj = this.statements.compile(this.environmentAux,"","","");
                     gen.addCode("}");
                 }
             }
