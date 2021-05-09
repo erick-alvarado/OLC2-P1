@@ -36,7 +36,6 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 Return ret = value.compile(environment,"");//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
                 gen.AddStack(ret.value);
                 environment.saveVarActual(this.idList.First.Value.id, this.type, ret.type, "var",gen.getSP());
-                environment.addSP();
             }
             else
             {
@@ -62,7 +61,6 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                     Return ret = value.compile(environment,"");//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
                     gen.AddStack(ret.value);
                     environment.saveVarActual(e.id, this.type, ret.type, "var",gen.getSP());
-                    environment.addSP();
                 }
             }
 

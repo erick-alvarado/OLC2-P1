@@ -1,11 +1,30 @@
-﻿program forLoop;
+﻿program ifelseChecking;
 var
-   a: integer;
+   { local variable definition }
+   a : integer;
 
 begin
-   for a := 10  to 20 do
-   
+   a := 100;
+   (* check the boolean condition *)
+   if( a = 20 ) then
    begin
-      writeln('value of a: ', a);
+      (* if condition is true then print the following *)
+      writeln('a is = than 20' )
    end;
+   else if( a > 20 ) then
+   begin
+      (* if condition is true then print the following *)
+      writeln('a is > than 20' )
+   end;
+   else if( a < 20 ) then
+   begin
+      (* if condition is true then print the following *)
+      writeln('a is < than 20' )
+   end;
+   else
+   begin
+      (* if condition is false then print the following *) 
+      writeln('a is not less than 20' );
+      end;
+      writeln('value of a is : ', a);
 end.

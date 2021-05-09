@@ -66,8 +66,7 @@ namespace _OLC2__Proyecto_1.Instructions
                 gen.AddCom("Save temps");
                 foreach (String t in gen.tempsAux)
                 {
-                    gen.AddStack2(t);
-                    environment.addSP();
+                    //gen.AddStack2(t);
                     index++;
                 }
             }
@@ -87,9 +86,9 @@ namespace _OLC2__Proyecto_1.Instructions
                 index = index - gen.tempsAux.Count() + 2;
                 foreach (String t in gen.tempsAux)
                 {
-                    String tp = gen.newTemp2();
-                    gen.AddExp2(tp, "SP", index.ToString(), "+");
-                    gen.AddExp2(t, "stack[(int)"+tp+"]");
+                    //String tp = gen.newTemp2();
+                    //gen.AddExp2(tp, "SP", index.ToString(), "+");
+                    //gen.AddExp2(t, "stack[(int)"+tp+"]");
                     index++;
                 }
                 gen.tempsAux.Clear();

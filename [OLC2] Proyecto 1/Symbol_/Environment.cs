@@ -107,36 +107,11 @@ namespace _OLC2__Proyecto_1.Symbol_
             return null;
         }
 
-        public void addSP()
+        public int getVarCount()
         {
             Environment_ env = this;
-            while (env != null)
-            {
-                foreach (Symbol vari in env.variables)
-                {
-                    if (vari.position < 0)
-                    {
-                        vari.position--;
-                    }
-                }
-                env = env.prev;
-            }
-        }
+            return env.variables.Count();
 
-        public void reduceSP()
-        {
-            Environment_ env = this;
-            while (env != null)
-            {
-                foreach (Symbol vari in env.variables)
-                {
-                    if (vari.position < 0)
-                    {
-                        vari.position++;
-                    }
-                }
-                env = env.prev;
-            }
         }
     }
 }

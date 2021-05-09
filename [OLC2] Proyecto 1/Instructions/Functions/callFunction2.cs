@@ -61,7 +61,7 @@ namespace _OLC2__Proyecto_1.Instructions
                     Return r = this.parameterList.ElementAt(index).compile(environment,"");
                     f.environmentAux.saveVarActual(id.id, r.type_aux, r.type, "var", index - pos);
                     index++;
-                    gen.AddStack(r.value);
+                    //gen.AddStack(r.value);
                 }
             }
             if (gen.tempsAux.Count > 0)
@@ -69,8 +69,7 @@ namespace _OLC2__Proyecto_1.Instructions
                 gen.AddCom("Save temps");
                 foreach (String t in gen.tempsAux)
                 {
-                    gen.AddStack2(t);
-                    environment.addSP();
+                    //gen.AddStack2(t);
                     index++;
                 }
             }
@@ -82,7 +81,7 @@ namespace _OLC2__Proyecto_1.Instructions
             gen.AddExp("SP", "SP", (index + f.declaration_count+1).ToString(), "-");
 
             String return_ = gen.newTemp();
-            gen.AddExp2(return_, "stack[(int)SP]");
+            //gen.AddExp2(return_, "stack[(int)SP]");
 
             if (gen.tempsAux.Count > 0)
             {
@@ -90,9 +89,9 @@ namespace _OLC2__Proyecto_1.Instructions
                 index = index - gen.tempsAux.Count()+2;
                 foreach (String t in gen.tempsAux)
                 {
-                    String tp = gen.newTemp2();
-                    gen.AddExp2(tp, "SP",index.ToString() , "+");
-                    gen.AddExp2(t, "stack[(int)"+tp+"]");
+                    //String tp = gen.newTemp2();
+                    //gen.AddExp2(tp, "SP",index.ToString() , "+");
+                   // gen.AddExp2(t, "stack[(int)"+tp+"]");
                     index++;
                 }
                 gen.tempsAux.Clear();

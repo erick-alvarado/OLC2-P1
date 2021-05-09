@@ -49,11 +49,22 @@ namespace _OLC2__Proyecto_1.Instructions
                 }
                 else
                 {
+                    //Mover environment 
+                    int var_count = environment.getVarCount();
+                    gen.AddExp("SP", "SP", var_count.ToString(), "+");
+                    gen.addSP(var_count);
+                    
+                    //Add heap value
                     String temp = gen.newTemp();
-                    gen.AddExp(temp, "SP");
-                    gen.AddExp("SP",  ret.value.ToString() );
+                    gen.AddExp(temp, "SP+1");
+                    gen.SetStack(temp, ret.value.ToString());
+
                     gen.addCode("printString();");
-                    gen.AddExp("SP", temp);
+                    
+                    //Retornar environment
+                    gen.AddExp("SP", "SP", environment.getVarCount().ToString(), "-");
+                    gen.addSP(-var_count);
+
                 }
             }
             if (write)

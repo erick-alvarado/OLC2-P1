@@ -137,12 +137,6 @@ namespace Compilador.Generator
             this.tempsAux.AddLast(temp);
             return temp;
         }
-        public String newTemp2()
-        {
-            String temp = "T" + this.temporal++;
-            this.temps.AddLast(temp);
-            return temp;
-        }
 
         public String newLabel()
         {
@@ -156,22 +150,25 @@ namespace Compilador.Generator
         public int addSP()
         {
             this.SP++;
-            this.code.AddLast("SP = SP + 1;");
+            return this.SP;
+        }
+        public int addSP(int value)
+        {
+            this.SP +=value;
             return this.SP;
         }
         public int addHP()
         {
             this.HP++;
-            this.code.AddLast("HP = HP + 1;");
             return this.HP;
         }
         public int getSP()
         {
-            return this.SP-1;
+            return this.SP;
         }
         public int getHP()
         {
-            return this.HP-1;
+            return this.HP;
         }
         public void AddExp(String target, String left, String right = "", String op = "")
         {
@@ -189,45 +186,11 @@ namespace Compilador.Generator
             this.code.AddLast(target + " = " + left + op + right + ";");
             
         }
-        public void AddExp2(String target, String left, String right = "", String op = "")
-        {
-            this.code.AddLast(target + " = " + left + op + right + ";");
-        }
-        public void AddStack(object value)
-        {
-            this.code.AddLast("stack[(int)SP] = " +value.ToString() + ";");
-            try
-            {
-                this.tempsAux.Remove(value.ToString());
-            }
-            catch (Exception )
-            {
-
-            }
-            addSP();
-        }
-        public void AddStack2(object value)
-        {
-            this.code.AddLast("stack[(int)SP] = " + value.ToString() + ";");
-            addSP();
-        }
-        public void AddHeap(object value)
-        {
-            this.code.AddLast("heap[(int)HP] = " + value.ToString() + ";");
-            try
-            {
-                this.tempsAux.Remove(value.ToString());
-            }
-            catch (Exception)
-            {
-
-            }
-            addHP();
-        }
 
         public void SetStack(String temp_pos,object value)
         {
             this.code.AddLast("stack[(int)"+temp_pos+"] = " + value.ToString() + ";");
+            this.addSP();
             try
             {
                 this.tempsAux.Remove(temp_pos.ToString());
@@ -241,9 +204,43 @@ namespace Compilador.Generator
         public void SetHeap(String temp_pos, object value)
         {
             this.code.AddLast("heap[(int)" + temp_pos + "] = " + value.ToString() + ";");
+            this.addHP();
+
             try
             {
                 this.tempsAux.Remove(temp_pos.ToString());
+                this.tempsAux.Remove(value.ToString());
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        public void AddStack(object value)
+        {
+            String temp = this.newTemp();
+            this.AddExp(temp, this.SP.ToString());
+            this.code.AddLast("stack[(int)" + temp + "] = " + value.ToString() + ";");
+            this.addSP();
+
+            try
+            {
+                this.tempsAux.Remove(value.ToString());
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+        public void AddHeap(object value)
+        {
+            String temp = this.newTemp();
+            this.AddExp(temp, this.HP.ToString());
+            this.code.AddLast("heap[(int)" + temp + "] = " + value.ToString() + ";");
+            this.addHP();
+
+            try
+            {
                 this.tempsAux.Remove(value.ToString());
             }
             catch (Exception)
@@ -330,6 +327,7 @@ namespace Compilador.Generator
             String lbl1 = this.newLabel();
             String lbl0 = this.newLabel();
 
+            String temp1 = this.newTemp();
             String temp2 = this.newTemp();
             String temp3 = this.newTemp();
             try
@@ -344,7 +342,8 @@ namespace Compilador.Generator
 
             this.code.AddLast("void");
             this.code.AddLast("printString");
-            this.code.AddLast(temp2+"= SP;");
+            this.code.AddLast(temp1 + "= SP+1;");
+            this.code.AddLast(temp2+"= stack[(int)"+temp1+"];");
             this.code.AddLast(lbl1+":");
             this.code.AddLast(temp3+"= heap[(int)"+temp2+"];");
             this.code.AddLast("if ("+temp3+" == -1) goto "+lbl0 + ";");

@@ -33,7 +33,13 @@ namespace _OLC2__Proyecto_1.Expressions
                 String temp1 = gen.newTemp();
                 String temp2 = gen.newTemp();
                 String result = gen.newTemp();
+                
+                //Mover environment 
+                int var_count = environment.getVarCount();
+                gen.AddExp("SP", "SP", var_count.ToString(), "+");
+                gen.addSP(var_count);
 
+                
                 gen.AddExp(temp1, "SP+1");
                 gen.AddExp(temp2, "SP+2");
 
@@ -41,8 +47,15 @@ namespace _OLC2__Proyecto_1.Expressions
                 gen.SetStack(temp2, rightValue.value.ToString());
 
                 gen.addCode("compareString();");
+                
+                
+                
                 gen.AddExp(result, "stack[(int)SP]");
                 gen.addIf(result, "==", "1",lbl);
+
+                //Retornar environment
+                gen.AddExp("SP", "SP", environment.getVarCount().ToString(), "-");
+                gen.addSP(-var_count);
                 return new Return(lbl, Type_.BOOLEAN);
             }
             switch (this.type)
