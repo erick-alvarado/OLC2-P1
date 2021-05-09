@@ -51,8 +51,6 @@ namespace _OLC2__Proyecto_1.Expressions
 
             switch (this.type)
             {
-                case LogicalOption.NOT:
-                    return new Return(!Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
                 case LogicalOption.AND:
 
                     return new Return(Boolean.Parse(leftValue.value.ToString()) && Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);

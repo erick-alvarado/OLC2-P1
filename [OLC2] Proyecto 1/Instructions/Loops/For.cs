@@ -1,7 +1,9 @@
 ﻿using _OLC2__Proyecto_1.Abstract;
+using _OLC2__Proyecto_1.Expressions;
 using _OLC2__Proyecto_1.Instructions.Transfer;
 using _OLC2__Proyecto_1.Instructions.Variables;
 using _OLC2__Proyecto_1.Symbol_;
+using Compilador.Generator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +31,30 @@ namespace _OLC2__Proyecto_1.Instructions.Loops
 
         public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
-            throw new NotImplementedException();
+            Generator gen = Generator.getInstance();
+            Symbol b = (Symbol)this.assignment.compile(environment, "", "", "");
+
+            String lbl_inicio = gen.newLabel();
+            lbl_end = gen.newLabel();
+            lbl_continue = gen.newLabel();
+            lbl_break = lbl_end;
+
+            gen.addLabel(lbl_inicio);
+
+            Relational exp =  this.up? new Relational(new Access(0, 0, b.id),this.condition,RelationalOption.LESSEQ,0,0): new Relational(new Access(0, 0, b.id), this.condition, RelationalOption.GREAEQ, 0, 0);
+            Return ret = exp.compile(environment,"");
+            gen.addGoto(lbl_end);
+
+            gen.addLabel(ret.value.ToString());
+            this.statements.compile(environment, "", lbl_break, lbl_continue);
+
+            gen.addLabel(lbl_continue);
+            Assignment ass = this.up ? new Assignment(0, 0, b.id, null, new Arithmetic(new Access(0, 0, b.id), new Literal(1, Type_.INTEGER, 0, 0), ArithmeticOption.PLUS, 0, 0)) : new Assignment(0, 0, b.id, null, new Arithmetic(new Access(0, 0, b.id), new Literal(1, Type_.INTEGER, 0, 0), ArithmeticOption.MINUS, 0, 0));
+            ass.compile(environment, "", "", "");
+            gen.addGoto(lbl_inicio);
+
+            gen.addLabel(lbl_end);
+            return null;
         }
         public override object execute(Environment_ environment)
         {
