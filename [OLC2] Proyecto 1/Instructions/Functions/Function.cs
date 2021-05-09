@@ -28,6 +28,7 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
         public bool exec2 = true;
         public bool compile_once = true;
         public Environment_ environmentAux;
+        public int declaration_count = 0;
 
         public Function(int line, int column,string id, LinkedList<Instruction> argumentList, LinkedList<Instruction> declarationList, Statement statements, Type_ return_)
         {
@@ -71,6 +72,7 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     gen.addCode(this.id);
                     foreach (Instruction i in this.declarationList)
                     {
+                        this.declaration_count++;
                         i.compile(this.environmentAux);
                     }
                     object obj = this.statements.compile(this.environmentAux);

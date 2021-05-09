@@ -1,30 +1,13 @@
-﻿program ifelse_ifelseChecking;
+﻿program whileLoop;
 var
-   { local variable definition }
-   a : integer;
+   a: integer;
 
 begin
    a := 10;
-   (* check the boolean condition *)
-   if (a = 10)  then
+   while  a < 20  do
+   
    begin
-      (* if condition is true then print the following *)
-      writeln('Value of a is 10' )
+      writeln('value of a: ', a);
+      a := a + 1;
    end;
-   else if ( a = 20 ) then
-   begin
-      (* if else if condition is true *)
-      writeln('Value of a is 20' )
-   end;
-   else if( a = 30 ) then 
-   begin
-      (* if else if condition is true  *)
-      writeln('Value of a is 30' )
-   end;
-   else
-   begin
-      (* if none of the conditions is true *)
-      writeln('None of the values is matching' );
-      writeln('Exact value of a is: ', a );
-      end;
 end.

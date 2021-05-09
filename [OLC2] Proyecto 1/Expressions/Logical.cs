@@ -34,15 +34,23 @@ namespace _OLC2__Proyecto_1.Expressions
 
         public override Return compile(Environment_ environment)
         {
-            Return leftValue = this.left != null ? this.left.execute(environment) : new Return(0, Type_.INTEGER);
-            Return rightValue = this.right.execute(environment);
             Generator gen = Generator.getInstance();
+            Return rightValue = this.right.compile(environment);
+
+            if (this.left == null)
+            {
+                
+            }
+
+
+            Return leftValue = this.left != null ? this.left.compile(environment) : new Return(0, Type_.INTEGER);
 
             switch (this.type)
             {
                 case LogicalOption.NOT:
                     return new Return(!Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
                 case LogicalOption.AND:
+
                     return new Return(Boolean.Parse(leftValue.value.ToString()) && Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
                 case LogicalOption.OR:
                     return new Return(Boolean.Parse(leftValue.value.ToString()) || Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
@@ -64,15 +72,14 @@ namespace _OLC2__Proyecto_1.Expressions
                         return new Return(Boolean.Parse(leftValue.value.ToString()) && Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
                     case LogicalOption.OR:
                         return new Return(Boolean.Parse(leftValue.value.ToString()) || Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                    default:
+                        throw new Error_(this.line, this.column, "Semantico", "Operacion logica sobre un tipo de dato incorrecto");
                 }
             }
             catch(Exception)
             {
                 throw new Error_(this.line, this.column, "Semantico", "Operacion logica sobre un tipo de dato incorrecto");
-
             }
-            
-            return null;
         }
 
         public override void setLineColumn(int line, int column)

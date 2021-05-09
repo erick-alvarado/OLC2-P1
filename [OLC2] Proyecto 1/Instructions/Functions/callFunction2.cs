@@ -18,6 +18,7 @@ namespace _OLC2__Proyecto_1.Instructions
         private LinkedList<Expression> parameterList = new LinkedList<Expression>();
         public LinkedList<Instruction> argumentList = new LinkedList<Instruction>();
 
+
         public callFunction2(int line, int column, string id, LinkedList<Expression> parameterList)
         {
             this.id = id;
@@ -28,7 +29,7 @@ namespace _OLC2__Proyecto_1.Instructions
         {
             if (this.line == -1010)
             {
-                return null;
+                return new Return(0, Type_.INTEGER);
             }
 
             Generator gen = Generator.getInstance();
@@ -38,45 +39,66 @@ namespace _OLC2__Proyecto_1.Instructions
             Environment_ aux = f.environmentAux.prev;
 
             f.environmentAux = new Environment_(null, this.id);
-            
-            object aux_value = null;
+
             Type_ type = Type_.STACK;
             if (f.return_ == Type_.STRING)
             {
                 type = Type_.HEAP;
-                aux_value = "";
             }
 
-            String temp_stack = gen.newTemp();
             int pos = this.parameterList.Count();
-
-            gen.AddExp(temp_stack, "SP");
+            f.environmentAux.saveVar(f.id, f.return_, type, "var", -pos - 1);
             gen.addSP();
 
-            f.environmentAux.saveVar(f.id, f.return_, type, "var", -pos -1);
             f.environmentAux.prev = aux;
-
-
             this.argumentList = f.argumentList;
+
             int index = 0;
-
-            foreach (Expression id in this.parameterList)
+            foreach (Argument i in this.argumentList)
             {
-                Return r = this.parameterList.ElementAt(index).compile(environment);
-                f.environmentAux.saveVarActual(this.argumentList.ElementAt(index).compile(environment).ToString(), r.type_aux, r.type, "var",index-pos);
-                index++;
-                gen.AddStack(r.value);
+                foreach (Access id in i.idList)
+                {
+                    Return r = this.parameterList.ElementAt(index).compile(environment);
+                    f.environmentAux.saveVarActual(id.id, r.type_aux, r.type, "var", index - pos);
+                    index++;
+                    gen.AddStack(r.value);
+                }
             }
-
+            if (gen.tempsAux.Count > 0)
+            {
+                gen.AddCom("Save temps");
+                foreach (String t in gen.tempsAux)
+                {
+                    gen.AddStack2(t);
+                    environment.addSP();
+                    index++;
+                }
+            }
             gen.addCall(f.id);
-            
+
             f.parameterList = this.parameterList;
             object ret = f.compile(f.environmentAux);
 
+            gen.AddExp("SP", "SP", (index + f.declaration_count+1).ToString(), "-");
+
             String return_ = gen.newTemp();
-            gen.AddExp(return_, "stack[(int)" + temp_stack + "]");
-            gen.AddExp("SP", temp_stack);
-            return null;
+            gen.AddExp2(return_, "stack[(int)SP]");
+
+            if (gen.tempsAux.Count > 0)
+            {
+                gen.AddCom("Return temps");
+                index = index - gen.tempsAux.Count()+2;
+                foreach (String t in gen.tempsAux)
+                {
+                    String tp = gen.newTemp2();
+                    gen.AddExp2(tp, "SP",index.ToString() , "+");
+                    gen.AddExp2(t, "stack[(int)"+tp+"]");
+                    index++;
+                }
+                gen.tempsAux.Clear();
+            }
+            b = f.environmentAux.getVar(this.id);
+            return new Return(return_, b.type, (Type_)b.value);
         }
         public override object execute(Environment_ environment)
         {

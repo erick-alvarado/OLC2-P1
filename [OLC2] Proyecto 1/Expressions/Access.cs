@@ -37,7 +37,7 @@ namespace _OLC2__Proyecto_1.Expressions
                     gen.AddExp(temp,"SP"+ b.position.ToString());
                 }
                 String temp2 = gen.newTemp();
-                gen.AddExp(temp2, "stack[(int)" + temp + "]");
+                gen.AddExp(temp2, "stack[(int)","]", temp );
                 return new Return(temp2, b.type, (Type_)b.value);
 
             }

@@ -10,15 +10,18 @@ namespace Compilador.Generator
         private static Generator generator;
         private LinkedList<String> code;
         private LinkedList<String> temps;
+        public LinkedList<String> tempsAux;//Temps no utilizados
+
         private int temporal=0, label = 0, SP = 0, HP = 0;
         private string endLabel = "";
 
-
+        
         public Generator()
         {
             this.temporal = this.label = 0;
             this.temps = new LinkedList<String>();
             this.code = new LinkedList<String>();
+            this.tempsAux = new LinkedList<String>();
             this.addNativePrint();
             this.addNativeCompareStrings();
         }
@@ -38,11 +41,11 @@ namespace Compilador.Generator
             this.temporal = this.label = SP = HP = 0;
             this.code = new LinkedList<String>();
             this.temps = new LinkedList<String>();
+            this.tempsAux = new LinkedList<String>();
             this.addNativePrint();
             this.addNativeCompareStrings();
 
         }
-
         public void addCode(String code)
         {
             this.code.AddLast(code);
@@ -132,6 +135,13 @@ namespace Compilador.Generator
         {
             String temp = "T" + this.temporal++;
             this.temps.AddLast(temp);
+            this.tempsAux.AddLast(temp);
+            return temp;
+        }
+        public String newTemp2()
+        {
+            String temp = "T" + this.temporal++;
+            this.temps.AddLast(temp);
             return temp;
         }
 
@@ -166,27 +176,81 @@ namespace Compilador.Generator
         }
         public void AddExp(String target, String left, String right = "", String op = "")
         {
+            try
+            {
+                this.tempsAux.Remove(left);
+                this.tempsAux.Remove(right);
+                this.tempsAux.Remove(op);
+
+            }
+            catch (Exception)
+            {
+
+            }
             this.code.AddLast(target + " = " + left + op + right + ";");
             
+        }
+        public void AddExp2(String target, String left, String right = "", String op = "")
+        {
+            this.code.AddLast(target + " = " + left + op + right + ";");
         }
         public void AddStack(object value)
         {
             this.code.AddLast("stack[(int)SP] = " +value.ToString() + ";");
+            try
+            {
+                this.tempsAux.Remove(value.ToString());
+            }
+            catch (Exception )
+            {
+
+            }
+            addSP();
+        }
+        public void AddStack2(object value)
+        {
+            this.code.AddLast("stack[(int)SP] = " + value.ToString() + ";");
             addSP();
         }
         public void AddHeap(object value)
         {
             this.code.AddLast("heap[(int)HP] = " + value.ToString() + ";");
+            try
+            {
+                this.tempsAux.Remove(value.ToString());
+            }
+            catch (Exception)
+            {
+
+            }
             addHP();
         }
 
         public void SetStack(String temp_pos,object value)
         {
             this.code.AddLast("stack[(int)"+temp_pos+"] = " + value.ToString() + ";");
+            try
+            {
+                this.tempsAux.Remove(temp_pos.ToString());
+                this.tempsAux.Remove(value.ToString());
+            }
+            catch (Exception)
+            {
+
+            }
         }
         public void SetHeap(String temp_pos, object value)
         {
             this.code.AddLast("heap[(int)" + temp_pos + "] = " + value.ToString() + ";");
+            try
+            {
+                this.tempsAux.Remove(temp_pos.ToString());
+                this.tempsAux.Remove(value.ToString());
+            }
+            catch (Exception)
+            {
+
+            }
         }
         public void AddCom(String com)
         {
@@ -201,6 +265,15 @@ namespace Compilador.Generator
         public void addIf(String left, String op, String right, String label)
         {
             this.code.AddLast("if (" + left + op + right + ") goto " + label + ";");
+            try
+            {
+                this.tempsAux.Remove(left);
+                this.tempsAux.Remove(right);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
 
@@ -219,6 +292,14 @@ namespace Compilador.Generator
                 type = "float";
             }
             this.code.AddLast("printf(\"%" + format + "\", ("+type+")" + value + ");");
+            try
+            {
+                this.tempsAux.Remove(value);
+            }
+            catch (Exception)
+            {
+
+            }
         }
 
         public void printTrue()
@@ -252,7 +333,15 @@ namespace Compilador.Generator
 
             String temp2 = this.newTemp();
             String temp3 = this.newTemp();
+            try
+            {
+                this.tempsAux.Remove(temp2);
+                this.tempsAux.Remove(temp3);
+            }
+            catch (Exception)
+            {
 
+            }
 
             this.code.AddLast("void");
             this.code.AddLast("printString");
@@ -274,7 +363,18 @@ namespace Compilador.Generator
             String temp5 = this.newTemp();
             String temp6 = this.newTemp();
             String temp7 = this.newTemp();
+            try
+            {
+                this.tempsAux.Remove(temp3);
+                this.tempsAux.Remove(temp4);
+                this.tempsAux.Remove(temp5);
+                this.tempsAux.Remove(temp6);
+                this.tempsAux.Remove(temp7);
+            }
+            catch (Exception)
+            {
 
+            }
 
             String lbl0 = this.newLabel();
             String lbl1 = this.newLabel();
@@ -314,5 +414,6 @@ namespace Compilador.Generator
         {
             return this.endLabel;
         }
+
     }
 }

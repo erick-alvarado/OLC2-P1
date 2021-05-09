@@ -29,7 +29,7 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             Return ret =  value.compile(environment);//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
             gen.AddStack(ret.value);
             environment.saveVarActual(this.id, this.type, ret.type, "cons",gen.getSP());
-
+            environment.addSP();
             return null;
         }
         public override object execute(Environment_ environment)
@@ -48,7 +48,6 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
                 }
 
                 environment.saveVarActual(this.id, val.value, val.type, "cons");
-                environment.addSP();
             }
             return null;
         }
