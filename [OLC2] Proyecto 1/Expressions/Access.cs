@@ -28,13 +28,13 @@ namespace _OLC2__Proyecto_1.Expressions
                 int position = b.position;
                 String temp = gen.newTemp();
 
-                if (position >= 0)
+                if (environment.name== "Global$")
                 {
                     gen.AddExp(temp, b.position.ToString());
                 }
                 else
                 {
-                    gen.AddExp(temp,"SP"+ b.position.ToString());
+                    gen.AddExp(temp,"SP + "+ b.position.ToString());
                 }
                 String temp2 = gen.newTemp();
                 gen.AddExp(temp2, "stack[(int)","]", temp );

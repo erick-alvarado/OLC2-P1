@@ -53,7 +53,7 @@ namespace _OLC2__Proyecto_1.Expressions
                 gen.AddExp(result, "stack[(int)SP]");
 
                 //Retornar environment
-                gen.AddExp("SP", "SP", environment.getVarCount().ToString(), "-");
+                gen.AddExp("SP", "SP", var_count.ToString(), "-");
                 gen.addSP(-var_count);
 
                 gen.addIf(result, "==", "1",lbl);

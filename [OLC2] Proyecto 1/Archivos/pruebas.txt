@@ -1,17 +1,18 @@
-﻿program checkCase;
-var
-   grade: string= 'A';
+﻿program Funciones;
+function factorial(n: integer): integer;
+begin
+    if (n = 0) then
+        begin
+        factorial := 1
+        end
+    else
+        begin
+        factorial := n * factorial(n - 1);
+        end;
+end;
+
 
 begin
-   grade := 'B';
-   case (grade) of
-      'A' :begin  writeln('Excellent!' );end;
-      'D' :begin writeln('You passed' );end;
-   else
-   begin
-      writeln('You really did not study right!' );
-    end;     
-    end;     
-   
-   writeln('Your grade is  ', grade );
+    writeln('1 Factorial');
+    writeln(factorial(6));
 end.

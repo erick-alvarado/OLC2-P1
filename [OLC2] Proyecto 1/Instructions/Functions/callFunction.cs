@@ -4,6 +4,7 @@ using _OLC2__Proyecto_1.Instructions.Functions;
 using _OLC2__Proyecto_1.Reports;
 using _OLC2__Proyecto_1.Symbol_;
 using Compilador.Generator;
+using Force.DeepCloner;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -43,56 +44,77 @@ namespace _OLC2__Proyecto_1.Instructions
                 type = Type_.HEAP;
             }
 
-            int pos = this.parameterList.Count();
-            f.environmentAux.saveVar(f.id, f.return_, type, "var", -pos - 1);
+            LinkedList<String> tempsAux = gen.tempsAux.DeepClone();
+            gen.tempsAux.Clear();
+
+            if (tempsAux.Count > 0)
+            {
+                gen.AddCom("Save temps");
+                for(int i = 0; i < tempsAux.Count; i++)
+                {
+                    String tt = gen.newTemp();
+                    gen.AddExp(tt, "SP", (environment.getVarCount()+i).ToString(), "+");
+                    gen.SetStack(tt, tempsAux.ElementAt(i));
+                }
+            }
+
+
+            f.environmentAux.saveVar(f.id, f.return_, type, "var", 0);
             gen.addSP();
 
             f.environmentAux.prev = aux;
             this.argumentList = f.argumentList;
 
             int index = 0;
+            String temp = gen.newTemp();
+            int var_count = environment.getVarCount() ;
+
+
             foreach (Argument i in this.argumentList)
             {
                 foreach (Access id in i.idList)
                 {
                     Return r = this.parameterList.ElementAt(index).compile(environment,lbl_end);
-                    f.environmentAux.saveVarActual(id.id, r.type_aux, r.type, "var", index - pos);
-                    index++;
-                    gen.AddStack(r.value);
-                }
-            }
-            if (gen.tempsAux.Count > 0)
-            {
-                gen.AddCom("Save temps");
-                foreach (String t in gen.tempsAux)
-                {
-                    //gen.AddStack2(t);
+                    f.environmentAux.saveVarActual(id.id, r.type_aux, r.type, "var", (index+1));
+                    gen.AddExp(temp,"SP", (var_count+index+tempsAux.Count + 1).ToString(),"+");
+                    gen.SetStack(temp, r.value);
                     index++;
                 }
             }
+
+
+            //Mover environment 
+            gen.AddExp("SP", "SP", (var_count+tempsAux.Count).ToString(), "+");
+            gen.addSP((var_count + tempsAux.Count));
+
+            //Call function
             gen.addCall(f.id);
-
             f.parameterList = this.parameterList;
-            object ret = f.compile(f.environmentAux,"","","");
+            object ret = f.compile(f.environmentAux, "", "", "");
 
-            gen.AddExp("SP", "SP", (index + f.declaration_count + 1).ToString(), "-");
 
-            String return_ = gen.newTemp();
+            
+
+            String return_ = gen.newTemp2();
             gen.AddExp(return_, "stack[(int)SP]");
 
-            if (gen.tempsAux.Count > 0)
+            //Retornar environment
+            gen.AddExp("SP", "SP", (var_count + tempsAux.Count).ToString(), "-");
+            gen.addSP(-(var_count + tempsAux.Count));
+
+            if (tempsAux.Count > 0)
             {
                 gen.AddCom("Return temps");
-                index = index - gen.tempsAux.Count() + 2;
-                foreach (String t in gen.tempsAux)
+                for (int i = 0; i < tempsAux.Count; i++)
                 {
-                    //String tp = gen.newTemp2();
-                    //gen.AddExp2(tp, "SP", index.ToString(), "+");
-                    //gen.AddExp2(t, "stack[(int)"+tp+"]");
-                    index++;
+                    String tt = gen.newTemp2();
+                    gen.AddExp(tt, "SP", (environment.getVarCount() + i).ToString(), "+");
+                    gen.AddExp(tempsAux.ElementAt(i), "stack[(int)" + tt+"]");
+                    gen.reduceSP();
                 }
                 gen.tempsAux.Clear();
             }
+
             b = f.environmentAux.getVar(this.id);
             return new Return(return_, b.type, (Type_)b.value);
         }

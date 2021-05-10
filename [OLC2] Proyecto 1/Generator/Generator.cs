@@ -137,6 +137,12 @@ namespace Compilador.Generator
             this.tempsAux.AddLast(temp);
             return temp;
         }
+        public String newTemp2()
+        {
+            String temp = "T" + this.temporal++;
+            this.temps.AddLast(temp);
+            return temp;
+        }
 
         public String newLabel()
         {
@@ -165,6 +171,10 @@ namespace Compilador.Generator
         public int getSP()
         {
             return this.SP;
+        }
+        public void reduceSP()
+        {
+            this.SP--;
         }
         public int getHP()
         {
@@ -201,6 +211,7 @@ namespace Compilador.Generator
 
             }
         }
+
         public void SetHeap(String temp_pos, object value)
         {
             this.code.AddLast("heap[(int)" + temp_pos + "] = " + value.ToString() + ";");
@@ -225,6 +236,7 @@ namespace Compilador.Generator
 
             try
             {
+                this.tempsAux.Remove(temp);
                 this.tempsAux.Remove(value.ToString());
             }
             catch (Exception)
@@ -241,6 +253,7 @@ namespace Compilador.Generator
 
             try
             {
+                this.tempsAux.Remove(temp);
                 this.tempsAux.Remove(value.ToString());
             }
             catch (Exception)
@@ -332,6 +345,7 @@ namespace Compilador.Generator
             String temp3 = this.newTemp();
             try
             {
+                this.tempsAux.Remove(temp1);
                 this.tempsAux.Remove(temp2);
                 this.tempsAux.Remove(temp3);
             }

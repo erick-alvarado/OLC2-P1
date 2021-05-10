@@ -110,7 +110,16 @@ namespace _OLC2__Proyecto_1.Symbol_
         public int getVarCount()
         {
             Environment_ env = this;
-            return env.variables.Count();
+            int ret = 0;
+            foreach (Symbol vari in env.variables)
+            {
+                if (vari.type_name != "function")
+                {
+                    ret++;
+                }
+            }
+
+            return ret;
 
         }
     }

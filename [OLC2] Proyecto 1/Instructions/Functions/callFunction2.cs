@@ -46,56 +46,73 @@ namespace _OLC2__Proyecto_1.Instructions
                 type = Type_.HEAP;
             }
 
-            int pos = this.parameterList.Count();
-            f.environmentAux.saveVar(f.id, f.return_, type, "var", -pos - 1);
+            LinkedList<String> tempsAux = gen.tempsAux;
+
+            if (tempsAux.Count > 0)
+            {
+                gen.AddCom("Save temps");
+                for (int i = 0; i < tempsAux.Count; i++)
+                {
+                    String tt = gen.newTemp();
+                    gen.AddExp(tt, "SP", (environment.getVarCount() + i).ToString(), "+");
+                    gen.SetStack(tt, tempsAux.ElementAt(i));
+                }
+                gen.tempsAux.Clear();
+            }
+
+
+            f.environmentAux.saveVar(f.id, f.return_, type, "var", 0);
             gen.addSP();
 
             f.environmentAux.prev = aux;
             this.argumentList = f.argumentList;
 
             int index = 0;
+            String temp = gen.newTemp();
             foreach (Argument i in this.argumentList)
             {
                 foreach (Access id in i.idList)
                 {
-                    Return r = this.parameterList.ElementAt(index).compile(environment,"");
-                    f.environmentAux.saveVarActual(id.id, r.type_aux, r.type, "var", index - pos);
                     index++;
-                    //gen.AddStack(r.value);
+                    Return r = this.parameterList.ElementAt(index).compile(environment, lbl_end);
+                    f.environmentAux.saveVarActual(id.id, r.type_aux, r.type, "var", index);
+                    gen.AddExp(temp, index.ToString());
+                    gen.SetStack(temp, r.value);
                 }
             }
-            if (gen.tempsAux.Count > 0)
-            {
-                gen.AddCom("Save temps");
-                foreach (String t in gen.tempsAux)
-                {
-                    //gen.AddStack2(t);
-                    index++;
-                }
-            }
+
+
+            //Mover environment 
+            int var_count = environment.getVarCount();
+            gen.AddExp("SP", "SP", var_count.ToString(), "+");
+            gen.addSP(var_count);
+
+            //Call function
             gen.addCall(f.id);
-
             f.parameterList = this.parameterList;
-            object ret = f.compile(f.environmentAux,"","","");
+            object ret = f.compile(f.environmentAux, "", "", "");
 
-            gen.AddExp("SP", "SP", (index + f.declaration_count+1).ToString(), "-");
+
+            //Retornar environment
+            gen.AddExp("SP", "SP", environment.getVarCount().ToString(), "-");
+            gen.addSP(-var_count);
+
 
             String return_ = gen.newTemp();
-            //gen.AddExp2(return_, "stack[(int)SP]");
+            gen.AddExp(return_, "stack[(int)SP]");
 
-            if (gen.tempsAux.Count > 0)
+            if (tempsAux.Count > 0)
             {
                 gen.AddCom("Return temps");
-                index = index - gen.tempsAux.Count()+2;
-                foreach (String t in gen.tempsAux)
+                for (int i = 0; i < tempsAux.Count; i++)
                 {
-                    //String tp = gen.newTemp2();
-                    //gen.AddExp2(tp, "SP",index.ToString() , "+");
-                   // gen.AddExp2(t, "stack[(int)"+tp+"]");
-                    index++;
+                    String tt = gen.newTemp();
+                    gen.AddExp(tt, "SP", (environment.getVarCount() + i).ToString(), "+");
+                    gen.AddExp(tempsAux.ElementAt(i), "stack[(int)" + tt + "]");
+                    gen.reduceSP();
                 }
-                gen.tempsAux.Clear();
             }
+
             b = f.environmentAux.getVar(this.id);
             return new Return(return_, b.type, (Type_)b.value);
         }

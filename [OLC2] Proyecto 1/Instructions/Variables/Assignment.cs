@@ -33,13 +33,13 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             Return val = value.compile(environment,"");//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
             
             String temp = gen.newTemp();
-            if (var_asignation.position >= 0)
+            if (environment.name == "Global$")
             {
                 gen.AddExp(temp, var_asignation.position.ToString());
             }
             else
             {
-                gen.AddExp(temp, "SP" + var_asignation.position.ToString());
+                gen.AddExp(temp, "SP + " + var_asignation.position.ToString());
             }
             gen.SetStack(temp,val.value.ToString());
 
