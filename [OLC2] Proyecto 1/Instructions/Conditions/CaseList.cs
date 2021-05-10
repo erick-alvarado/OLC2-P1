@@ -29,16 +29,16 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             {
                 gen.AddCom("Case");
                 Expressions.Relational relation = new Expressions.Relational(this.temp_compile, e, Expressions.RelationalOption.EQUALSEQUALS, 0, 0);
-                Return ret = relation.compile(environment,lbl_end);
+                Return ret = relation.compile(environment,"");
 
-                lbl_end = gen.newLabel();
-                gen.addGoto(lbl_end);
+                String lbl_end2 = gen.newLabel();
+                gen.addGoto(lbl_end2);
 
                 gen.addLabel(ret.value.ToString());
                 this.statements.compile(environment, "", lbl_break,lbl_continue) ;
                 gen.addGoto(lbl_end);
 
-                gen.addLabel(lbl_end);
+                gen.addLabel(lbl_end2);
             }
             return null;
         }

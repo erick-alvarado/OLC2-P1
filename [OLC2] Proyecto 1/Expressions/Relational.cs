@@ -51,12 +51,16 @@ namespace _OLC2__Proyecto_1.Expressions
                 
                 
                 gen.AddExp(result, "stack[(int)SP]");
-                gen.addIf(result, "==", "1",lbl);
 
                 //Retornar environment
                 gen.AddExp("SP", "SP", environment.getVarCount().ToString(), "-");
                 gen.addSP(-var_count);
+
+                gen.addIf(result, "==", "1",lbl);
+
                 return new Return(lbl, Type_.BOOLEAN);
+
+
             }
             switch (this.type)
             {

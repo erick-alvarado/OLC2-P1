@@ -1,30 +1,17 @@
-﻿program ifelseChecking;
+﻿program checkCase;
 var
-   { local variable definition }
-   a : integer;
+   grade: string= 'A';
 
 begin
-   a := 100;
-   (* check the boolean condition *)
-   if( a = 20 ) then
-   begin
-      (* if condition is true then print the following *)
-      writeln('a is = than 20' )
-   end;
-   else if( a > 20 ) then
-   begin
-      (* if condition is true then print the following *)
-      writeln('a is > than 20' )
-   end;
-   else if( a < 20 ) then
-   begin
-      (* if condition is true then print the following *)
-      writeln('a is < than 20' )
-   end;
+   grade := 'B';
+   case (grade) of
+      'A' :begin  writeln('Excellent!' );end;
+      'D' :begin writeln('You passed' );end;
    else
    begin
-      (* if condition is false then print the following *) 
-      writeln('a is not less than 20' );
-      end;
-      writeln('value of a is : ', a);
+      writeln('You really did not study right!' );
+    end;     
+    end;     
+   
+   writeln('Your grade is  ', grade );
 end.
