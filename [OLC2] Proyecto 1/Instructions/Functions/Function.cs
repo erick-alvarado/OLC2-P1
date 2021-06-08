@@ -55,6 +55,57 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
         }
         public override object compile(Environment_ environment, String lbl_end, String lbl_break, String lbl_continue)
         {
+            Generator gen = Generator.getInstance();
+            
+            environmentAux = new Environment_(null, this.id);
+            environmentAux.prev = environment;
+            environment.saveVar(this.id, this, this.return_, "function");
+            Type_ type_aux = Type_.DEFAULT;
+            if (this.return_ == Type_.STRING)
+            {
+                type_aux = Type_.HEAP;
+            }
+            else
+            {
+                type_aux = Type_.STACK;
+            }
+            this.environmentAux.saveVarActual(this.id, this.return_, type_aux, "var", 0);
+
+
+            int index = 0;
+            String temp = gen.newTemp();
+            int var_count = environment.getVarCount();
+
+            foreach (Argument i in this.argumentList)
+            {
+                foreach (Access id in i.idList)
+                {
+                    if (i.type == Type_.STRING)
+                    {
+                        type_aux = Type_.HEAP;
+                    }
+                    else
+                    {
+                        type_aux = Type_.STACK;
+                    }
+                    this.environmentAux.saveVarActual(id.id, i.type,type_aux, "var", (index + 1));
+                    index++;
+                }
+            }
+
+
+
+
+            gen.addCode("void");
+            gen.addCode(this.id);
+            foreach (Instruction i in this.declarationList)
+            {
+                this.declaration_count++;
+                i.compile(this.environmentAux, "", "", "");
+            }
+            object obj = this.statements.compile(this.environmentAux, "", "", "");
+            gen.addCode("}");
+            /*
             if (this.exec2)
             {
                 this.exec2 = false;
@@ -78,7 +129,7 @@ namespace _OLC2__Proyecto_1.Instructions.Functions
                     object obj = this.statements.compile(this.environmentAux,"","","");
                     gen.addCode("}");
                 }
-            }
+            }*/
 
             return null;
         }

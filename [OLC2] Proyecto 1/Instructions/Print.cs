@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using _OLC2__Proyecto_1.Abstract;
 using _OLC2__Proyecto_1.Gramm;
 using _OLC2__Proyecto_1.Symbol_;
 using Compilador.Generator;
+using Force.DeepCloner;
 
 namespace _OLC2__Proyecto_1.Instructions
 {

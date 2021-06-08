@@ -6,7 +6,15 @@ Intermedio
 
 Recursivas
 -Begin y end en un monton de lados
+
+
 -No se por que Ackerman con valores altos me truena
+
+
+
+
+
+
 
 Types
 -Cons falta el tipo 

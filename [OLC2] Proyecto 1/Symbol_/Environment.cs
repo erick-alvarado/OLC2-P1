@@ -118,7 +118,6 @@ namespace _OLC2__Proyecto_1.Symbol_
                     ret++;
                 }
             }
-
             return ret;
 
         }

@@ -32,7 +32,7 @@ namespace _OLC2__Proyecto_1.Instructions.Conditions
             gen.AddCom("If");
 
             String lbl_else = gen.newLabel();
-            Return condition = this.condition.compile(environment,"");
+            Return condition = this.condition.compile(environment,lbl_else);
             gen.addGoto(lbl_else);
 
 

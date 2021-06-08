@@ -47,17 +47,32 @@ namespace _OLC2__Proyecto_1.Expressions
             }
 
 
-            Return leftValue = this.left != null ? this.left.compile(environment,lbl_end) : new Return(0, Type_.INTEGER);
 
             switch (this.type)
             {
                 case LogicalOption.AND:
-
-                    return new Return(Boolean.Parse(leftValue.value.ToString()) && Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
+                    gen.addGoto(lbl_end);
+                    gen.addLabel(rightValue.value.ToString());
+                    Return leftValue = this.left.compile(environment, lbl_end);
+                    return new Return(leftValue.value.ToString(), Type_.BOOLEAN);
                 case LogicalOption.OR:
-                    return new Return(Boolean.Parse(leftValue.value.ToString()) || Boolean.Parse(rightValue.value.ToString()), Type_.BOOLEAN);
-            }
+                    String lbl_gg = gen.newLabel();
+                    String lbl = gen.newLabel();
+                    gen.addGoto(lbl);
 
+                    gen.addLabel(rightValue.value.ToString());
+                    gen.addGoto(lbl_gg);
+
+                    gen.addLabel(lbl);
+                    Return leftValue2 = this.left.compile(environment, lbl_end);
+                    gen.addGoto(lbl_end);
+
+                    gen.addLabel(leftValue2.value.ToString());
+                    gen.addGoto(lbl_gg);
+
+                    return new Return(lbl_gg, Type_.BOOLEAN);
+
+            }
             return null;
         }
         public override Return execute(Environment_ environment)

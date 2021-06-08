@@ -23,12 +23,13 @@ namespace _OLC2__Proyecto_1.Expressions
         {
             Generator gen = Generator.getInstance();
             Symbol b = environment.getVar(this.id);
+            Symbol aux = environment.getVarActual(this.id);
             if (b.type == Type_.STACK)
             {
                 int position = b.position;
                 String temp = gen.newTemp();
 
-                if (environment.name== "Global$")
+                if (environment.name== "Global$"|| aux==null)
                 {
                     gen.AddExp(temp, b.position.ToString());
                 }

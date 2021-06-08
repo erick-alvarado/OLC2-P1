@@ -33,7 +33,10 @@ namespace _OLC2__Proyecto_1.Instructions.Variables
             Return val = value.compile(environment,"");//ret.type = STACK|HEAP   ret.value = temp_final | pos_heap
             
             String temp = gen.newTemp();
-            if (environment.name == "Global$")
+
+            Symbol aux = environment.getVarActual(this.id);
+
+            if (environment.name == "Global$" || aux == null)
             {
                 gen.AddExp(temp, var_asignation.position.ToString());
             }
